@@ -1,10 +1,12 @@
 package com.byakko.service.authentication.domain.domaincore.entity;
 
+import com.byakko.common.DomainConstants;
 import com.byakko.common.domain.entity.BaseEntity;
 import com.byakko.common.domain.exception.ValidationException;
 import com.byakko.service.authentication.domain.domaincore.valueobject.EmployeeId;
 import com.byakko.service.authentication.domain.domaincore.valueobject.EmployeeStatus;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
@@ -15,6 +17,13 @@ public class Employee extends BaseEntity<EmployeeId> {
     private EmployeeStatus status;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+    private Role role;
+
+    public void initialize() {
+        setId(new EmployeeId(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond()));
+        setStatus(EmployeeStatus.ACTIVE);
+        setCreatedAt(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)));
+    }
 
     public void validate() {
         validateEmployeeId();
@@ -31,7 +40,7 @@ public class Employee extends BaseEntity<EmployeeId> {
     private void validatePassword() {
         if(this.password == null || this.password.isBlank())
             throw new ValidationException(Map.of("password", "password must be not blank"));
-        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"))
+        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
             throw new ValidationException(Map.of("password", "password is not in the correct format"));
     }
 

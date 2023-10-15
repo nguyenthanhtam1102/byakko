@@ -1,4 +1,5 @@
 rootProject.name = 'byakko'
 include 'common'
 include 'authentication-service'
+include 'DigitalSignatureKeyGenerater'
 

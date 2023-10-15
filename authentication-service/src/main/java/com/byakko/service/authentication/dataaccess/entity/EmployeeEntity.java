@@ -16,9 +16,8 @@ import java.time.ZonedDateTime;
 public class EmployeeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer id;
+    private Long id;
 
     @Column(name = "employee_id", length = 30, nullable = false)
     private String employeeId;
@@ -35,5 +34,9 @@ public class EmployeeEntity {
 
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
 
 }

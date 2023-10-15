@@ -1,10 +1,13 @@
 package com.byakko.service.authentication.domain.domaincore.entity;
 
+import com.byakko.common.DomainConstants;
 import com.byakko.common.domain.entity.BaseEntity;
 import com.byakko.common.domain.exception.ValidationException;
 import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerId;
 import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerStatus;
+import com.byakko.service.authentication.domain.domaincore.valueobject.SystemRole;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
@@ -19,6 +22,15 @@ public class Customer extends BaseEntity<CustomerId> {
     private CustomerStatus status;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
+    private SystemRole role;
+
+    public void initialize() {
+        setId(new CustomerId(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond()));
+        setVerified(false);
+        setStatus(CustomerStatus.ACTIVE);
+        setCreatedAt(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)));
+        setRole(SystemRole.CUSTOMER);
+    }
 
     public void validate() {
         validateFirstName();
@@ -44,21 +56,21 @@ public class Customer extends BaseEntity<CustomerId> {
     private void validatePhone() {
         if(this.phone == null || this.phone.isBlank())
             throw new ValidationException(Map.of("phone", "phone must be not blank"));
-        if(!this.phone.matches("/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/"))
+        if(!this.phone.matches("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"))
             throw new ValidationException(Map.of("phone", "phone is not in the correct format"));
     }
 
     private void validateEmail() {
         if(this.email == null || this.email.isBlank())
             throw new ValidationException(Map.of("email", "email must be not blank"));
-        if(!this.email.matches("[a-zA-Z0-9_+&*-]+(?:\\\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\\\.)+[a-zA-Z]{2,7}$"))
+        if(!this.email.matches("^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$"))
             throw new ValidationException(Map.of("email", "email is not in the correct format"));
     }
 
     private void validatePassword() {
         if(this.password == null || this.password.isBlank())
             throw new ValidationException(Map.of("password", "password must be not blank"));
-        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"))
+        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
             throw new ValidationException(Map.of("password", "password is not in the correct format"));
     }
 
@@ -147,6 +159,14 @@ public class Customer extends BaseEntity<CustomerId> {
 
     public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public SystemRole getRole() {
+        return role;
+    }
+
+    public void setRole(SystemRole role) {
+        this.role = role;
     }
 
     public static final class CustomerBuilder {

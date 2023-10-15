@@ -16,8 +16,8 @@ import java.time.ZonedDateTime;
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @Column(name = "firstname", length = 30, nullable = false)
     private String firstName;

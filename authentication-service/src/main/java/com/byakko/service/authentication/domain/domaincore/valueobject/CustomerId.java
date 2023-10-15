@@ -2,9 +2,9 @@ package com.byakko.service.authentication.domain.domaincore.valueobject;
 
 import com.byakko.common.valueobject.BaseId;
 
-public class CustomerId extends BaseId<Integer> {
+public class CustomerId extends BaseId<Long> {
 
-    public CustomerId(Integer value) {
+    public CustomerId(Long value) {
         super(value);
     }
 
