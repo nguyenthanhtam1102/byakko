@@ -14,7 +14,7 @@ public class Role extends BaseEntity<RoleId> {
     private String name;
 
     public void initialize() {
-        setId(new RoleId(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond()));
+        setId(new RoleId(String.valueOf(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())));
     }
 
     public void validate() {

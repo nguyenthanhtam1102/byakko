@@ -1,17 +1,16 @@
 package com.byakko.service.authentication.domain.domaincore.entity;
 
 import com.byakko.common.DomainConstants;
-import com.byakko.common.domain.entity.BaseEntity;
 import com.byakko.common.domain.exception.ValidationException;
-import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerId;
+import com.byakko.common.domain.valueobject.Authority;
 import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerStatus;
-import com.byakko.service.authentication.domain.domaincore.valueobject.SystemRole;
+import com.byakko.common.domain.valueobject.SystemRole;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
-public class Customer extends BaseEntity<CustomerId> {
+public class Customer extends User {
 
     private String firstName;
     private String lastName;
@@ -22,14 +21,14 @@ public class Customer extends BaseEntity<CustomerId> {
     private CustomerStatus status;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
-    private SystemRole role;
+    private Authority authority;
 
     public void initialize() {
-        setId(new CustomerId(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond()));
+        setId(new UserId(String.valueOf(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())));
         setVerified(false);
         setStatus(CustomerStatus.ACTIVE);
         setCreatedAt(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)));
-        setRole(SystemRole.CUSTOMER);
+        setAuthority(SystemRole.CUSTOMER);
     }
 
     public void validate() {
@@ -161,12 +160,12 @@ public class Customer extends BaseEntity<CustomerId> {
         this.updatedAt = updatedAt;
     }
 
-    public SystemRole getRole() {
-        return role;
+    public Authority getAuthority() {
+        return authority;
     }
 
-    public void setRole(SystemRole role) {
-        this.role = role;
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
     }
 
     public static final class CustomerBuilder {
@@ -179,7 +178,7 @@ public class Customer extends BaseEntity<CustomerId> {
         private CustomerStatus status;
         private ZonedDateTime createdAt;
         private ZonedDateTime updatedAt;
-        private CustomerId id;
+        private UserId id;
 
         private CustomerBuilder() {
         }
@@ -233,7 +232,7 @@ public class Customer extends BaseEntity<CustomerId> {
             return this;
         }
 
-        public CustomerBuilder id(CustomerId id) {
+        public CustomerBuilder id(UserId id) {
             this.id = id;
             return this;
         }

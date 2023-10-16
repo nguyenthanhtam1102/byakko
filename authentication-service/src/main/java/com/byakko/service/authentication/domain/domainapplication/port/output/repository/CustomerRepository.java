@@ -8,6 +8,8 @@ import java.util.Optional;
 @Component
 public interface CustomerRepository {
 
+    Optional<Customer> findById(String id);
+    Optional<Customer> findByPhoneOrEmail(String phone, String email);
     Optional<Customer> findByPhoneAndEmail(String phone, String email);
     Customer save(Customer customer);
 

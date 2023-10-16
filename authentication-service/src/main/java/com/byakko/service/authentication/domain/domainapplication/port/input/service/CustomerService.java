@@ -1,9 +1,6 @@
 package com.byakko.service.authentication.domain.domainapplication.port.input.service;
 
-import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignInCommand;
-import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignInResponse;
-import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignUpCommand;
-import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignUpResponse;
+import com.byakko.service.authentication.domain.domainapplication.dto.customer.*;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -15,5 +12,11 @@ public interface CustomerService {
 
     CustomerSignUpResponse signUp(@Valid CustomerSignUpCommand command);
     CustomerSignInResponse signIn(@Valid CustomerSignInCommand command);
+    void changePassword(@Valid CustomerChangePasswordCommand command);
+    void sendResetPasswordMail(@Valid SendResetPasswordMailCommand command);
+    void resetPassword(@Valid CustomerResetPasswordCommand command);
+    void deleteCustomer(@Valid DeleteCustomerCommand command);
+    void resendEmailAddressVerificationMail(@Valid ResendEmailAddressVerificationMailCommand command);
+    void verifyEmailAddress(@Valid VerifyEmailAddressCommand command);
 
 }

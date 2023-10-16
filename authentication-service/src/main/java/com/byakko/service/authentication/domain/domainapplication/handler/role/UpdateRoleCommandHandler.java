@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.domain.domainapplication;
+package com.byakko.service.authentication.domain.domainapplication.handler.role;
 
 import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.service.authentication.domain.domainapplication.dto.role.RoleResponse;
@@ -11,11 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class UpdateRoleCommandHandler {
 
-    private RoleRepository roleRepository;
+    private final RoleCommandHandlerHelper roleCommandHandlerHelper;
+    private final RoleRepository roleRepository;
+
+    public UpdateRoleCommandHandler(RoleCommandHandlerHelper roleCommandHandlerHelper, RoleRepository roleRepository) {
+        this.roleCommandHandlerHelper = roleCommandHandlerHelper;
+        this.roleRepository = roleRepository;
+    }
 
     public RoleResponse update(UpdateRoleCommand command) {
-        Role role = roleRepository.findById(command.getId())
-                .orElseThrow(() -> new NotFoundException(String.format("Role %s not found", command.getId())));
+        Role role = roleCommandHandlerHelper.findRoleById(command.getId());
 
         if(command.getName() != null)
             role.setName(command.getName());

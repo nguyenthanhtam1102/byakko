@@ -9,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CustomerJpaRepository extends JpaRepository<CustomerEntity, Long> {
+public interface CustomerJpaRepository extends JpaRepository<CustomerEntity, String> {
+
+    Optional<CustomerEntity> findByPhoneOrEmail(String phone, String email);
 
     @Query("select c from CustomerEntity c where (c.phone = :phone or c.email = :email) and c.status != 'DELETED'")
     Optional<CustomerEntity> findByPhoneAndEmail(@Param("phone") String phone, @Param("email") String email);

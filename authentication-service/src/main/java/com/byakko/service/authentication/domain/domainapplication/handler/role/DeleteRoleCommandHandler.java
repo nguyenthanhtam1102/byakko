@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.domain.domainapplication;
+package com.byakko.service.authentication.domain.domainapplication.handler.role;
 
 import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.service.authentication.domain.domainapplication.dto.role.DeleteRoleCommand;
@@ -9,15 +9,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeleteRoleCommandHandler {
 
+    private final RoleCommandHandlerHelper roleCommandHandlerHelper;
     private final RoleRepository roleRepository;
 
-    public DeleteRoleCommandHandler(RoleRepository roleRepository) {
+    public DeleteRoleCommandHandler(RoleCommandHandlerHelper roleCommandHandlerHelper, RoleRepository roleRepository) {
+        this.roleCommandHandlerHelper = roleCommandHandlerHelper;
         this.roleRepository = roleRepository;
     }
 
     public void delete(DeleteRoleCommand command) {
-        Role role = roleRepository.findById(command.getId())
-                .orElseThrow(() -> new NotFoundException(String.format("Role %d not found", command.getId())));
+        Role role = roleCommandHandlerHelper.findRoleById(command.getId());
         roleRepository.delete(role);
     }
 

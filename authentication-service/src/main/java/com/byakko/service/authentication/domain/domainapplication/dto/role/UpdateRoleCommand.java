@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class UpdateRoleCommand {
 
     @NotNull(message = "id must be not null")
-    private Long id;
+    private String id;
 
     @NotBlank(message = "name must be not blank")
     private String name;

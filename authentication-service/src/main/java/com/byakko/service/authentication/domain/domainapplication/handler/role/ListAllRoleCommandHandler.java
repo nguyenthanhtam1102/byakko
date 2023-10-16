@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.domain.domainapplication;
+package com.byakko.service.authentication.domain.domainapplication.handler.role;
 
 import com.byakko.common.application.dto.ListAllResponse;
 import com.byakko.service.authentication.domain.domainapplication.dto.role.ListAllRoleCommand;

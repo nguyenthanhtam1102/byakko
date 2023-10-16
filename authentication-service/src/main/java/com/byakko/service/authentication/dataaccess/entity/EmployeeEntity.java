@@ -10,17 +10,14 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 @Entity
 @Table(name = "employees")
-public class EmployeeEntity {
+public class EmployeeEntity extends UserEntity {
 
     @Id
     @EqualsAndHashCode.Include
-    private Long id;
-
-    @Column(name = "employee_id", length = 30, nullable = false)
-    private String employeeId;
+    private String id;
 
     @Column(length = 255, nullable = false)
     private String password;

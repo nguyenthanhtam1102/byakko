@@ -18,7 +18,7 @@ public class RoleEntity {
 
     @Id
     @EqualsAndHashCode.Include
-    private Long id;
+    private String id;
 
     @Column(length = 60, nullable = false)
     private String name;

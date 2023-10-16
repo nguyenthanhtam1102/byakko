@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
-public class Employee extends BaseEntity<EmployeeId> {
+public class Employee extends User {
 
     private String employeeId;
     private String password;
@@ -20,7 +20,7 @@ public class Employee extends BaseEntity<EmployeeId> {
     private Role role;
 
     public void initialize() {
-        setId(new EmployeeId(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond()));
+        setId(new UserId(String.valueOf(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())));
         setStatus(EmployeeStatus.ACTIVE);
         setCreatedAt(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)));
     }
@@ -101,7 +101,7 @@ public class Employee extends BaseEntity<EmployeeId> {
         private EmployeeStatus status;
         private ZonedDateTime createdAt;
         private ZonedDateTime updatedAt;
-        private EmployeeId id;
+        private UserId id;
 
         private EmployeeBuilder() {
         }
@@ -135,7 +135,7 @@ public class Employee extends BaseEntity<EmployeeId> {
             return this;
         }
 
-        public EmployeeBuilder id(EmployeeId id) {
+        public EmployeeBuilder id(UserId id) {
             this.id = id;
             return this;
         }

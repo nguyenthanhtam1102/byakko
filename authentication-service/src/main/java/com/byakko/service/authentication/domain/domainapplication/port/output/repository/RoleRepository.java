@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface RoleRepository {
 
     Page<Role> findAll(Integer page, Integer limit);
-    Optional<Role> findById(Long id);
+    Optional<Role> findById(String id);
     Role save(Role role);
     void delete(Role role);
 

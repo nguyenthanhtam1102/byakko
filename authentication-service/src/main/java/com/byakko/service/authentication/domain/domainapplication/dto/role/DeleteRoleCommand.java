@@ -10,6 +10,6 @@ import javax.validation.constraints.NotNull;
 public class DeleteRoleCommand {
 
     @NotNull(message = "id must be not null")
-    private Long id;
+    private String id;
 
 }

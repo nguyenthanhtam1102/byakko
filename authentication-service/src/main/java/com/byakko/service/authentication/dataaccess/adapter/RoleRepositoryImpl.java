@@ -24,7 +24,7 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public Optional<Role> findById(Long id) {
+    public Optional<Role> findById(String id) {
         return roleJpaRepository.findById(id).map(RoleMapper::toRole);
     }
 

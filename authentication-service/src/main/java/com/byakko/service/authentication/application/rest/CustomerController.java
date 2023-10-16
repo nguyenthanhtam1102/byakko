@@ -1,8 +1,6 @@
 package com.byakko.service.authentication.application.rest;
 
-import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignInCommand;
-import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignUpCommand;
-import com.byakko.service.authentication.domain.domainapplication.port.input.service.AuthenticationApplicationService;
+import com.byakko.service.authentication.domain.domainapplication.dto.customer.*;
 import com.byakko.service.authentication.domain.domainapplication.port.input.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,28 +26,39 @@ public class CustomerController {
     }
 
     @PutMapping("")
-    public ResponseEntity<?> resetPassword(@PathVariable("") Long id, @RequestBody ) {
+    public ResponseEntity<?> sendResetPasswordMail(@RequestBody SendResetPasswordMailCommand command) {
+        customerService.sendResetPasswordMail(command);
+        return ResponseEntity.ok("Email send success");
+    }
 
+    @GetMapping("")
+    public ResponseEntity<?> resetPassword(@ModelAttribute CustomerResetPasswordCommand command) {
+        customerService.resetPassword(command);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("")
-    public ResponseEntity<?> changePassword(@PathVariable("") Long id, @RequestBody ) {
-
+    public ResponseEntity<?> changePassword(@RequestBody CustomerChangePasswordCommand command) {
+        customerService.changePassword(command);
+        return ResponseEntity.ok("Change password success");
     }
 
     @GetMapping("")
-    public ResponseEntity<?> sendVerifyEmail() {
-
+    public ResponseEntity<?> resendVerifyMail(@PathVariable String id) {
+        customerService.resendEmailAddressVerificationMail(new ResendEmailAddressVerificationMailCommand(id));
+        return ResponseEntity.ok("Email address verification mail send success");
     }
 
     @GetMapping("")
-    public ResponseEntity<?> sendVerifyCode() {
-
+    public ResponseEntity<?> verifyEmailAddress(@ModelAttribute VerifyEmailAddressCommand command) {
+        customerService.verifyEmailAddress(command);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> deleteCustomer(@PathVariable("") Long id) {
-
+    public ResponseEntity<?> deleteCustomer(@PathVariable("") String id) {
+        customerService.deleteCustomer(new DeleteCustomerCommand(id));
+        return ResponseEntity.ok("Delete success");
     }
 
 }

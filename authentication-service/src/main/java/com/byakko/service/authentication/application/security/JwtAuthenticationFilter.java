@@ -1,11 +1,12 @@
 package com.byakko.service.authentication.application.security;
 
+import com.byakko.common.utils.JwtPayload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -44,14 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
 
             if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
-                String username = jwtProvider.getUsernameFromJwt(jwt);
+                JwtPayload payload = jwtProvider.getPayload(jwt);
 
-                // Nếu người dùng hợp lệ thì set thông tin security context cho spring security
+                // Set thông tin security context cho spring security
                 UsernamePasswordAuthenticationToken authenticationToken
                         = new UsernamePasswordAuthenticationToken(
-                        username,
+                        payload.getUserId(),
                         null,
-                        userDetails.getAuthorities()
+                        payload.getAuthorities().stream().map(authority -> new SimpleGrantedAuthority(authority.getName())).toList()
                 );
                 authenticationToken.setDetails(
                         new WebAuthenticationDetailsSource()
