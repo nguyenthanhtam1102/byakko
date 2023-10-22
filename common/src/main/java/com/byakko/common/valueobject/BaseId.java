@@ -3,6 +3,7 @@ package com.byakko.common.valueobject;
 import java.util.Objects;
 
 public abstract class BaseId<T> {
+
     protected T value;
 
     protected BaseId(T value) {
@@ -25,4 +26,6 @@ public abstract class BaseId<T> {
     public int hashCode() {
         return Objects.hash(value);
     }
+
 }
+

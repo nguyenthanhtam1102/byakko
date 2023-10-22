@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/DigitalSignatureKeyGenerater" />
             <option value="$PROJECT_DIR$/authentication-service" />
             <option value="$PROJECT_DIR$/common" />
           </set>
