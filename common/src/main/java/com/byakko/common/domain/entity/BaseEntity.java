@@ -36,3 +36,4 @@ public abstract class BaseEntity<ID extends BaseId> {
         return Objects.hash(id);
     }
 }
+
