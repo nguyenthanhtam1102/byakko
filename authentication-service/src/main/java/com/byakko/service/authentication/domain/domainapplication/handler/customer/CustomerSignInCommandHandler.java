@@ -1,12 +1,17 @@
 package com.byakko.service.authentication.domain.domainapplication.handler.customer;
 
+import com.byakko.common.DomainConstants;
 import com.byakko.service.authentication.application.security.JwtProvider;
 import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignInCommand;
 import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerSignInResponse;
 import com.byakko.service.authentication.domain.domainapplication.port.output.repository.CustomerRepository;
 import com.byakko.service.authentication.domain.domaincore.entity.Customer;
+import com.byakko.service.authentication.domain.domaincore.exception.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Component
 public class CustomerSignInCommandHandler {
@@ -30,13 +35,13 @@ public class CustomerSignInCommandHandler {
         Customer customer = customerCommandHandlerHelper.findCustomerByPhoneOrEmail(command.getPhoneOrEmail(), command.getPhoneOrEmail());
 
         if(!passwordEncoder.matches(command.getPassword(), customer.getPassword()))
-            throw new RuntimeException("Password not correct");
+            throw new AuthenticationException("Password not correct");
 
         return CustomerSignInResponse.Builder.builder()
-                .idToken(jwtProvider.generateToken())
+                .idToken(jwtProvider.generateToken(customer))
                 .refreshToken("")
-                .expiresTime()
-                .userId(customer.getId())
+                .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusMinutes(5).toEpochSecond())
+                .userId(customer.getId().getValue())
                 .build();
     }
 

@@ -1,6 +1,5 @@
 package com.byakko.service.authentication.domain.domainapplication.handler.role;
 
-import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.service.authentication.domain.domainapplication.dto.role.RoleResponse;
 import com.byakko.service.authentication.domain.domainapplication.dto.role.UpdateRoleCommand;
 import com.byakko.service.authentication.domain.domainapplication.mapper.RoleMapper;

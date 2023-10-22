@@ -18,7 +18,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 
     @Override
     public Optional<Employee> findByEmployeeId(String id) {
-        return employeeJpaRepository.findByEmployeeId(id).map(EmployeeMapper::toEmployee);
+        return employeeJpaRepository.findById(id).map(EmployeeMapper::toEmployee);
     }
 
     @Override

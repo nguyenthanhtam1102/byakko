@@ -8,6 +8,13 @@ public abstract class BaseEntity<ID extends BaseId> {
 
     private ID id;
 
+    public BaseEntity() {
+    }
+
+    public BaseEntity(ID id) {
+        this.id = id;
+    }
+
     public ID getId() {
         return id;
     }

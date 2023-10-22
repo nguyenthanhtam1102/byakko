@@ -1,34 +1,37 @@
 package com.byakko.service.authentication.domain.domainapplication.dto.customer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotBlank;
 
 public class CustomerResetPasswordCommand {
 
-    @NotBlank(message = "phone or email must be not blank")
-    private String phoneOrEmail;
+    @NotBlank(message = "token must be not blank")
+    @JsonProperty("token")
+    private String token;
 
-    @NotBlank(message = "code must be not blank")
-    private String code;
-
-    @NotBlank(message = "newPassword must be not blank")
+    @NotBlank(message = "new_password must be not blank")
+    @JsonProperty("new_password")
     private String newPassword;
 
-    public CustomerResetPasswordCommand(String phoneOrEmail, String code, String newPassword) {
-        this.phoneOrEmail = phoneOrEmail;
-        this.code = code;
+    public CustomerResetPasswordCommand(String token, String newPassword) {
+        this.token = token;
         this.newPassword = newPassword;
     }
 
-    public String getPhoneOrEmail() {
-        return phoneOrEmail;
+    public String getToken() {
+        return token;
     }
 
-    public String getCode() {
-        return code;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getNewPassword() {
         return newPassword;
     }
 
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 }

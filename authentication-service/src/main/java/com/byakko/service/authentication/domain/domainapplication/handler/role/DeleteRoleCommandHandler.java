@@ -1,6 +1,5 @@
 package com.byakko.service.authentication.domain.domainapplication.handler.role;
 
-import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.service.authentication.domain.domainapplication.dto.role.DeleteRoleCommand;
 import com.byakko.service.authentication.domain.domainapplication.port.output.repository.RoleRepository;
 import com.byakko.service.authentication.domain.domaincore.entity.Role;

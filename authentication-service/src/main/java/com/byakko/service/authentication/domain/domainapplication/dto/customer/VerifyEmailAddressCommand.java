@@ -4,17 +4,14 @@ import javax.validation.constraints.NotBlank;
 
 public class VerifyEmailAddressCommand {
 
-    @NotBlank(message = "id must be not blank")
-    private String id;
-
     @NotBlank(message = "code must be not blank")
-    private String code;
+    private final String token;
 
-    public String getId() {
-        return id;
+    public VerifyEmailAddressCommand(String token) {
+        this.token = token;
     }
 
-    public String getCode() {
-        return code;
+    public String getToken() {
+        return token;
     }
 }

@@ -1,6 +1,6 @@
 package com.byakko.service.authentication.domain.domainapplication.port.input.service.impl;
 
-import com.byakko.service.authentication.domain.VerifyEmailAddressCommandHandler;
+import com.byakko.service.authentication.domain.domainapplication.handler.customer.VerifyEmailAddressCommandHandler;
 import com.byakko.service.authentication.domain.domainapplication.dto.customer.*;
 import com.byakko.service.authentication.domain.domainapplication.handler.customer.*;
 import com.byakko.service.authentication.domain.domainapplication.port.input.service.CustomerService;
@@ -11,22 +11,27 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerSignUpCommandHandler customerSignUpCommandHandler;
     private final CustomerSignInCommandHandler customerSignInCommandHandler;
+    private final CustomerSignOutCommandHandler customerSignOutCommandHandler;
     private final CustomerChangePasswordCommandHandler customerChangePasswordCommandHandler;
     private final SendResetPasswordMailCommandHandler sendResetPasswordMailCommandHandler;
+    private final CustomerResetPasswordCommandHandler customerResetPasswordCommandHandler;
     private final DeleteCustomerCommandHandler deleteCustomerCommandHandler;
     private final ResendEmailAddressVerificationMailCommandHandler resendEmailAddressVerificationMailCommandHandler;
     private final VerifyEmailAddressCommandHandler verifyEmailAddressCommandHandler;
 
     public CustomerServiceImpl(CustomerSignUpCommandHandler customerSignUpCommandHandler,
                                CustomerSignInCommandHandler customerSignInCommandHandler,
-                               CustomerChangePasswordCommandHandler customerChangePasswordCommandHandler,
+                               CustomerSignOutCommandHandler customerSignOutCommandHandler, CustomerChangePasswordCommandHandler customerChangePasswordCommandHandler,
                                SendResetPasswordMailCommandHandler sendResetPasswordMailCommandHandler,
+                               CustomerResetPasswordCommandHandler customerResetPasswordCommandHandler,
                                DeleteCustomerCommandHandler deleteCustomerCommandHandler,
                                ResendEmailAddressVerificationMailCommandHandler resendEmailAddressVerificationMailCommandHandler, VerifyEmailAddressCommandHandler verifyEmailAddressCommandHandler) {
         this.customerSignUpCommandHandler = customerSignUpCommandHandler;
         this.customerSignInCommandHandler = customerSignInCommandHandler;
+        this.customerSignOutCommandHandler = customerSignOutCommandHandler;
         this.customerChangePasswordCommandHandler = customerChangePasswordCommandHandler;
         this.sendResetPasswordMailCommandHandler = sendResetPasswordMailCommandHandler;
+        this.customerResetPasswordCommandHandler = customerResetPasswordCommandHandler;
         this.deleteCustomerCommandHandler = deleteCustomerCommandHandler;
         this.resendEmailAddressVerificationMailCommandHandler = resendEmailAddressVerificationMailCommandHandler;
         this.verifyEmailAddressCommandHandler = verifyEmailAddressCommandHandler;
@@ -43,6 +48,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public void signOut(CustomerSignOutCommand command) {
+        customerSignOutCommandHandler.handler(command);
+    }
+
+    @Override
     public void changePassword(CustomerChangePasswordCommand command) {
         customerChangePasswordCommandHandler.changePassword(command);
     }
@@ -54,7 +64,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void resetPassword(CustomerResetPasswordCommand command) {
-
+        customerResetPasswordCommandHandler.handler(command);
     }
 
     @Override

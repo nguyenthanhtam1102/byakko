@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.application.security;
+package com.byakko.common.utils;
 
 import java.security.KeyFactory;
 import java.security.PrivateKey;

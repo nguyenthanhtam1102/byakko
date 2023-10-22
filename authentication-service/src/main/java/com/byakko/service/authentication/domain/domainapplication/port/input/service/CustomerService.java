@@ -12,6 +12,7 @@ public interface CustomerService {
 
     CustomerSignUpResponse signUp(@Valid CustomerSignUpCommand command);
     CustomerSignInResponse signIn(@Valid CustomerSignInCommand command);
+    void signOut(@Valid CustomerSignOutCommand command);
     void changePassword(@Valid CustomerChangePasswordCommand command);
     void sendResetPasswordMail(@Valid SendResetPasswordMailCommand command);
     void resetPassword(@Valid CustomerResetPasswordCommand command);

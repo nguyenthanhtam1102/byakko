@@ -1,51 +1,54 @@
 package com.byakko.service.authentication.domain.domainapplication.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MailTemplate {
 
-    public static Mail getEmailAddressVerificationMailTemplate(String mailTo) {
+    @Value("${application.name}")
+    private String APP_NAME;
+
+    public Mail getEmailAddressVerificationMailTemplate(String mailTo, String displayName, String token) {
         return Mail.Builder.builder()
-                .from("")
-                .to("")
-                .subject("Verify your email for %APP_NAME%")
-                .body("Hello %DISPLAY_NAME%,\n" +
+                .to(mailTo)
+                .subject(String.format("Verify your email for %s", APP_NAME))
+                .body(String.format("Hello %s,\n" +
                         "\n" +
                         "Follow this link to verify your email address.\n" +
                         "\n" +
-                        "https://commerce-6a53b.firebaseapp.com/__/auth/action?mode=action&oobCode=code\n" +
+                        "%s\n" +
                         "\n" +
                         "If you didn’t ask to verify this address, you can ignore this email.\n" +
                         "\n" +
                         "Thanks,\n" +
                         "\n" +
-                        "Your %APP_NAME% team")
+                        "Your %s team",
+                        displayName,
+                        String.format("http://localhost:3000/verifyemailaddress?token=%s", token),
+                        APP_NAME))
                 .build();
     }
 
-    public static Mail getPasswordResetMailTemplate(String mailTo) {
+    public Mail getPasswordResetMailTemplate(String mailTo, String token) {
         return Mail.Builder.builder()
-                .from("")
-                .to("")
-                .subject("Reset your password for %APP_NAME%")
-                .body("Hello,\n" +
+                .to(mailTo)
+                .subject(String.format("Reset your password for %s", "APP NAME"))
+                .body(String.format("Hello,\n" +
                         "\n" +
-                        "Follow this link to reset your %APP_NAME% password for your %EMAIL% account.\n" +
+                        "Follow this link to reset your %s password for your %s account.\n" +
                         "\n" +
-                        "https://commerce-6a53b.firebaseapp.com/__/auth/action?mode=action&oobCode=code\n" +
+                        "%s\n" +
                         "\n" +
                         "If you didn’t ask to reset your password, you can ignore this email.\n" +
                         "\n" +
                         "Thanks,\n" +
                         "\n" +
-                        "Your %APP_NAME% team")
-                .build();
-    }
-
-    public static Mail getVerificationMailTemplate(String mailTo) {
-        return Mail.Builder.builder()
-                .from("")
-                .to("")
-                .subject("Verification code for %APP_NAME%")
-                .body("%LOGIN_CODE% is your verification code for %APP_NAME%.")
+                        "Your %s team",
+                        APP_NAME,
+                        mailTo,
+                        String.format("http://localhost:3000/resetpassword?token=%s", token),
+                        APP_NAME))
                 .build();
     }
 

@@ -2,14 +2,10 @@ package com.byakko.service.authentication.domain.domainapplication.utils;
 
 public class Mail {
 
-    private String from;
     private String to;
     private String subject;
     private String body;
 
-    public String getFrom() {
-        return from;
-    }
 
     public String getTo() {
         return to;
@@ -24,7 +20,6 @@ public class Mail {
     }
 
     public static final class Builder {
-        private String from;
         private String to;
         private String subject;
         private String body;
@@ -34,11 +29,6 @@ public class Mail {
 
         public static Builder builder() {
             return new Builder();
-        }
-
-        public Builder from(String from) {
-            this.from = from;
-            return this;
         }
 
         public Builder to(String to) {
@@ -58,7 +48,6 @@ public class Mail {
 
         public Mail build() {
             Mail mail = new Mail();
-            mail.from = this.from;
             mail.body = this.body;
             mail.subject = this.subject;
             mail.to = this.to;

@@ -1,5 +1,7 @@
 package com.byakko.service.authentication.domain.domainapplication.handler.customer;
 
+import com.byakko.common.domain.domainapplication.MessageManager;
+import com.byakko.common.domain.entity.Message;
 import com.byakko.service.authentication.domain.domainapplication.dto.customer.CustomerChangePasswordCommand;
 import com.byakko.service.authentication.domain.domainapplication.port.output.repository.CustomerRepository;
 import com.byakko.service.authentication.domain.domainapplication.utils.PasswordUtils;
@@ -12,20 +14,23 @@ public class CustomerChangePasswordCommandHandler {
     private final CustomerCommandHandlerHelper customerCommandHandlerHelper;
     private final CustomerRepository customerRepository;
     private final PasswordUtils passwordUtils;
+    private final MessageManager messageManager;
 
     public CustomerChangePasswordCommandHandler(CustomerCommandHandlerHelper customerCommandHandlerHelper,
                                                 CustomerRepository customerRepository,
-                                                PasswordUtils passwordUtils) {
+                                                PasswordUtils passwordUtils,
+                                                MessageManager messageManager) {
         this.customerCommandHandlerHelper = customerCommandHandlerHelper;
         this.customerRepository = customerRepository;
         this.passwordUtils = passwordUtils;
+        this.messageManager = messageManager;
     }
 
     public void changePassword(CustomerChangePasswordCommand command) {
         Customer customer = customerCommandHandlerHelper.findCustomerById(command.getId());
 
         if(!passwordUtils.matches(command.getCurrentPassword(), customer.getPassword()))
-            throw new RuntimeException("Password not correct");
+            throw new RuntimeException("Mật khẩu hiện tại không chính xác");
 
         customer.setPassword(passwordUtils.encode(command.getNewPassword()));
 

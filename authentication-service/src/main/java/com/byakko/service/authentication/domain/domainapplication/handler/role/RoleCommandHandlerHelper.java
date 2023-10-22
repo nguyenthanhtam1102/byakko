@@ -8,14 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoleCommandHandlerHelper {
 
-    private final RoleCommandHandlerHelper roleCommandHandlerHelper;
+    private final RoleRepository roleRepository;
 
-    public RoleCommandHandlerHelper(RoleCommandHandlerHelper roleCommandHandlerHelper) {
-        this.roleCommandHandlerHelper = roleCommandHandlerHelper;
+    public RoleCommandHandlerHelper(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
 
     public Role findRoleById(String id) {
-        return roleCommandHandlerHelper.findRoleById(id);
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Role %s not found", id)));
     }
 
 }

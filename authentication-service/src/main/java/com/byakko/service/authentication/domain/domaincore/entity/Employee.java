@@ -1,10 +1,9 @@
 package com.byakko.service.authentication.domain.domaincore.entity;
 
 import com.byakko.common.DomainConstants;
-import com.byakko.common.domain.entity.BaseEntity;
 import com.byakko.common.domain.exception.ValidationException;
-import com.byakko.service.authentication.domain.domaincore.valueobject.EmployeeId;
 import com.byakko.service.authentication.domain.domaincore.valueobject.EmployeeStatus;
+import com.byakko.service.authentication.domain.domaincore.valueobject.UserId;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -94,48 +93,62 @@ public class Employee extends User {
         this.updatedAt = updatedAt;
     }
 
+    public Role getRole() {
+        return role;
+    }
 
-    public static final class EmployeeBuilder {
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+
+    public static final class Builder {
         private String employeeId;
         private String password;
         private EmployeeStatus status;
         private ZonedDateTime createdAt;
         private ZonedDateTime updatedAt;
+        private Role role;
         private UserId id;
 
-        private EmployeeBuilder() {
+        private Builder() {
         }
 
-        public static EmployeeBuilder builder() {
-            return new EmployeeBuilder();
+        public static Builder builder() {
+            return new Builder();
         }
 
-        public EmployeeBuilder employeeId(String employeeId) {
+        public Builder employeeId(String employeeId) {
             this.employeeId = employeeId;
             return this;
         }
 
-        public EmployeeBuilder password(String password) {
+        public Builder password(String password) {
             this.password = password;
             return this;
         }
 
-        public EmployeeBuilder status(EmployeeStatus status) {
+        public Builder status(EmployeeStatus status) {
             this.status = status;
             return this;
         }
 
-        public EmployeeBuilder createdAt(ZonedDateTime createdAt) {
+        public Builder createdAt(ZonedDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        public EmployeeBuilder updatedAt(ZonedDateTime updatedAt) {
+        public Builder updatedAt(ZonedDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        public EmployeeBuilder id(UserId id) {
+        public Builder role(Role role) {
+            this.role = role;
+            return this;
+        }
+
+        public Builder id(UserId id) {
             this.id = id;
             return this;
         }
@@ -147,6 +160,7 @@ public class Employee extends User {
             employee.setStatus(status);
             employee.setCreatedAt(createdAt);
             employee.setUpdatedAt(updatedAt);
+            employee.setRole(role);
             employee.setId(id);
             return employee;
         }

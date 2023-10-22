@@ -2,7 +2,10 @@ package com.byakko.common.domain.valueobject;
 
 public class Authority {
 
-    private final String name;
+    private String name;
+
+    public Authority() {
+    }
 
     public Authority(String name) {
         this.name = name;
@@ -10,5 +13,12 @@ public class Authority {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

@@ -19,7 +19,7 @@ public class ListAllRoleCommandHandler {
     }
 
     public ListAllRoleResponse listAll(ListAllRoleCommand command) {
-        Page<Role> rolePage = roleRepository.findAll(command.getPage(), command.getLimit());
+        Page<Role> rolePage = roleRepository.findAll(command.getPage(), command.getLimit(), command.getQuery());
         return ListAllRoleResponse.builder()
                 .data(rolePage.get().map(RoleMapper::toRoleResponse).toList())
                 .pagination(ListAllResponse.Pagination.toPagination(rolePage))

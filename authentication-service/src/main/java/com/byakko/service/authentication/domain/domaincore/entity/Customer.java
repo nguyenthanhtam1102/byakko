@@ -5,6 +5,7 @@ import com.byakko.common.domain.exception.ValidationException;
 import com.byakko.common.domain.valueobject.Authority;
 import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerStatus;
 import com.byakko.common.domain.valueobject.SystemRole;
+import com.byakko.service.authentication.domain.domaincore.valueobject.UserId;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -67,10 +68,11 @@ public class Customer extends User {
     }
 
     private void validatePassword() {
+        System.out.println(password);
         if(this.password == null || this.password.isBlank())
             throw new ValidationException(Map.of("password", "password must be not blank"));
-        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
-            throw new ValidationException(Map.of("password", "password is not in the correct format"));
+//        if(!this.password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"))
+//            throw new ValidationException(Map.of("password", "password phải gồm tối thiểu 8 kí tự, bao gồm ít nhất 1 chữ cái, ít nhất 1 chữ cái viết hoa, ít nhất 1 chữ số"));
     }
 
     private void validateVerified() {

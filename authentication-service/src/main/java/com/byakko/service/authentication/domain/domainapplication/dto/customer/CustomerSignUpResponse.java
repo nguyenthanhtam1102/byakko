@@ -1,5 +1,7 @@
 package com.byakko.service.authentication.domain.domainapplication.dto.customer;
 
+import lombok.Getter;
+
 public class CustomerSignUpResponse {
 
     private String userId;
@@ -7,6 +9,21 @@ public class CustomerSignUpResponse {
     private String email;
     private Long createdAt;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
+    }
 
     public static final class Builder {
         private String userId;

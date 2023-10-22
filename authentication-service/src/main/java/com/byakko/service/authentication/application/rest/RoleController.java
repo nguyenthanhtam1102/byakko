@@ -11,31 +11,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("")
+@RequestMapping("/roles")
 @RequiredArgsConstructor
 public class RoleController {
 
     private final RoleService roleService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> listAllRoles(@ModelAttribute ListAllRoleCommand command) {
         return ResponseEntity.ok(roleService.listAllRoles(command));
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> createRole(@RequestBody CreateRoleCommand command) {
         return ResponseEntity.status(HttpStatus.CREATED).body(roleService.createRole(command));
     }
 
-    @PutMapping("")
-    public ResponseEntity<?> updateRole(@PathVariable("") Long id, @RequestBody UpdateRoleCommand command) {
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRole(@PathVariable("id") String id, @RequestBody UpdateRoleCommand command) {
         command.setId(id);
         return ResponseEntity.ok(roleService.updateRole(command));
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteRole(@PathVariable("") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRole(@PathVariable("id") String id) {
         roleService.deleteRole(new DeleteRoleCommand(id));
         return ResponseEntity.ok("Delete success");
     }

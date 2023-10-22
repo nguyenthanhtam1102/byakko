@@ -4,11 +4,11 @@ import java.util.List;
 
 public class ErrorDTO {
 
-    private String code;
+    private Integer code;
     private String message;
     private List<ErrorDetailDTO> errors;
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
@@ -21,7 +21,7 @@ public class ErrorDTO {
     }
 
     public static final class Builder {
-        private String code;
+        private Integer code;
         private String message;
         private List<ErrorDetailDTO> errors;
 
@@ -32,7 +32,7 @@ public class ErrorDTO {
             return new Builder();
         }
 
-        public Builder code(String code) {
+        public Builder code(Integer code) {
             this.code = code;
             return this;
         }

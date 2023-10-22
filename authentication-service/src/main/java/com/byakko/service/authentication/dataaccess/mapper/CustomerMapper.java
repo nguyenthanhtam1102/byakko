@@ -2,7 +2,7 @@ package com.byakko.service.authentication.dataaccess.mapper;
 
 import com.byakko.service.authentication.dataaccess.entity.CustomerEntity;
 import com.byakko.service.authentication.domain.domaincore.entity.Customer;
-import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerId;
+import com.byakko.service.authentication.domain.domaincore.valueobject.UserId;
 
 public class CustomerMapper {
 
@@ -23,7 +23,7 @@ public class CustomerMapper {
 
     public static Customer toCustomer(CustomerEntity customerEntity) {
         return Customer.CustomerBuilder.builder()
-                .id(new CustomerId(customerEntity.getId()))
+                .id(new UserId(customerEntity.getId()))
                 .firstName(customerEntity.getFirstName())
                 .lastName(customerEntity.getLastName())
                 .phone(customerEntity.getPhone())

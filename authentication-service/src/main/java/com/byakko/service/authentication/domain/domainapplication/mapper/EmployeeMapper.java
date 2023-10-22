@@ -7,7 +7,7 @@ import com.byakko.service.authentication.domain.domaincore.entity.Employee;
 public class EmployeeMapper {
 
     public static Employee toEmployee(EmployeeSignUpCommand command) {
-        return Employee.EmployeeBuilder.builder()
+        return Employee.Builder.builder()
                 .employeeId(command.getEmployeeId())
                 .password(command.getPassword())
                 .build();

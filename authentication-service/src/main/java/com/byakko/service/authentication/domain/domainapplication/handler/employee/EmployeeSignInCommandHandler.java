@@ -1,6 +1,6 @@
 package com.byakko.service.authentication.domain.domainapplication.handler.employee;
 
-import com.byakko.common.domain.exception.NotFoundException;
+import com.byakko.common.DomainConstants;
 import com.byakko.service.authentication.application.security.JwtProvider;
 import com.byakko.service.authentication.domain.domainapplication.dto.employee.EmployeeSignInCommand;
 import com.byakko.service.authentication.domain.domainapplication.dto.employee.EmployeeSignInResponse;
@@ -8,6 +8,9 @@ import com.byakko.service.authentication.domain.domainapplication.port.output.re
 import com.byakko.service.authentication.domain.domaincore.entity.Employee;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Component
 public class EmployeeSignInCommandHandler {
@@ -34,10 +37,10 @@ public class EmployeeSignInCommandHandler {
             throw new RuntimeException("Password not correct");
 
         return EmployeeSignInResponse.Builder.builder()
-                .idToken(jwtProvider.generateToken())
-                .refreshToken()
-                .expiresTime()
-                .userId()
+                .idToken(jwtProvider.generateToken(employee))
+                .refreshToken("")
+                .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusMinutes(5).toEpochSecond())
+                .userId(employee.getId().getValue())
                 .build();
     }
 

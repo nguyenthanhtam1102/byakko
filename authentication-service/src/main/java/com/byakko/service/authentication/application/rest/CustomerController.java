@@ -7,8 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("")
+@RequestMapping("/customers")
 @RequiredArgsConstructor
 public class CustomerController {
 
@@ -16,8 +17,7 @@ public class CustomerController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody CustomerSignUpCommand command) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(customerService.signUp(command));
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.signUp(command));
     }
 
     @PostMapping("/signin")
@@ -25,38 +25,47 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.signIn(command));
     }
 
-    @PutMapping("")
-    public ResponseEntity<?> sendResetPasswordMail(@RequestBody SendResetPasswordMailCommand command) {
+    @PostMapping("/{userId}/signout")
+    public ResponseEntity<?> signOut(@PathVariable("userId") String userId) {
+        customerService.signOut(new CustomerSignOutCommand(userId));
+        return ResponseEntity.ok("singout success");
+    }
+
+    @GetMapping("/sendResetPasswordMail")
+    public ResponseEntity<?> sendResetPasswordMail(@ModelAttribute SendResetPasswordMailCommand command) {
         customerService.sendResetPasswordMail(command);
         return ResponseEntity.ok("Email send success");
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> resetPassword(@ModelAttribute CustomerResetPasswordCommand command) {
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody CustomerResetPasswordCommand command) {
+        System.out.println(token);
+        command.setToken(token);
         customerService.resetPassword(command);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Reset password success");
     }
 
-    @PutMapping("")
-    public ResponseEntity<?> changePassword(@RequestBody CustomerChangePasswordCommand command) {
+    @PutMapping("/{id}/changepassword")
+    public ResponseEntity<?> changePassword(@PathVariable("id") String id, @RequestBody CustomerChangePasswordCommand command) {
+        command.setId(id);
         customerService.changePassword(command);
         return ResponseEntity.ok("Change password success");
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> resendVerifyMail(@PathVariable String id) {
+    @GetMapping("/{id}/resendVerifyMail")
+    public ResponseEntity<?> resendVerifyMail(@PathVariable("id") String id) {
         customerService.resendEmailAddressVerificationMail(new ResendEmailAddressVerificationMailCommand(id));
         return ResponseEntity.ok("Email address verification mail send success");
     }
 
-    @GetMapping("")
-    public ResponseEntity<?> verifyEmailAddress(@ModelAttribute VerifyEmailAddressCommand command) {
-        customerService.verifyEmailAddress(command);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/verifyemailaddress")
+    public ResponseEntity<?> verifyEmailAddress(@RequestParam("token") String token) {
+        customerService.verifyEmailAddress(new VerifyEmailAddressCommand(token));
+        return ResponseEntity.ok("Verify email address success");
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteCustomer(@PathVariable("") String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable("id") String id) {
         customerService.deleteCustomer(new DeleteCustomerCommand(id));
         return ResponseEntity.ok("Delete success");
     }

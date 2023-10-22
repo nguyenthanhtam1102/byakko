@@ -17,7 +17,6 @@ public class MailSenderHelperImpl implements MailSenderHelper {
     public void send(Mail mail) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(mail.getFrom());
             message.setTo(mail.getTo());
             message.setSubject(mail.getSubject());
             message.setText(mail.getBody());
