@@ -1,6 +1,6 @@
-package com.byakko.service.authentication.dataacess.entity;
+package com.byakko.service.authentication.dataaccess.entity;
 
-import com.byakko.service.authentication.dataacess.entity.ids.MenusToPermissionsId;
+import com.byakko.service.authentication.dataaccess.entity.ids.MenusToPermissionsId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

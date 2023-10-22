@@ -1,6 +1,6 @@
-package com.byakko.service.authentication.dataacess.repository;
+package com.byakko.service.authentication.dataaccess.repository;
 
-import com.byakko.service.authentication.dataacess.entity.Page;
+import com.byakko.service.authentication.dataaccess.entity.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

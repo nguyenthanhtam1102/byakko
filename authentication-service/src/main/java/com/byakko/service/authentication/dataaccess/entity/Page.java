@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.dataacess.entity;
+package com.byakko.service.authentication.dataaccess.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -15,16 +15,21 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "permission_groups")
-public class PermissionGroups {
+@Table(name = "page")
+public class Page {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "permission_groups_id")
+    @Column(name = "page_id")
     private int id;
     @NotNull
-    @Column(name = "permission_groups_name")
+    @Column(name = "page_name")
     private String name;
-    @OneToMany(mappedBy = "permissionGroups")
+    @Column(name = "description")
+    private String description;
+    @NotNull
+    @Column(name = "path")
+    private String path;
+    @OneToMany(mappedBy = "page")
     @JsonIgnore
-    private Set<Permissions> permissionsSet;
+    private Set<MenuItem> menuItemSet;
 }

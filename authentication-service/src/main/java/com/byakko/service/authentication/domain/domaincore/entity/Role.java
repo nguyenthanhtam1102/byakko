@@ -12,6 +12,7 @@ import java.util.Map;
 public class Role extends BaseEntity<RoleId> {
 
     private String name;
+    private Menu menu;
 
     public void initialize() {
         setId(new RoleId(String.valueOf(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())));
@@ -34,9 +35,18 @@ public class Role extends BaseEntity<RoleId> {
         this.name = name;
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
 
     public static final class Builder {
         private String name;
+        private Menu menu;
         private RoleId id;
 
         private Builder() {
@@ -51,6 +61,11 @@ public class Role extends BaseEntity<RoleId> {
             return this;
         }
 
+        public Builder menu(Menu menu) {
+            this.menu = menu;
+            return this;
+        }
+
         public Builder id(RoleId id) {
             this.id = id;
             return this;
@@ -59,6 +74,7 @@ public class Role extends BaseEntity<RoleId> {
         public Role build() {
             Role role = new Role();
             role.setName(name);
+            role.setMenu(menu);
             role.setId(id);
             return role;
         }

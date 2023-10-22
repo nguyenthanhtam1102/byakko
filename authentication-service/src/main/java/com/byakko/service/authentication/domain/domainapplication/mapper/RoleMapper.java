@@ -16,6 +16,7 @@ public class RoleMapper {
         return RoleResponse.Builder.builder()
                 .id(role.getId().getValue().toString())
                 .name(role.getName())
+                .menuId(role.getMenu() != null ? role.getMenu().getId().getValue().toString() : null)
                 .build();
     }
 

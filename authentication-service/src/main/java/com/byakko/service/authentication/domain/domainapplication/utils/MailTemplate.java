@@ -33,7 +33,7 @@ public class MailTemplate {
     public Mail getPasswordResetMailTemplate(String mailTo, String token) {
         return Mail.Builder.builder()
                 .to(mailTo)
-                .subject(String.format("Reset your password for %s", "APP NAME"))
+                .subject(String.format("Reset your password for %s", APP_NAME))
                 .body(String.format("Hello,\n" +
                         "\n" +
                         "Follow this link to reset your %s password for your %s account.\n" +

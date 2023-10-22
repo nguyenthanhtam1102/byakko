@@ -7,6 +7,7 @@ import com.byakko.service.authentication.domain.domainapplication.dto.customer.C
 import com.byakko.service.authentication.domain.domainapplication.port.output.repository.CustomerRepository;
 import com.byakko.service.authentication.domain.domaincore.entity.Customer;
 import com.byakko.service.authentication.domain.domaincore.exception.AuthenticationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,9 @@ public class CustomerSignInCommandHandler {
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
+
+    @Value("${jwt.expiration-time}")
+    private long TOKEN_EXPIRATION_TIME;
 
     public CustomerSignInCommandHandler(CustomerCommandHandlerHelper customerCommandHandlerHelper,
                                         CustomerRepository customerRepository,
@@ -40,7 +44,7 @@ public class CustomerSignInCommandHandler {
         return CustomerSignInResponse.Builder.builder()
                 .idToken(jwtProvider.generateToken(customer))
                 .refreshToken("")
-                .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusMinutes(5).toEpochSecond())
+                .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusSeconds(TOKEN_EXPIRATION_TIME).toEpochSecond())
                 .userId(customer.getId().getValue())
                 .build();
     }

@@ -12,5 +12,6 @@ public interface TokenRepository {
     int countTokenByUserId(String userId);
     Token save(Token token);
     void delete(Token token);
+    void deleteAll();
 
 }

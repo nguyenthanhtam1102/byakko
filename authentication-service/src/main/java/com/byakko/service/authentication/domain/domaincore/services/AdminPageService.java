@@ -4,6 +4,7 @@ import com.byakko.common.application.dto.BaseResponse;
 import com.byakko.service.authentication.domain.domainapplication.dto.request.CreateMenuToPermissionGroupsRequest;
 import com.byakko.service.authentication.domain.domainapplication.dto.request.DeleteMenuRequest;
 import com.byakko.service.authentication.domain.domainapplication.dto.request.MenuItemRequest;
+import org.springframework.stereotype.Component;
 
 import java.security.NoSuchAlgorithmException;
 

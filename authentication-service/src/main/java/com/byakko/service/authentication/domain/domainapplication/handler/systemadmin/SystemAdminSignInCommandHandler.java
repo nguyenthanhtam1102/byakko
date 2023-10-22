@@ -9,6 +9,7 @@ import com.byakko.service.authentication.domain.domainapplication.utils.Password
 import com.byakko.service.authentication.domain.domainapplication.SystemAdminManager;
 import com.byakko.service.authentication.domain.domaincore.entity.SystemAdmin;
 import com.byakko.service.authentication.domain.domaincore.exception.AuthenticationException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
@@ -17,11 +18,12 @@ import java.time.ZonedDateTime;
 @Component
 public class SystemAdminSignInCommandHandler {
 
-    private final PasswordUtils passwordUtils;
     private final JwtProvider jwtProvider;
 
-    public SystemAdminSignInCommandHandler(PasswordUtils passwordUtils, JwtProvider jwtProvider) {
-        this.passwordUtils = passwordUtils;
+    @Value("${jwt.expiration-time}")
+    private long TOKEN_EXPIRATION_TIME;
+
+    public SystemAdminSignInCommandHandler(JwtProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
     }
 
@@ -35,7 +37,7 @@ public class SystemAdminSignInCommandHandler {
         return SystemAdminSignInResponse.Builder.builder()
                 .idToken(jwtProvider.generateToken(systemAdmin))
                 .refreshToken("")
-                .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusMinutes(5).toEpochSecond())
+                .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusSeconds(TOKEN_EXPIRATION_TIME).toEpochSecond())
                 .userId(systemAdmin.getId().getValue())
                 .build();
     }

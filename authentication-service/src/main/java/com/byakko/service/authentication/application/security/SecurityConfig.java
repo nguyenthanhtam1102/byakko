@@ -36,11 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public JwtAuthenticationFilter getJwtAuthenticationFilter() {
-//        return new JwtAuthenticationFilter();
-//    }
-
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -66,16 +61,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customers/resetPassword").permitAll()
                 .antMatchers("/customers/{id}").hasAnyAuthority(SystemRole.CUSTOMER.getName())
 
-//                .antMatchers("/roles").hasAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
                 .antMatchers("/roles/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
 
                 .antMatchers("/sa/signin").permitAll()
                 .antMatchers("/shopowner/signin").permitAll()
                 .antMatchers("/shopowner").hasAuthority(SystemRole.SYSTEM_ADMIN.getName())
 
-//                .antMatchers(HttpMethod.GET, "/users", "/users/{id}").hasRole(SystemRole.CUSTOMER.getName())
-//                .antMatchers().hasRole(SystemRole.SYSTEM_ADMIN.getName())
-//                .antMatchers().hasRole(SystemPermission.CREATE_PRODUCT.getName())
+                .antMatchers("/employees/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+//                .antMatchers("/employees/{userId}/changepassword").hasAnyAuthority(SystemRole.)
+//                .antMatchers("/sendResetPasswordMail").hasAnyAuthority(SystemRole)
+//                .antMatchers("/resetPassword").hasAnyAuthority()
+                .antMatchers("/employees/signin").permitAll()
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

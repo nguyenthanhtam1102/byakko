@@ -1,6 +1,6 @@
 package com.byakko.service.authentication.domain.domainapplication.dto.response;
 
-import com.byakko.service.authentication.dataacess.entity.Permissions;
+import com.byakko.service.authentication.dataaccess.entity.Permissions;
 import lombok.Data;
 
 import java.util.List;

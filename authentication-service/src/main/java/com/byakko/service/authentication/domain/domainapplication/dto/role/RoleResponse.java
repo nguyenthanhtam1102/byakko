@@ -4,6 +4,7 @@ public class RoleResponse {
 
     private String id;
     private String name;
+    private String menuId;
 
     public String getId() {
         return id;
@@ -21,9 +22,19 @@ public class RoleResponse {
         this.name = name;
     }
 
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
+
+
     public static final class Builder {
         private String id;
         private String name;
+        private String menuId;
 
         private Builder() {
         }
@@ -42,10 +53,16 @@ public class RoleResponse {
             return this;
         }
 
+        public Builder menuId(String menuId) {
+            this.menuId = menuId;
+            return this;
+        }
+
         public RoleResponse build() {
             RoleResponse roleResponse = new RoleResponse();
-            roleResponse.id = this.id;
-            roleResponse.name = this.name;
+            roleResponse.setId(id);
+            roleResponse.setName(name);
+            roleResponse.setMenuId(menuId);
             return roleResponse;
         }
     }

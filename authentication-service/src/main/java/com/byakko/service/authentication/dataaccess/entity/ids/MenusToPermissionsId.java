@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.dataacess.entity.ids;
+package com.byakko.service.authentication.dataaccess.entity.ids;
 
 import java.io.Serializable;
 

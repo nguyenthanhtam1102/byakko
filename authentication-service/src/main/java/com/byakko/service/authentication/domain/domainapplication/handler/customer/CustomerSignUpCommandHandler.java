@@ -47,6 +47,7 @@ public class CustomerSignUpCommandHandler {
             throw new DomainException("Phone or email is exists");
 
         Customer customer = CustomerMapper.toCustomer(command);
+        customer.validatePassword(customer.getPassword());
         customer.setPassword(passwordEncoder.encode(command.getPassword()));
         customer.initialize();
         customer.validate();

@@ -1,7 +1,7 @@
 package com.byakko.service.authentication.domain.domainapplication.dto.response;
 
-import com.byakko.service.authentication.dataacess.entity.Menu;
-import com.byakko.service.authentication.dataacess.entity.Page;
+import com.byakko.service.authentication.dataaccess.entity.Menu;
+import com.byakko.service.authentication.dataaccess.entity.Page;
 import lombok.Data;
 
 @Data

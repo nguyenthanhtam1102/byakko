@@ -1,6 +1,6 @@
 package com.byakko.service.authentication.domain.domainapplication.dto.employee;
 
-public class EmployeeSignUpResponse {
+public class CreateEmployeeAccountResponse {
 
     private String userId;
     private String employeeId;
@@ -34,12 +34,12 @@ public class EmployeeSignUpResponse {
             return this;
         }
 
-        public EmployeeSignUpResponse build() {
-            EmployeeSignUpResponse employeeSignUpResponse = new EmployeeSignUpResponse();
-            employeeSignUpResponse.userId = this.userId;
-            employeeSignUpResponse.createdAt = this.createdAt;
-            employeeSignUpResponse.employeeId = this.employeeId;
-            return employeeSignUpResponse;
+        public CreateEmployeeAccountResponse build() {
+            CreateEmployeeAccountResponse createEmployeeAccountResponse = new CreateEmployeeAccountResponse();
+            createEmployeeAccountResponse.userId = this.userId;
+            createEmployeeAccountResponse.createdAt = this.createdAt;
+            createEmployeeAccountResponse.employeeId = this.employeeId;
+            return createEmployeeAccountResponse;
         }
     }
 }

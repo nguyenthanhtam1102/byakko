@@ -1,6 +1,5 @@
 package com.byakko.service.authentication.dataaccess.entity;
 
-import com.byakko.service.authentication.domain.domaincore.valueobject.EmployeeStatus;
 import com.byakko.service.authentication.domain.domaincore.valueobject.ShopOwnerStatus;
 import lombok.*;
 

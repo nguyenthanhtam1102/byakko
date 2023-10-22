@@ -1,4 +1,4 @@
-package com.byakko.service.authentication.dataacess.entity;
+package com.byakko.service.authentication.dataaccess.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

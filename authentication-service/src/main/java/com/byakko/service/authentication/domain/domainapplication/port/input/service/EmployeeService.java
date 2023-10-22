@@ -1,9 +1,6 @@
 package com.byakko.service.authentication.domain.domainapplication.port.input.service;
 
-import com.byakko.service.authentication.domain.domainapplication.dto.employee.EmployeeSignInCommand;
-import com.byakko.service.authentication.domain.domainapplication.dto.employee.EmployeeSignInResponse;
-import com.byakko.service.authentication.domain.domainapplication.dto.employee.EmployeeSignUpCommand;
-import com.byakko.service.authentication.domain.domainapplication.dto.employee.EmployeeSignUpResponse;
+import com.byakko.service.authentication.domain.domainapplication.dto.employee.*;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -13,7 +10,12 @@ import javax.validation.Valid;
 @Validated
 public interface EmployeeService {
 
-    EmployeeSignUpResponse signUp(@Valid EmployeeSignUpCommand command);
+    GetEmployeeAccountResponse getEmployeeAccount(@Valid GetEmployeeAccountCommand command);
+    CreateEmployeeAccountResponse createEmployeeAccount(@Valid CreateEmployeeAccountCommand command);
     EmployeeSignInResponse signIn(@Valid EmployeeSignInCommand command);
-
+//    void signOut(@Valid CustomerSignOutCommand command);
+    void changePassword(@Valid EmployeeChangePasswordCommand command);
+    void sendResetPasswordMail(@Valid EmployeeSendResetPasswordMailCommand command);
+    void resetPassword(@Valid EmployeeResetPasswordCommand command);
+    void deleteEmployeeAccount(@Valid DeleteEmployeeAccountCommand command);
 }

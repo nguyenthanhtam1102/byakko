@@ -75,6 +75,13 @@ public class Customer extends User {
 //            throw new ValidationException(Map.of("password", "password phải gồm tối thiểu 8 kí tự, bao gồm ít nhất 1 chữ cái, ít nhất 1 chữ cái viết hoa, ít nhất 1 chữ số"));
     }
 
+    public void validatePassword(String password) {
+        if(password == null || password.isBlank())
+            throw new ValidationException(Map.of("password", "password must be not blank"));
+        if(!this.password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"))
+            throw new ValidationException(Map.of("password", "password phải gồm tối thiểu 8 kí tự, bao gồm ít nhất 1 chữ cái, ít nhất 1 chữ cái viết hoa, ít nhất 1 chữ số"));
+    }
+
     private void validateVerified() {
         if(this.verified == null)
             throw new ValidationException(Map.of("verified", "verified must be not null"));

@@ -1,28 +1,23 @@
-package com.byakko.service.authentication.domain.domainapplication.port.input.service;
+package com.byakko.service.authentication.dataaccess.adapter;
 
 import com.byakko.common.application.dto.BaseResponse;
 import com.byakko.service.authentication.application.utils.JwtHelper;
 import com.byakko.service.authentication.domain.domainapplication.dto.request.CreateMenuToPermissionGroupsRequest;
-import com.byakko.service.authentication.domain.domainapplication.dto.request.DeleteMenuRequest;
 import com.byakko.service.authentication.domain.domainapplication.dto.request.MenuItemRequest;
 import com.byakko.service.authentication.domain.domainapplication.dto.request.PermissionAndPermissionGroups;
 import com.byakko.service.authentication.domain.domainapplication.dto.response.MenuItemResponse;
-import com.byakko.service.authentication.dataacess.entity.*;
-import com.byakko.service.authentication.dataacess.repository.*;
+import com.byakko.service.authentication.dataaccess.entity.*;
+import com.byakko.service.authentication.dataaccess.repository.*;
 import com.byakko.service.authentication.domain.domainapplication.dto.response.PermissionGroupsResponse;
 import com.byakko.service.authentication.domain.domaincore.services.AdminPageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
-import static com.byakko.service.authentication.application.utils.JwtHelper.generateHmacSha256Key;
-
-@Service
+@Component
 public class AdminPageServiceImp implements AdminPageService {
     @Autowired
     private MenuItemRepository menuitemRepository;
@@ -38,6 +33,7 @@ public class AdminPageServiceImp implements AdminPageService {
     private MenuToPermissionRepository menuToPermissionRepository;
     @Autowired
     private JwtHelper jwtHelper;
+
     @Override
     public BaseResponse getAllPermission() {
         BaseResponse res = new BaseResponse();

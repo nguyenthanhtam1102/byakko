@@ -6,7 +6,6 @@ import com.byakko.service.authentication.dataaccess.repository.CustomerJpaReposi
 import com.byakko.service.authentication.domain.domainapplication.port.output.repository.CustomerRepository;
 import com.byakko.service.authentication.domain.domaincore.entity.Customer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

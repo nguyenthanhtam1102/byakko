@@ -1,7 +1,6 @@
 package com.byakko.service.authentication.dataaccess.repository;
 
 import com.byakko.service.authentication.dataaccess.entity.CustomerEntity;
-import com.byakko.service.authentication.domain.domaincore.valueobject.CustomerStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

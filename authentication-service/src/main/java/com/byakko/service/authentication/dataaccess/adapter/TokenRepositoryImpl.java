@@ -35,4 +35,9 @@ public class TokenRepositoryImpl implements TokenRepository {
         tokenJpaRepository.delete(TokenMapper.toOTPEntity(token));
     }
 
+    @Override
+    public void deleteAll() {
+        tokenJpaRepository.deleteAll();
+    }
+
 }

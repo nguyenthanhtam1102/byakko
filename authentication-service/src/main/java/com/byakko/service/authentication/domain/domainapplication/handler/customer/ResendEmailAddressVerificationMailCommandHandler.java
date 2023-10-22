@@ -32,6 +32,9 @@ public class ResendEmailAddressVerificationMailCommandHandler {
     @Value("${maxtoken}")
     private int MAX_TOKEN;
 
+    @Value("${token.expiration-time}")
+    private long TOKEN_EXPIRATION_TIME;
+
     public ResendEmailAddressVerificationMailCommandHandler(CustomerCommandHandlerHelper customerCommandHandlerHelper,
                                                             TokenRepository tokenRepository,
                                                             MailSenderHelper mailSenderHelper,
@@ -59,7 +62,7 @@ public class ResendEmailAddressVerificationMailCommandHandler {
                 .userId(customer.getId().getValue())
                 .randomData(UUID.randomUUID().toString())
                 .createdAt(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)))
-                .expiredTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusSeconds(300))
+                .expiredTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusSeconds(TOKEN_EXPIRATION_TIME))
                 .build();
 
         String rawToken;

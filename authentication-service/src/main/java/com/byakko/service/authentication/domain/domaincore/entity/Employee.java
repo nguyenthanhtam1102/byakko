@@ -13,6 +13,8 @@ public class Employee extends User {
 
     private String employeeId;
     private String password;
+    private String phone;
+    private String email;
     private EmployeeStatus status;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
@@ -27,6 +29,8 @@ public class Employee extends User {
     public void validate() {
         validateEmployeeId();
         validatePassword();
+        validatePhone();
+        validateEmail();
         validateStatus();
         validateCreatedAt();
     }
@@ -39,8 +43,29 @@ public class Employee extends User {
     private void validatePassword() {
         if(this.password == null || this.password.isBlank())
             throw new ValidationException(Map.of("password", "password must be not blank"));
-        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
+//        if(!this.password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
+//            throw new ValidationException(Map.of("password", "password is not in the correct format"));
+    }
+
+    public void validatePassword(String password) {
+        if(password == null || password.isBlank())
+            throw new ValidationException(Map.of("password", "password must be not blank"));
+        if(password.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
             throw new ValidationException(Map.of("password", "password is not in the correct format"));
+    }
+
+    private void validatePhone() {
+        if(this.phone == null || this.phone.isBlank())
+            throw new ValidationException(Map.of("phone", "phone must be not blank"));
+        if(!this.phone.matches("^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$"))
+            throw new ValidationException(Map.of("phone", "phone is not in the correct format"));
+    }
+
+    private void validateEmail() {
+        if(this.email == null || this.email.isBlank())
+            throw new ValidationException(Map.of("email", "email must be not blank"));
+        if(!this.email.matches("^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$"))
+            throw new ValidationException(Map.of("email", "email is not in the correct format"));
     }
 
     private void validateStatus() {
@@ -67,6 +92,22 @@ public class Employee extends User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public EmployeeStatus getStatus() {
@@ -105,6 +146,8 @@ public class Employee extends User {
     public static final class Builder {
         private String employeeId;
         private String password;
+        private String phone;
+        private String email;
         private EmployeeStatus status;
         private ZonedDateTime createdAt;
         private ZonedDateTime updatedAt;
@@ -125,6 +168,16 @@ public class Employee extends User {
 
         public Builder password(String password) {
             this.password = password;
+            return this;
+        }
+
+        public Builder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
             return this;
         }
 
@@ -157,6 +210,8 @@ public class Employee extends User {
             Employee employee = new Employee();
             employee.setEmployeeId(employeeId);
             employee.setPassword(password);
+            employee.setPhone(phone);
+            employee.setEmail(email);
             employee.setStatus(status);
             employee.setCreatedAt(createdAt);
             employee.setUpdatedAt(updatedAt);

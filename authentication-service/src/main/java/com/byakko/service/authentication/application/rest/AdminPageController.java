@@ -12,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 @RestController
 @RequestMapping("/adminPage")
 public class AdminPageController {
+    
     @Autowired
     private AdminPageService adminservice;
 //  Get
