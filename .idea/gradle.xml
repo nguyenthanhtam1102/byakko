@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/DigitalSignatureKeyGenerater" />
             <option value="$PROJECT_DIR$/authentication-service" />
             <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/human-resources-service" />
           </set>
         </option>
       </GradleProjectSettings>

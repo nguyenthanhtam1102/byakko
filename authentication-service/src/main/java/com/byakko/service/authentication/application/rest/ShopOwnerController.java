@@ -20,9 +20,11 @@ public class ShopOwnerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createShopOwner(@RequestBody ShopOwnerSignUpCommand command) {
+    public ResponseEntity<?> signUp(@RequestBody ShopOwnerSignUpCommand command) {
         return ResponseEntity.ok(shopOwnerService.signUp(command));
     }
+
+
 
 //    @PutMapping("/{id}")
 //    public ResponseEntity<?> updateShopOwner(@PathVariable("id") String id) {
