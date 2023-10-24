@@ -21,7 +21,6 @@ public class JwtHelper {
         return keyGenerator.generateKey();
     }
     public String generateToken(String data) {
-
         Key key = Keys.hmacShaKeyFor(secret.getBytes());
         String token = Jwts.builder()
                 .setSubject(data)

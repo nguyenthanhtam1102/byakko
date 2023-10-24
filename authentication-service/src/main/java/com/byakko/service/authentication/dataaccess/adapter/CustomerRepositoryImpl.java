@@ -15,7 +15,6 @@ import java.util.Optional;
 public class CustomerRepositoryImpl implements CustomerRepository {
 
     private final CustomerJpaRepository customerJpaRepository;
-
     @Override
     public Optional<Customer> findById(String id) {
         return customerJpaRepository.findById(id).map(CustomerMapper::toCustomer);

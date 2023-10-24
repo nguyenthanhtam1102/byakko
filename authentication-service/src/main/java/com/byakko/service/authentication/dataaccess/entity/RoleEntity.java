@@ -2,10 +2,7 @@ package com.byakko.service.authentication.dataaccess.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -22,5 +19,9 @@ public class RoleEntity {
 
     @Column(length = 60, nullable = false)
     private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id")
+    private MenuEntity menu;
+
 
 }

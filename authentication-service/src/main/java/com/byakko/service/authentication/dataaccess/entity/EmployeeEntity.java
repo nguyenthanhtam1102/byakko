@@ -1,6 +1,7 @@
 package com.byakko.service.authentication.dataaccess.entity;
 
 import com.byakko.service.authentication.domain.domaincore.valueobject.EmployeeStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;

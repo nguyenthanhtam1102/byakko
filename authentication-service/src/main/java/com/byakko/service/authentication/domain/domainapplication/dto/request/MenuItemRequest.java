@@ -1,10 +1,22 @@
 package com.byakko.service.authentication.domain.domainapplication.dto.request;
 
+import java.util.List;
+
 public class MenuItemRequest {
     private String menu_item_name;
     private int menu_id;
     private int page_id;
     private int parent_id;
+    private List<PermissionRequest> permissionRequestList;
+
+    public List<PermissionRequest> getPermissionRequestList() {
+        return permissionRequestList;
+    }
+
+    public void setPermissionRequestList(List<PermissionRequest> permissionRequestList) {
+        this.permissionRequestList = permissionRequestList;
+    }
+
     public String getMenu_item_name() {
         return menu_item_name;
     }

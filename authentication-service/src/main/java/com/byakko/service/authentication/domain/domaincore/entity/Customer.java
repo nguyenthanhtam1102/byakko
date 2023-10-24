@@ -12,7 +12,6 @@ import java.time.ZonedDateTime;
 import java.util.Map;
 
 public class Customer extends User {
-
     private String firstName;
     private String lastName;
     private String phone;

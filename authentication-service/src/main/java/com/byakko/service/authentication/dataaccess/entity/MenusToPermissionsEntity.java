@@ -16,15 +16,15 @@ import java.io.Serializable;
 @IdClass(MenusToPermissionsId.class)
 @Entity
 @Table(name = "menu_to_permissions")
-public class MenusToPermissions implements Serializable {
+public class MenusToPermissionsEntity implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "menu_item_id",insertable = false,updatable = false)
-    private MenuItem menuItem;
+    private MenuItemEntity menuItem;
     @Id
     @ManyToOne
     @JoinColumn(name = "permissions_id",updatable = false,insertable = false)
-    private Permissions permissions;
+    private PermissionsEntity permissions;
     @Column(name = "active")
     private boolean active;
 }

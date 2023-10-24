@@ -64,6 +64,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/roles/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
 
                 .antMatchers("/sa/signin").permitAll()
+                .antMatchers("/adminPage/getMenuItemById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/getAllPage").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/getMenuById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/getAllPermissions").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/getAllMenu").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/createMenu").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/createMenuItem").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/createPermissionGroups").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/createMenuToPermissionGroup").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/deleteMenuById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+
                 .antMatchers("/shopowner/signin").permitAll()
                 .antMatchers("/shopowner").hasAuthority(SystemRole.SYSTEM_ADMIN.getName())
 

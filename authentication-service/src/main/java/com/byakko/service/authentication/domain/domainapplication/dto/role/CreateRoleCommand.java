@@ -13,6 +13,6 @@ public class CreateRoleCommand {
     private String name;
 
     @JsonProperty("menu_id")
-    private String menuId;
+    private int menuId;
 
 }

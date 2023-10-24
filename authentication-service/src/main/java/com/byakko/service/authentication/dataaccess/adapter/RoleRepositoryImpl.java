@@ -28,12 +28,10 @@ public class RoleRepositoryImpl implements RoleRepository {
         Specification<RoleEntity> specification = new RoleSpecification(query);
         return roleJpaRepository.findAll(specification, pageable).map(RoleMapper::toRole);
     }
-
     @Override
     public Optional<Role> findById(String id) {
         return roleJpaRepository.findById(id).map(RoleMapper::toRole);
     }
-
     @Override
     public Role save(Role role) {
         RoleEntity roleEntity = roleJpaRepository.save(RoleMapper.toRoleEntity(role));

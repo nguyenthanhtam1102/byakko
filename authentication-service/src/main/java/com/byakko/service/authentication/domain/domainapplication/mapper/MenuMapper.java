@@ -1,0 +1,12 @@
+package com.byakko.service.authentication.domain.domainapplication.mapper;
+
+import com.byakko.service.authentication.dataaccess.entity.MenuEntity;
+import com.byakko.service.authentication.domain.domaincore.entity.Employee;
+import com.byakko.service.authentication.domain.domaincore.entity.Menu;
+import com.byakko.service.authentication.domain.domaincore.valueobject.MenuId;
+
+public class MenuMapper {
+    public static Menu toMenu(MenuEntity menu) {
+        return new Menu(new MenuId(menu.getId()), menu.getName());
+    }
+}

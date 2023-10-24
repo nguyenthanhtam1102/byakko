@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "menu_item")
-public class MenuItem {
+public class MenuItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_item_id")
@@ -23,17 +23,17 @@ public class MenuItem {
     private String name;
     @ManyToOne
     @JoinColumn(name = "menu_id")
-    private Menu menu;
+    private MenuEntity menu;
     @ManyToOne
     @JoinColumn(name = "page_id")
-    private Page page;
+    private PageEntity page;
     @OneToMany(mappedBy = "menuItem")
     @JsonIgnore
-    private Set<MenusToPermissions> menusToPermissionsSet;
+    private Set<MenusToPermissionsEntity> menusToPermissionsSet;
     @ManyToOne
     @JoinColumn(name = "parent_id",referencedColumnName = "menu_item_id")
-    private MenuItem parentMenu;
+    private MenuItemEntity parentMenu;
     @OneToMany(mappedBy = "parentMenu")
     @JsonIgnore
-    private Set<MenuItem> menuItemSet;
+    private Set<MenuItemEntity> menuItemSet;
 }
