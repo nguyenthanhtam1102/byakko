@@ -16,7 +16,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "page")
-public class Page {
+public class PageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "page_id")
@@ -31,5 +31,5 @@ public class Page {
     private String path;
     @OneToMany(mappedBy = "page")
     @JsonIgnore
-    private Set<MenuItem> menuItemSet;
+    private Set<MenuItemEntity> menuItemSet;
 }

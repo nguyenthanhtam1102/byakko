@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "menus")
-public class Menu {
+public class MenuEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "menu_id")
@@ -23,5 +23,12 @@ public class Menu {
     private String name;
     @OneToMany(mappedBy = "menu")
     @JsonIgnore
-    private Set<MenuItem> menuItemSet;
+    private Set<MenuItemEntity> menuItemSet;
+    @OneToMany(mappedBy = "menu")
+    @JsonIgnore
+    private Set<RoleEntity> employeeEntities;
+
+    public MenuEntity(int id) {
+        this.id = id;
+    }
 }

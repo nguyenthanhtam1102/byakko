@@ -15,16 +15,22 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "permission_groups")
-public class PermissionGroups {
+@Table(name = "permissions")
+public class PermissionsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "permission_groups_id")
+    @Column(name = "permissions_id")
     private int id;
     @NotNull
-    @Column(name = "permission_groups_name")
+    @Column(name = "code")
+    private String code;
+    @NotNull
+    @Column(name = "permissions_name")
     private String name;
-    @OneToMany(mappedBy = "permissionGroups")
+    @ManyToOne
+    @JoinColumn(name = "permission_groups_id")
+    private PermissionGroupsEntity permissionGroups;
+    @OneToMany(mappedBy = "permissions")
     @JsonIgnore
-    private Set<Permissions> permissionsSet;
+    private Set<MenusToPermissionsEntity> menusToPermissionsSet;
 }
