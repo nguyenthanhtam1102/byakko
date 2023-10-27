@@ -3,4 +3,5 @@ include 'common'
 include 'authentication-service'
 include 'DigitalSignatureKeyGenerater'
 include 'human-resources-service'
+include 'production-service'
 

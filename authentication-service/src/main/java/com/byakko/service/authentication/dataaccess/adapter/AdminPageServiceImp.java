@@ -170,7 +170,7 @@ public class AdminPageServiceImp implements AdminPageService {
             MenuItemEntity menuItem = new MenuItemEntity();
             menuItem.setName(menuItemRequest.getMenu_item_name());
             menuItem.setMenu(menuRepository.findById(menuItemRequest.getMenu_id()).get());
-            menuItem.setPage(pageRepository.findById(menuItemRequest.getPage_id()).get());
+//            menuItem.setPage(pageRepository.findById(menuItemRequest.getPage_id()).get());
             if(menuItemRequest.getParent_id()!=0) {
                 menuItem.setParentMenu(menuitemRepository.findById(menuItemRequest.getParent_id()).get());
             }
