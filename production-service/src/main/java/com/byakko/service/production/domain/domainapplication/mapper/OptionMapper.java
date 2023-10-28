@@ -1,6 +1,6 @@
 package com.byakko.service.production.domain.domainapplication.mapper;
 
-import com.byakko.service.production.domain.domainapplication.dto.OptionResponse;
+import com.byakko.service.production.domain.domainapplication.dto.global_option.OptionResponse;
 import com.byakko.service.production.domain.domaincore.entity.GlobalOption;
 
 public class OptionMapper {

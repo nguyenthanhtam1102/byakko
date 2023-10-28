@@ -1,6 +1,6 @@
 package com.byakko.service.production.application.rest;
 
-import com.byakko.service.production.domain.domainapplication.dto.*;
+import com.byakko.service.production.domain.domainapplication.dto.global_option.*;
 import com.byakko.service.production.domain.domainapplication.port.input.GlobalOptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

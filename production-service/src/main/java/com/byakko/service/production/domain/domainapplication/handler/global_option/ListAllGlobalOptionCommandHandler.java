@@ -1,8 +1,8 @@
-package com.byakko.service.production.domain.domainapplication.handler;
+package com.byakko.service.production.domain.domainapplication.handler.global_option;
 
 import com.byakko.common.application.dto.ListAllResponse;
-import com.byakko.service.production.domain.domainapplication.dto.ListAllGlobalOptionCommand;
-import com.byakko.service.production.domain.domainapplication.dto.ListAllGlobalOptionResponse;
+import com.byakko.service.production.domain.domainapplication.dto.global_option.ListAllGlobalOptionCommand;
+import com.byakko.service.production.domain.domainapplication.dto.global_option.ListAllGlobalOptionResponse;
 import com.byakko.service.production.domain.domainapplication.mapper.OptionMapper;
 import com.byakko.service.production.domain.domainapplication.port.output.repository.GlobalOptionRepository;
 import com.byakko.service.production.domain.domaincore.entity.GlobalOption;

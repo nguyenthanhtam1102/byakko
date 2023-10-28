@@ -41,6 +41,6 @@ public class GlobalOptionRepositoryImpl implements GlobalOptionRepository {
 
     @Override
     public void delete(GlobalOption option) {
-        globalOptionJpaRepository.delete(GlobalOptionMapper.toGlobalOptionEntity(option));
+        globalOptionJpaRepository.deleteById(option.getId().getValue());
     }
 }

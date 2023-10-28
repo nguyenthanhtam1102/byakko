@@ -1,6 +1,6 @@
 package com.byakko.service.production.domain.domainapplication.port.input;
 
-import com.byakko.service.production.domain.domainapplication.dto.*;
+import com.byakko.service.production.domain.domainapplication.dto.global_option.*;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 

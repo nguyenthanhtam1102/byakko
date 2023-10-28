@@ -1,4 +1,4 @@
-package com.byakko.service.production.domain.domainapplication.dto;
+package com.byakko.service.production.domain.domainapplication.dto.global_option;
 
 import java.util.List;
 

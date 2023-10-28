@@ -1,4 +1,4 @@
-package com.byakko.service.production.domain.domainapplication.handler;
+package com.byakko.service.production.domain.domainapplication.handler.global_option;
 
 import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.service.production.domain.domainapplication.port.output.repository.GlobalOptionRepository;
