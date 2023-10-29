@@ -1,19 +1,17 @@
 package com.byakko.service.production.application.firebase;
 
-import com.byakko.common.domain.exception.NotFoundException;
-import com.google.cloud.storage.*;
-import com.google.firebase.FirebaseApp;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Storage;
+import com.google.firebase.cloud.StorageClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
-
-import com.google.firebase.cloud.StorageClient;
 
 @Component
 @RequiredArgsConstructor
@@ -25,7 +23,6 @@ public class FirebaseStorageService {
     @Value("${firebase.storage.bucket-name}")
     private String STORAGE_BUCKET_NAME;
 
-    private final FirebaseApp firebaseApp;
     private final Tika tika;
 
     public Blob uploadImage(String base64Data, String fileName) {
