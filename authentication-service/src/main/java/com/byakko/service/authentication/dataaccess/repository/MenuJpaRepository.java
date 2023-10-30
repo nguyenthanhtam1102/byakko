@@ -13,5 +13,5 @@ import java.util.Optional;
 @Repository
 public interface MenuJpaRepository extends JpaRepository<MenuEntity,Integer> {
     @Query("select m from MenuEntity m where m.id = :id")
-    Optional<Menu> findByMenuId(int id);
+    Optional<MenuEntity> findByMenuId(int id);
 }

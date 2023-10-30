@@ -27,10 +27,10 @@ public class ShopOwnerSignInCommandHandler {
     }
 
     public ShopOwnerSignInResponse signIn(ShopOwnerSignInCommand command) {
-        ShopOwner shopOwner = shopOwnerRepository.findById(command.getUsername())
-                .orElseThrow(() -> new NotFoundException("account not found"));
+        ShopOwner shopOwner = shopOwnerRepository.findByPhoneOrEmail(command.getPhoneOrEmail(), command.getPhoneOrEmail())
+                .orElseThrow(() -> new NotFoundException("Shop owner not found"));
 
-        if(!passwordUtils.matches(command.getPassword(), shopOwner.getUsername()))
+        if(!passwordUtils.matches(command.getPassword(), shopOwner.getPassword()))
             throw new RuntimeException("Password not correct");
 
         return ShopOwnerSignInResponse.Builder.builder()
@@ -38,6 +38,7 @@ public class ShopOwnerSignInCommandHandler {
                 .refreshToken("")
                 .expiresTime(ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).plusMinutes(5).toEpochSecond())
                 .userId(shopOwner.getId().getValue())
+                .menuId(String.valueOf(shopOwner.getMenuId().getId().getValue()))
                 .build();
     }
 }

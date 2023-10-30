@@ -10,7 +10,7 @@ public class ShopOwnerSignInResponse extends SignInResponse {
         private String refreshToken;
         private Long expiresTime;
         private String userId;
-
+        private String menuId;
         private Builder() {
         }
 
@@ -22,7 +22,10 @@ public class ShopOwnerSignInResponse extends SignInResponse {
             this.idToken = idToken;
             return this;
         }
-
+        public Builder menuId(String menuId) {
+            this.menuId = menuId;
+            return this;
+        }
         public Builder refreshToken(String refreshToken) {
             this.refreshToken = refreshToken;
             return this;
@@ -44,6 +47,7 @@ public class ShopOwnerSignInResponse extends SignInResponse {
             shopOwnerSignInResponse.setRefreshToken(refreshToken);
             shopOwnerSignInResponse.setExpiresTime(expiresTime);
             shopOwnerSignInResponse.setUserId(userId);
+            shopOwnerSignInResponse.setMenuId(menuId);
             return shopOwnerSignInResponse;
         }
     }

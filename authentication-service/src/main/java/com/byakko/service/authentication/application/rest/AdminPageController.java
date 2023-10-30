@@ -58,4 +58,13 @@ public class AdminPageController {
     public ResponseEntity<?> deleteMenuById(@RequestParam int Menuid){
         return new ResponseEntity<>(adminservice.deleteMenuById(Menuid),HttpStatus.OK);
     }
+    @DeleteMapping("/deleteMenuItemById")
+    public ResponseEntity<?> deleteMenuItemById(@RequestParam int MenuItemId){
+        return new ResponseEntity<>(adminservice.deleteMenuItemById(MenuItemId),HttpStatus.OK);
+    }
+//    update
+    @PostMapping("/updateMenu")
+    public ResponseEntity<?> updateMenu(@RequestParam String name,@RequestParam int menuId){
+        return new ResponseEntity<>(adminservice.updateMenu(name,menuId),HttpStatus.OK);
+    }
 }

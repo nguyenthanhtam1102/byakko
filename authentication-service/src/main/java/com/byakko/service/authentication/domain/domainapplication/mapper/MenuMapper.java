@@ -9,4 +9,10 @@ public class MenuMapper {
     public static Menu toMenu(MenuEntity menu) {
         return new Menu(new MenuId(menu.getId()), menu.getName());
     }
+    public static MenuEntity toMenuEntity(Menu menu){
+        return MenuEntity.builder()
+                .id(menu.getId().getValue())
+                .name(menu.getName())
+                .build();
+    }
 }

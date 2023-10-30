@@ -74,9 +74,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/adminPage/createPermissionGroups").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
                 .antMatchers("/adminPage/createMenuToPermissionGroup").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
                 .antMatchers("/adminPage/deleteMenuById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/deleteMenuItemById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/adminPage/updateMenu").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
 
-                .antMatchers("/shopowner/signin").permitAll()
-                .antMatchers("/shopowner").hasAuthority(SystemRole.SYSTEM_ADMIN.getName())
+                .antMatchers("/shopowners/signin").permitAll()
+                .antMatchers("/shopowners/signup").permitAll()
+                .antMatchers("/shopowners/sendResetPasswordMail").permitAll()
+                .antMatchers("/shopowners/resetPassword").permitAll()
+                .antMatchers("/shopowners/{id}/resendVerifyMail").permitAll()
+                .antMatchers("/shopowners/verifyemailaddress").permitAll()
+                .antMatchers("/shopowners/{id}").hasAuthority(SystemRole.SHOP_OWNER.getName())
 
                 .antMatchers("/employees/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
 //                .antMatchers("/employees/{userId}/changepassword").hasAnyAuthority(SystemRole.)
