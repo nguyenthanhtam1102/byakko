@@ -1,10 +1,8 @@
 package com.byakko.common.domain.entity;
 
-import com.byakko.common.valueobject.BaseId;
-
 import java.util.Objects;
 
-public abstract class BaseEntity<ID extends BaseId> {
+public abstract class BaseEntity<ID> {
 
     private ID id;
 

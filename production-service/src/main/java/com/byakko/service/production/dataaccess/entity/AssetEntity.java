@@ -31,7 +31,7 @@ public class AssetEntity {
     private long size;
 
     @Column(name = "is_graphic")
-    private String isGraphic;
+    private boolean isGraphic;
 
     private int width;
 
@@ -55,4 +55,7 @@ public class AssetEntity {
             createdAt = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
     }
 
+    public AssetEntity(String id) {
+        this.id = id;
+    }
 }

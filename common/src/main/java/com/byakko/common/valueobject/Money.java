@@ -1,11 +1,17 @@
 package com.byakko.common.valueobject;
 
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-public class Money {
-    private final BigDecimal amount;
+@NoArgsConstructor
+@Embeddable
+public class Money implements Serializable {
+    private BigDecimal amount;
 
     public static final Money ZERO = new Money(BigDecimal.ZERO);
 
@@ -13,12 +19,24 @@ public class Money {
         this.amount = amount;
     }
 
+    public int compare(Money m2) {
+        return setScale(amount).compareTo(setScale(m2.getAmount()));
+    }
+
     public boolean isGreaterThanZero() {
         return this.amount != null && this.amount.compareTo(BigDecimal.ZERO) > 0;
     }
 
+    public boolean isGreaterThanOrEqualZero() {
+        return isGreaterThanOrEqual(ZERO);
+    }
+
     public boolean isGreaterThan(Money money) {
         return this.amount != null && this.amount.compareTo(money.getAmount()) > 0;
+    }
+
+    public boolean isGreaterThanOrEqual(Money money) {
+        return this.amount != null && this.amount.compareTo(money.getAmount()) >= 0;
     }
 
     public Money add(Money money) {
@@ -35,6 +53,13 @@ public class Money {
 
     public BigDecimal getAmount() {
         return amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Money{" +
+                "amount=" + amount +
+                '}';
     }
 
     @Override

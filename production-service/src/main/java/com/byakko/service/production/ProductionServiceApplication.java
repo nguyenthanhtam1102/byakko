@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories(basePackages = { "com.byakko.service.production.dataaccess", "com.byakko.common.dataaccess" })
-@EntityScan(basePackages = { "com.byakko.service.production.dataaccess", "com.byakko.common.dataaccess" })
+@EntityScan(basePackages = { "com.byakko.service.production.dataaccess", "com.byakko.common" })
 @SpringBootApplication(scanBasePackages = "com.byakko")
 public class ProductionServiceApplication {
 
