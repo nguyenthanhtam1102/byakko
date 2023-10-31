@@ -19,8 +19,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -77,8 +79,11 @@ public class ProductCategoryRepositoryImpl implements ProductCategoryRepository 
                 children.forEach(child -> child.setParent(productCategoryEntity.getParent()));
                 productCategoryJpaRepository.saveAllAndFlush(productCategoryEntity.getChildren());
                 break;
+            case 2:
+                deleteAllChildrenForProductCategory(productCategoryEntity);
+                break;
             default:
-                throw new RuntimeException("handlerChild must be equal 0 or 1");
+                throw new RuntimeException("handlerChild must be equal 0 or 1 or 2");
         }
 
         productCategoryJpaRepository.delete(new ProductCategoryEntity(command.getId()));
@@ -92,6 +97,14 @@ public class ProductCategoryRepositoryImpl implements ProductCategoryRepository 
         }
 
         return productCategoryEntity.getChildren();
+    }
+
+    private void deleteAllChildrenForProductCategory(ProductCategoryEntity productCategoryEntity) {
+        for(ProductCategoryEntity child : productCategoryJpaRepository.findByParent(productCategoryEntity)) {
+            deleteAllChildrenForProductCategory(child);
+            productCategoryJpaRepository.delete(child);
+            productCategoryJpaRepository.flush();
+        }
     }
 
 }

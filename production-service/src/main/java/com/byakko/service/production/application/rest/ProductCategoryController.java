@@ -40,6 +40,7 @@ public class ProductCategoryController {
     // Handle child
     // 0: Set all child with parent null
     // 1: Set all child up to parent level
+    // 2: Delete all level child
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProductCategory(@PathVariable("id") String id,
                                                    @RequestParam(value = "handle_child", defaultValue = "0") int handleChild) {
