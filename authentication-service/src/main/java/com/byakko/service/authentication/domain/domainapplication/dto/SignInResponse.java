@@ -6,8 +6,16 @@ public abstract class SignInResponse {
     protected String refreshToken;
     protected Long expiresTime;
     protected String userId;
-
+    protected String menuId;
     public SignInResponse() {
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 
     public void setIdToken(String idToken) {

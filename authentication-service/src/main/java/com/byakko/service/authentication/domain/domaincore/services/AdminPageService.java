@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 
 public interface AdminPageService {
     BaseResponse getAllMenu();
+    BaseResponse deleteMenuItemById(int MenuItemId);
     BaseResponse getAllMenuItem();
     BaseResponse getMenuItemById(int id);
     BaseResponse getAllPage();
@@ -21,4 +22,5 @@ public interface AdminPageService {
     BaseResponse createMenuItem(MenuItemRequest menuItemRequest);
     BaseResponse deletePermissionGroups(int id);
     BaseResponse deleteMenuById(int id);
+    BaseResponse updateMenu(String name,int id);
 }

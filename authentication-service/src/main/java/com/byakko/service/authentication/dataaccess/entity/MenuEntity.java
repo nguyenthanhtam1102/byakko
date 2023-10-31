@@ -27,7 +27,9 @@ public class MenuEntity {
     @OneToMany(mappedBy = "menu")
     @JsonIgnore
     private Set<RoleEntity> employeeEntities;
-
+    @OneToOne(mappedBy = "menu")
+    @JsonIgnore
+    private ShopOwnerEntity shopOwner;
     public MenuEntity(int id) {
         this.id = id;
     }

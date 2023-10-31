@@ -106,6 +106,23 @@ public class AdminPageServiceImp implements AdminPageService {
     }
 
     @Override
+    public BaseResponse deleteMenuItemById(int MenuItemId) {
+        BaseResponse res = new BaseResponse();
+        try{
+            menuToPermissionRepository.deleteByMenuItem(menuitemRepository.findById(MenuItemId).get());
+            menuitemRepository.deleteById(MenuItemId);
+            res.setStatusCode(200);
+            res.setMessage("Get data Successfully");
+            res.setData("");
+        }catch(Exception e){
+            res.setStatusCode(400);
+            res.setMessage("Can not add data");
+            res.setData("");
+        }
+        return res;
+    }
+
+    @Override
     public BaseResponse getAllMenuItem() {
         BaseResponse res = new BaseResponse();
         try{
@@ -262,6 +279,10 @@ public class AdminPageServiceImp implements AdminPageService {
     public BaseResponse deleteMenuById(int id) {
         BaseResponse res = new BaseResponse();
         try{
+            List<MenuItemEntity> menuItemEntities = menuitemRepository.findByMenuId(id);
+            for (MenuItemEntity m:menuItemEntities) {
+                menuToPermissionRepository.deleteByMenuItem(m);
+            }
             menuitemRepository.deleteByMenu_Id(id);
             menuRepository.deleteById(id);
             res.setData("");
@@ -269,6 +290,24 @@ public class AdminPageServiceImp implements AdminPageService {
             res.setStatusCode(200);
         }catch(Exception e){
             res.setMessage("Can not delete data");
+            res.setData("");
+            res.setStatusCode(400);
+        }
+        return res;
+    }
+
+    @Override
+    public BaseResponse updateMenu(String name, int id) {
+        BaseResponse res = new BaseResponse();
+        try{
+            MenuEntity menu = menuRepository.findById(id).get();
+            menu.setName(name);
+            menuRepository.save(menu);
+            res.setData("");
+            res.setMessage("update successfully");
+            res.setStatusCode(200);
+        }catch(Exception e){
+            res.setMessage("Can not update data");
             res.setData("");
             res.setStatusCode(400);
         }
