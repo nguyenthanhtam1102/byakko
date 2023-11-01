@@ -91,6 +91,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/resetPassword").hasAnyAuthority()
                 .antMatchers("/employees/signin").permitAll()
 
+                .antMatchers("/send/hello").permitAll()
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
