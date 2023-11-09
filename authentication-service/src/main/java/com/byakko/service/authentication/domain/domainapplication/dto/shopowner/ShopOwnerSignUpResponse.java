@@ -7,39 +7,27 @@ public class ShopOwnerSignUpResponse {
     private Long createdAt;
 
 
-    public static final class Builder {
-        private String userId;
-        private String username;
-        private Long createdAt;
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
+    }
 
-        private Builder() {
-        }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-        public static Builder builder() {
-            return new Builder();
-        }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-        public Builder userId(String userId) {
-            this.userId = userId;
-            return this;
-        }
+    public String getUserId() {
+        return userId;
+    }
 
-        public Builder username(String username) {
-            this.username = username;
-            return this;
-        }
+    public Long getCreatedAt() {
+        return createdAt;
+    }
 
-        public Builder createdAt(Long createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public ShopOwnerSignUpResponse build() {
-            ShopOwnerSignUpResponse shopOwnerSignUpResponse = new ShopOwnerSignUpResponse();
-            shopOwnerSignUpResponse.userId = this.userId;
-            shopOwnerSignUpResponse.createdAt = this.createdAt;
-            shopOwnerSignUpResponse.username = this.username;
-            return shopOwnerSignUpResponse;
-        }
+    public String getUsername() {
+        return username;
     }
 }
