@@ -35,6 +35,7 @@ public abstract class ListAllResponse<T> {
         this.pagination = pagination;
     }
 
+
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
