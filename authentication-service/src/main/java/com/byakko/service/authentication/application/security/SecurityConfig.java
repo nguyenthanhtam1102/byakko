@@ -36,6 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public JwtAuthenticationFilter getJwtAuthenticationFilter() {
+//        return new JwtAuthenticationFilter();
+//    }
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
@@ -61,36 +66,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customers/resetPassword").permitAll()
                 .antMatchers("/customers/{id}").hasAnyAuthority(SystemRole.CUSTOMER.getName())
 
+//                .antMatchers("/roles").hasAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
                 .antMatchers("/roles/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
 
                 .antMatchers("/sa/signin").permitAll()
-                .antMatchers("/adminPage/getMenuItemById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/getAllPage").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/getMenuById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/getAllPermissions").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/getAllMenu").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/createMenu").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/createMenuItem").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/createPermissionGroups").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/createMenuToPermissionGroup").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/deleteMenuById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/deleteMenuItemById").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-                .antMatchers("/adminPage/updateMenu").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
+                .antMatchers("/shopowner/signin").permitAll()
+                .antMatchers("/shopowner").hasAuthority(SystemRole.SYSTEM_ADMIN.getName())
 
-                .antMatchers("/shopowners/signin").permitAll()
-                .antMatchers("/shopowners/signup").permitAll()
-                .antMatchers("/shopowners/sendResetPasswordMail").permitAll()
-                .antMatchers("/shopowners/resetPassword").permitAll()
-                .antMatchers("/shopowners/{id}/resendVerifyMail").permitAll()
-                .antMatchers("/shopowners/verifyemailaddress").permitAll()
-                .antMatchers("/shopowners/{id}").hasAuthority(SystemRole.SHOP_OWNER.getName())
-
-                .antMatchers("/employees/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
-//                .antMatchers("/employees/{userId}/changepassword").hasAnyAuthority(SystemRole.)
-//                .antMatchers("/sendResetPasswordMail").hasAnyAuthority(SystemRole)
-//                .antMatchers("/resetPassword").hasAnyAuthority()
-                .antMatchers("/employees/signin").permitAll()
-
+//                .antMatchers(HttpMethod.GET, "/users", "/users/{id}").hasRole(SystemRole.CUSTOMER.getName())
+//                .antMatchers().hasRole(SystemRole.SYSTEM_ADMIN.getName())
+//                .antMatchers().hasRole(SystemPermission.CREATE_PRODUCT.getName())
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
