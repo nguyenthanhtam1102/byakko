@@ -15,11 +15,6 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "products")
-@AttributeOverrides({
-        @AttributeOverride(name = "originalPrice.amount", column = @Column(name = "original_price", nullable = false)),
-        @AttributeOverride(name = "pricePerItem.amount", column = @Column(name = "price_per_item", nullable = false)),
-        @AttributeOverride(name = "price.amount", column = @Column(name = "price", nullable = false))
-})
 public class ProductEntity {
 
     @Id
@@ -37,15 +32,6 @@ public class ProductEntity {
 
     @Column(columnDefinition = "text")
     private String description;
-
-    @Embedded
-    private Money originalPrice;
-
-    @Embedded
-    private Money price;
-
-    @Embedded
-    private Money pricePerItem;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -80,4 +66,5 @@ public class ProductEntity {
     public ProductEntity(String id) {
         this.id = id;
     }
+
 }

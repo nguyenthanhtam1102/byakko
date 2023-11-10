@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 
-@Configuration
+@Service
 public class FirebaseConfig {
 
     @Value("${firebase.service-account-file}")
@@ -20,15 +22,17 @@ public class FirebaseConfig {
     @Value("${firebase.storage.bucket-name}")
     private String STORAGE_BUCKET_NAME;
 
-    @Bean
-    public FirebaseApp firebaseApp() throws IOException {
+    @PostConstruct
+    public void initialize() throws IOException {
         ClassPathResource serviceAccount = new ClassPathResource(SERVICE_ACCOUNT_FILE);
-        FirebaseOptions options = new FirebaseOptions.Builder()
+        FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount.getInputStream()))
                 .setStorageBucket(STORAGE_BUCKET_NAME)
                 .build();
 
-        return FirebaseApp.initializeApp(options);
+        if(FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(options);
+        }
     }
 
     @Bean

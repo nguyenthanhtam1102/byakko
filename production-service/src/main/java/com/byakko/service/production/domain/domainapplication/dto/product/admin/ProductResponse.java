@@ -1,9 +1,11 @@
 package com.byakko.service.production.domain.domainapplication.dto.product.admin;
 
 import com.byakko.service.production.domain.domainapplication.dto.asset.AssetResponse;
+import com.byakko.service.production.domain.domainapplication.dto.global_option.OptionResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 public class ProductResponse {
@@ -37,6 +39,9 @@ public class ProductResponse {
     private Set<AssetResponse> assets;
 
     private Set<ProductItemResponse> relatedProducts;
+
+    private List<OptionResponse> options;
+    private List<ProductVariantResponse> variants;
 
     public String getId() {
         return id;
@@ -142,6 +147,22 @@ public class ProductResponse {
         this.relatedProducts = relatedProducts;
     }
 
+    public List<OptionResponse> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<OptionResponse> options) {
+        this.options = options;
+    }
+
+    public List<ProductVariantResponse> getVariants() {
+        return variants;
+    }
+
+    public void setVariants(List<ProductVariantResponse> variants) {
+        this.variants = variants;
+    }
+
     public static final class Builder {
         private String id;
         private String barcode;
@@ -156,6 +177,8 @@ public class ProductResponse {
         private Long updatedAt;
         private Set<AssetResponse> assets;
         private Set<ProductItemResponse> relatedProducts;
+        private List<OptionResponse> options;
+        private List<ProductVariantResponse> variants;
 
         private Builder() {
         }
@@ -229,6 +252,16 @@ public class ProductResponse {
             return this;
         }
 
+        public Builder options(List<OptionResponse> options) {
+            this.options = options;
+            return this;
+        }
+
+        public Builder variants(List<ProductVariantResponse> variants) {
+            this.variants = variants;
+            return this;
+        }
+
         public ProductResponse build() {
             ProductResponse productResponse = new ProductResponse();
             productResponse.setId(id);
@@ -244,6 +277,8 @@ public class ProductResponse {
             productResponse.setUpdatedAt(updatedAt);
             productResponse.setAssets(assets);
             productResponse.setRelatedProducts(relatedProducts);
+            productResponse.setOptions(options);
+            productResponse.setVariants(variants);
             return productResponse;
         }
     }

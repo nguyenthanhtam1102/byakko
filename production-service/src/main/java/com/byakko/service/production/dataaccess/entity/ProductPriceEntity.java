@@ -11,14 +11,14 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "product_price_histories")
-@IdClass(ProductPriceHistoryEntityId.class)
+@Table(name = "product_prices")
+@IdClass(ProductPriceEntityId.class)
 @AttributeOverrides({
         @AttributeOverride(name = "originalPrice.amount", column = @Column(name = "original_price", nullable = false)),
         @AttributeOverride(name = "pricePerItem.amount", column = @Column(name = "price_per_item", nullable = false)),
         @AttributeOverride(name = "price.amount", column = @Column(name = "price", nullable = false))
 })
-public class ProductPriceHistoryEntity {
+public class ProductPriceEntity {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,6 +42,8 @@ public class ProductPriceHistoryEntity {
 
     @Embedded
     private Money pricePerItem;
+
+    private Boolean active;
 
     @Column(length = 512)
     private String reason;

@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Embeddable
-public class ProductPriceHistoryEntityId implements Serializable {
+public class ProductPriceEntityId implements Serializable {
 
     @EqualsAndHashCode.Include
     private ProductEntity product;

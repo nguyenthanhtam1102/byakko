@@ -3,16 +3,16 @@ package com.byakko.service.production.domain.domainapplication.port.output.repos
 import com.byakko.service.production.domain.domainapplication.dto.product.admin.GetPriceHistoriesForProductCommand;
 import com.byakko.service.production.domain.domainapplication.dto.product.admin.ProductPriceHistoriesResponse;
 import com.byakko.service.production.domain.domaincore.entity.Product;
-import com.byakko.service.production.domain.domaincore.entity.ProductPriceHistory;
+import com.byakko.service.production.domain.domaincore.entity.ProductPrice;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
-public interface ProductPriceHistoryRepository {
+public interface ProductPriceRepository {
 
-    ProductPriceHistoriesResponse getPriceHistoriesForProduct(GetPriceHistoriesForProductCommand command);
-    Optional<ProductPriceHistory> getLastedPriceForProduct(Product product);
-    ProductPriceHistory save(ProductPriceHistory priceHistory);
+    ProductPriceHistoriesResponse getPricesForProduct(GetPriceHistoriesForProductCommand command);
+    Optional<ProductPrice> getLastedPriceForProduct(Product product);
+    ProductPrice save(ProductPrice priceHistory);
 
 }

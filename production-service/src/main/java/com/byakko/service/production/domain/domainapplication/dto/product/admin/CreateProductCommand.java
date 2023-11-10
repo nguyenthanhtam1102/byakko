@@ -7,6 +7,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Set;
 
 public class CreateProductCommand {
@@ -22,20 +23,6 @@ public class CreateProductCommand {
 
     private String description;
 
-    @NotNull(message = "original_price must be not null")
-    @DecimalMin(value = "0", inclusive = true, message = "original_price must be greater than or equal 0")
-    @JsonProperty("original_price")
-    private BigDecimal originalPrice;
-
-    @NotNull(message = "price must be not null")
-    @DecimalMin(value = "0", inclusive = true, message = "price must be greater than or equal 0")
-    private BigDecimal price;
-
-    @NotNull(message = "price_per_item must be not null")
-    @DecimalMin(value = "0", inclusive = true, message = "price_per_item must be greater than or equal 0")
-    @JsonProperty("price_per_item")
-    private BigDecimal pricePerItem;
-
     @NotBlank(message = "status must be not blank")
     private String status;
 
@@ -43,6 +30,10 @@ public class CreateProductCommand {
 
     @JsonProperty("related_products")
     private Set<String> relatedProducts;
+
+    private Map<String, Set<String>> options;
+
+    private Set<CreateVariantCommand> variants;
 
     public String getBarcode() {
         return barcode;
@@ -84,30 +75,6 @@ public class CreateProductCommand {
         this.description = description;
     }
 
-    public BigDecimal getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(BigDecimal originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public BigDecimal getPricePerItem() {
-        return pricePerItem;
-    }
-
-    public void setPricePerItem(BigDecimal pricePerItem) {
-        this.pricePerItem = pricePerItem;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -130,5 +97,21 @@ public class CreateProductCommand {
 
     public void setRelatedProducts(Set<String> relatedProducts) {
         this.relatedProducts = relatedProducts;
+    }
+
+    public Map<String, Set<String>> getOptions() {
+        return options;
+    }
+
+    public void setOptions(Map<String, Set<String>> options) {
+        this.options = options;
+    }
+
+    public Set<CreateVariantCommand> getVariants() {
+        return variants;
+    }
+
+    public void setVariants(Set<CreateVariantCommand> variants) {
+        this.variants = variants;
     }
 }

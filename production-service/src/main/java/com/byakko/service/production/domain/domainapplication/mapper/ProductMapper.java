@@ -5,6 +5,7 @@ import com.byakko.service.production.domain.domainapplication.dto.product.admin.
 import com.byakko.service.production.domain.domainapplication.dto.product.customer.ProductDetailResponse;
 import com.byakko.service.production.domain.domainapplication.dto.product.customer.ProductFilterItemResponse;
 import com.byakko.service.production.domain.domaincore.entity.Product;
+import com.byakko.service.production.domain.domaincore.entity.ProductPrice;
 
 import java.util.stream.Collectors;
 
@@ -18,9 +19,6 @@ public class ProductMapper {
                 .slug(product.getSlug())
                 .name(product.getName())
                 .description(product.getDescription())
-                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice().getAmount() : null)
-                .price(product.getPrice() != null ? product.getPrice().getAmount() : null)
-                .pricePerItem(product.getPricePerItem() != null ? product.getPricePerItem().getAmount() : null)
                 .createdAt(product.getCreatedAt().toEpochSecond())
                 .updatedAt(product.getUpdatedAt() != null ? product.getUpdatedAt().toEpochSecond() : null)
                 .assets(product.getAssets() != null ? product.getAssets().stream().map(AssetMapper::toAssetResponse).collect(Collectors.toSet()) : null)
@@ -30,6 +28,8 @@ public class ProductMapper {
                                 .map(ProductMapper::toProductItemResponse)
                                 .collect(Collectors.toSet())
                         : null)
+                .options(product.getOptions() != null ? product.getOptions().stream().map(OptionMapper::toOptionResponse).toList() : null)
+                .variants(product.getVariants() != null ? product.getVariants().stream().map(ProductVariantMapper::toProductVariantResponse).toList() : null)
                 .build();
     }
 
@@ -38,22 +38,20 @@ public class ProductMapper {
                 .id(product.getId().getValue())
                 .slug(product.getSlug())
                 .name(product.getName())
-                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice().getAmount() : null)
-                .price(product.getPrice() != null ? product.getPrice().getAmount() : null)
                 .createdAt(product.getCreatedAt().toEpochSecond())
                 .updatedAt(product.getUpdatedAt() != null ? product.getUpdatedAt().toEpochSecond() : null)
                 .image(product.getImage() != null ? AssetMapper.toAssetResponse(product.getImage()) : null)
                 .build();
     }
 
-    public static ProductDetailResponse toProductDetailResponse(Product product) {
+    public static ProductDetailResponse toProductDetailResponse(Product product, ProductPrice productPrice) {
         return ProductDetailResponse.Builder.builder()
                 .id(product.getId().getValue())
                 .slug(product.getSlug())
                 .name(product.getName())
+                .originalPrice(productPrice.getOriginalPrice().getAmount())
+                .price(productPrice.getPrice().getAmount())
                 .description(product.getDescription())
-                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice().getAmount() : null)
-                .price(product.getPrice() != null ? product.getPrice().getAmount() : null)
                 .createdAt(product.getCreatedAt().toEpochSecond())
                 .updatedAt(product.getUpdatedAt() != null ? product.getUpdatedAt().toEpochSecond() : null)
                 .assets(product.getAssets() != null
@@ -76,8 +74,6 @@ public class ProductMapper {
                 .id(product.getId().getValue())
                 .slug(product.getSlug())
                 .name(product.getName())
-                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice().getAmount() : null)
-                .price(product.getPrice() != null ? product.getPrice().getAmount() : null)
                 .createdAt(product.getCreatedAt().toEpochSecond())
                 .updatedAt(product.getUpdatedAt() != null ? product.getUpdatedAt().toEpochSecond() : null)
                 .image(product.getImage() != null ? AssetMapper.toAssetResponse(product.getImage()) : null)

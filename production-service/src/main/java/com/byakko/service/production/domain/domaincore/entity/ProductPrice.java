@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
-public class ProductPriceHistory {
+public class ProductPrice {
 
     private Product product;
     private ZonedDateTime startDate;
@@ -17,6 +17,7 @@ public class ProductPriceHistory {
     private Money price;
     private Money pricePerItem;
     private String reason;
+    private Boolean active;
 
     public void initialize() {
         if(startDate == null)
@@ -123,6 +124,14 @@ public class ProductPriceHistory {
         this.reason = reason;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "ProductPriceHistory{" +
@@ -144,6 +153,7 @@ public class ProductPriceHistory {
         private Money price;
         private Money pricePerItem;
         private String reason;
+        private Boolean active;
 
         private Builder() {
         }
@@ -187,16 +197,22 @@ public class ProductPriceHistory {
             return this;
         }
 
-        public ProductPriceHistory build() {
-            ProductPriceHistory productPriceHistory = new ProductPriceHistory();
-            productPriceHistory.setProduct(product);
-            productPriceHistory.setStartDate(startDate);
-            productPriceHistory.setEndDate(endDate);
-            productPriceHistory.setOriginalPrice(originalPrice);
-            productPriceHistory.setPrice(price);
-            productPriceHistory.setPricePerItem(pricePerItem);
-            productPriceHistory.setReason(reason);
-            return productPriceHistory;
+        public Builder active(Boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public ProductPrice build() {
+            ProductPrice productPrice = new ProductPrice();
+            productPrice.setProduct(product);
+            productPrice.setStartDate(startDate);
+            productPrice.setEndDate(endDate);
+            productPrice.setOriginalPrice(originalPrice);
+            productPrice.setPrice(price);
+            productPrice.setPricePerItem(pricePerItem);
+            productPrice.setReason(reason);
+            productPrice.setActive(active);
+            return productPrice;
         }
     }
 }

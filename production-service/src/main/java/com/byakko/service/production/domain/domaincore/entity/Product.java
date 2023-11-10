@@ -20,15 +20,14 @@ public class Product extends BaseEntity<ProductId> {
     private String slug;
     private String name;
     private String description;
-    private Money originalPrice;
-    private Money price;
-    private Money pricePerItem;
     private ProductStatus status;
     private ZonedDateTime createdAt;
     private ZonedDateTime updatedAt;
     private Asset image;
     private Set<Asset> assets;
     private Set<Product> relatedProducts;
+    private Set<Option> options;
+    private Set<ProductVariant> variants;
 
     public Product() {
     }
@@ -46,9 +45,6 @@ public class Product extends BaseEntity<ProductId> {
 
     public void validate() {
         validateName();
-        validateOriginalPrice();
-        validatePrice();
-        validatePricePerItem();
         validateStatus();
     }
 
@@ -57,30 +53,6 @@ public class Product extends BaseEntity<ProductId> {
             throw new ValidationException(Map.of("name", "name must be not blank"));
         } else if(name.length() > 255) {
             throw new ValidationException(Map.of("name", "name maximum 255 characters"));
-        }
-    }
-
-    private void validateOriginalPrice() {
-        if(originalPrice == null) {
-            throw new ValidationException(Map.of("originalPrice", "originalPrice must be greater than or equal 0"));
-        } else if(!originalPrice.isGreaterThanOrEqualZero()) {
-            throw new ValidationException(Map.of("originalPrice", "originalPrice must be greater than or equal 0"));
-        }
-    }
-
-    private void validatePrice() {
-        if(price == null) {
-            throw new ValidationException(Map.of("price", "price must be greater than or equal 0"));
-        } else if(!price.isGreaterThanOrEqualZero()) {
-            throw new ValidationException(Map.of("price", "price must be greater than or equal 0"));
-        }
-    }
-
-    private void validatePricePerItem() {
-        if(pricePerItem == null) {
-            throw new ValidationException(Map.of("pricePerItem", "pricePerItem must be greater than or equal 0"));
-        } else if(!pricePerItem.isGreaterThanOrEqualZero()) {
-            throw new ValidationException(Map.of("pricePerItem", "pricePerItem must be greater than or equal 0"));
         }
     }
 
@@ -128,30 +100,6 @@ public class Product extends BaseEntity<ProductId> {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Money getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(Money originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public Money getPrice() {
-        return price;
-    }
-
-    public void setPrice(Money price) {
-        this.price = price;
-    }
-
-    public Money getPricePerItem() {
-        return pricePerItem;
-    }
-
-    public void setPricePerItem(Money pricePerItem) {
-        this.pricePerItem = pricePerItem;
     }
 
     public ProductStatus getStatus() {
@@ -202,123 +150,20 @@ public class Product extends BaseEntity<ProductId> {
         this.relatedProducts = relatedProducts;
     }
 
-    public static final class Builder {
-        private ProductId id;
-        private String barcode;
-        private String sku;
-        private String slug;
-        private String name;
-        private String description;
-        private Money originalPrice;
-        private Money price;
-        private Money pricePerItem;
-        private ProductStatus status;
-        private ZonedDateTime createdAt;
-        private ZonedDateTime updatedAt;
-        private Asset image;
-        private Set<Asset> assets;
-        private Set<Product> relatedProducts;
-
-        private Builder() {
-        }
-
-        public static Builder builder() {
-            return new Builder();
-        }
-
-        public Builder id(ProductId id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder barcode(String barcode) {
-            this.barcode = barcode;
-            return this;
-        }
-
-        public Builder sku(String sku) {
-            this.sku = sku;
-            return this;
-        }
-
-        public Builder slug(String slug) {
-            this.slug = slug;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder description(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder originalPrice(Money originalPrice) {
-            this.originalPrice = originalPrice;
-            return this;
-        }
-
-        public Builder price(Money price) {
-            this.price = price;
-            return this;
-        }
-
-        public Builder pricePerItem(Money pricePerItem) {
-            this.pricePerItem = pricePerItem;
-            return this;
-        }
-
-        public Builder status(ProductStatus status) {
-            this.status = status;
-            return this;
-        }
-
-        public Builder createdAt(ZonedDateTime createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public Builder updatedAt(ZonedDateTime updatedAt) {
-            this.updatedAt = updatedAt;
-            return this;
-        }
-
-        public Builder image(Asset image) {
-            this.image = image;
-            return this;
-        }
-
-        public Builder assets(Set<Asset> assets) {
-            this.assets = assets;
-            return this;
-        }
-
-        public Builder relatedProducts(Set<Product> relatedProducts) {
-            this.relatedProducts = relatedProducts;
-            return this;
-        }
-
-        public Product build() {
-            Product product = new Product();
-            product.setId(id);
-            product.setBarcode(barcode);
-            product.setSku(sku);
-            product.setSlug(slug);
-            product.setName(name);
-            product.setDescription(description);
-            product.setOriginalPrice(originalPrice);
-            product.setPrice(price);
-            product.setPricePerItem(pricePerItem);
-            product.setStatus(status);
-            product.setCreatedAt(createdAt);
-            product.setUpdatedAt(updatedAt);
-            product.setImage(image);
-            product.setAssets(assets);
-            product.setRelatedProducts(relatedProducts);
-            return product;
-        }
+    public Set<Option> getOptions() {
+        return options;
     }
+
+    public void setOptions(Set<Option> options) {
+        this.options = options;
+    }
+
+    public Set<ProductVariant> getVariants() {
+        return variants;
+    }
+
+    public void setVariants(Set<ProductVariant> variants) {
+        this.variants = variants;
+    }
+
 }

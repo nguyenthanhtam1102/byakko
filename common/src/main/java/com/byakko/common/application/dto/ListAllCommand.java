@@ -1,5 +1,6 @@
 package com.byakko.common.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,11 @@ public class ListAllCommand {
     private Integer limit = 15;
 
     private String query;
+
+    @JsonProperty("sort_by")
+    private String sortBy;
+
+    @JsonProperty("sort_direction")
+    private String sortDirection;
 
 }

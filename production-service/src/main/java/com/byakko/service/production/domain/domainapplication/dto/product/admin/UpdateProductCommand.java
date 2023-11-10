@@ -22,14 +22,6 @@ public class UpdateProductCommand {
 
     private String description;
 
-    @JsonProperty("original_price")
-    private BigDecimal originalPrice;
-
-    private BigDecimal price;
-
-    @JsonProperty("price_per_item")
-    private BigDecimal pricePerItem;
-
     private String status;
 
     private Set<String> assets;
@@ -83,30 +75,6 @@ public class UpdateProductCommand {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public BigDecimal getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(BigDecimal originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public BigDecimal getPricePerItem() {
-        return pricePerItem;
-    }
-
-    public void setPricePerItem(BigDecimal pricePerItem) {
-        this.pricePerItem = pricePerItem;
     }
 
     public String getStatus() {
