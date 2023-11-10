@@ -53,10 +53,12 @@ public class ProductMapper {
                         .map(asset -> new AssetEntity(asset.getId().getValue()))
                         .collect(Collectors.toSet())
                         : null)
-                .relatedProducts(product.getRelatedProducts()
+                .relatedProducts(product.getRelatedProducts() != null
+                        ? product.getRelatedProducts()
                         .stream()
                         .map(productId -> new ProductEntity(productId.getId().getValue()))
-                        .collect(Collectors.toSet()))
+                        .collect(Collectors.toSet())
+                        : null)
                 .build();
     }
 
