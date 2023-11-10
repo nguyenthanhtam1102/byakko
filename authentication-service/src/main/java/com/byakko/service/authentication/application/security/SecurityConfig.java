@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/sa/signin").permitAll()
                 .antMatchers("/shopowner/signin").permitAll()
                 .antMatchers("/shopowner").hasAuthority(SystemRole.SYSTEM_ADMIN.getName())
+
 //                .antMatchers(HttpMethod.GET, "/users", "/users/{id}").hasRole(SystemRole.CUSTOMER.getName())
 //                .antMatchers().hasRole(SystemRole.SYSTEM_ADMIN.getName())
 //                .antMatchers().hasRole(SystemPermission.CREATE_PRODUCT.getName())

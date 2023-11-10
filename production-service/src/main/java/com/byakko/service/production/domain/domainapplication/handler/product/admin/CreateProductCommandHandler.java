@@ -2,22 +2,22 @@ package com.byakko.service.production.domain.domainapplication.handler.product.a
 
 import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.common.domain.exception.ValidationException;
-import com.byakko.common.valueobject.Money;
 import com.byakko.service.production.domain.domainapplication.dto.product.admin.CreateProductCommand;
 import com.byakko.service.production.domain.domainapplication.dto.product.admin.ProductResponse;
 import com.byakko.service.production.domain.domainapplication.handler.product.ProductCommandHandlerHelper;
 import com.byakko.service.production.domain.domainapplication.mapper.ProductMapper;
-import com.byakko.service.production.domain.domainapplication.port.output.repository.ProductPriceHistoryRepository;
+import com.byakko.service.production.domain.domainapplication.port.output.repository.OptionRepository;
 import com.byakko.service.production.domain.domainapplication.port.output.repository.ProductRepository;
-import com.byakko.service.production.domain.domaincore.entity.Product;
-import com.byakko.service.production.domain.domaincore.entity.ProductPriceHistory;
+import com.byakko.service.production.domain.domaincore.entity.*;
 import com.byakko.service.production.domain.domaincore.valueobject.AssetId;
 import com.byakko.service.production.domain.domaincore.valueobject.ProductId;
 import com.byakko.service.production.domain.domaincore.valueobject.ProductStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,14 +25,14 @@ public class CreateProductCommandHandler {
 
     private final ProductRepository productRepository;
     private final ProductCommandHandlerHelper productCommandHandlerHelper;
-    private final ProductPriceHistoryRepository productPriceHistoryRepository;
+    private final OptionRepository optionRepository;
 
     public CreateProductCommandHandler(ProductRepository productRepository,
                                        ProductCommandHandlerHelper productCommandHandlerHelper,
-                                       ProductPriceHistoryRepository productPriceHistoryRepository) {
+                                       OptionRepository optionRepository) {
         this.productRepository = productRepository;
         this.productCommandHandlerHelper = productCommandHandlerHelper;
-        this.productPriceHistoryRepository = productPriceHistoryRepository;
+        this.optionRepository = optionRepository;
     }
 
     @Transactional
@@ -43,9 +43,6 @@ public class CreateProductCommandHandler {
                 .slug(command.getSlug())
                 .name(command.getName())
                 .description(command.getDescription())
-                .originalPrice(command.getOriginalPrice() != null ? new Money(command.getOriginalPrice()) : null)
-                .price(command.getPrice() != null ? new Money(command.getPrice()) : null)
-                .pricePerItem(command.getPricePerItem() != null ? new Money(command.getPricePerItem()) : null)
                 .build();
 
         if(command.getStatus() != null) {
@@ -79,23 +76,51 @@ public class CreateProductCommandHandler {
             );
         }
 
+        if(command.getOptions() != null && !command.getOptions().isEmpty()) {
+            Set<Option> options = new HashSet<>();
+            command.getOptions().forEach((optionName, optionValues) -> {
+                Option option = Option.Builder.builder()
+                                .name(optionName)
+                                .build();
+
+                Set<OptionValue> values = optionValues.stream()
+                        .map(valueName -> new OptionValue(valueName, option))
+                        .collect(Collectors.toSet());
+
+                option.setValues(values);
+
+                option.initialize();
+
+                options.add(option);
+
+                optionRepository.save(option);
+            });
+
+            if(command.getVariants() != null && !command.getVariants().isEmpty()) {
+                Set<ProductVariant> variants = command.getVariants().stream().map(createVariantCommand -> {
+                    ProductVariant productVariant = new ProductVariant();
+                    productVariant.setSku(createVariantCommand.getSku());
+
+                    Set<ProductVariantOption> variantOptions = new HashSet<>();
+                    createVariantCommand.getVariantOptions().forEach((optionName, valueName) -> {
+                        ProductVariantOption productVariantOption = new ProductVariantOption();
+                        Option option = options.stream().filter(op -> op.getName().equals(optionName)).findFirst().orElseThrow(() -> new NotFoundException(String.format("Option %s not found", optionName)));
+                        productVariantOption.setOption(option);
+                        OptionValue value = option.getValues().stream().filter(vl -> vl.getName().equals(valueName)).findFirst().orElseThrow(() -> new NotFoundException(String.format("Option value %s not found", valueName)));
+                        productVariantOption.setOptionValue(value);
+                        variantOptions.add(productVariantOption);
+                    });
+                    productVariant.setVariantOptions(variantOptions);
+                    return productVariant;
+                }).collect(Collectors.toSet());
+                product.setVariants(variants);
+            }
+        }
+
         product.initialize();
         product.validate();
 
         productRepository.save(product);
-
-        // Tạo ra một price history
-        ProductPriceHistory priceHistory = ProductPriceHistory.Builder.builder()
-                .product(product)
-                .originalPrice(product.getOriginalPrice())
-                .price(product.getPrice())
-                .pricePerItem(product.getPricePerItem())
-                .build();
-
-        priceHistory.initialize();
-        priceHistory.validate();
-
-        productPriceHistoryRepository.save(priceHistory);
 
         return ProductMapper.toProductResponse(product);
     }

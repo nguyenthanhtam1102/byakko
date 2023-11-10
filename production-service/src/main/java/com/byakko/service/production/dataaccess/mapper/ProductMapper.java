@@ -5,6 +5,7 @@ import com.byakko.service.production.dataaccess.entity.ProductEntity;
 import com.byakko.service.production.domain.domainapplication.dto.product.admin.ProductItemResponse;
 import com.byakko.service.production.domain.domainapplication.dto.product.customer.ProductFilterItemResponse;
 import com.byakko.service.production.domain.domaincore.entity.Product;
+import com.byakko.service.production.domain.domaincore.entity.ProductPrice;
 import com.byakko.service.production.domain.domaincore.valueobject.ProductId;
 
 import java.util.stream.Collectors;
@@ -19,9 +20,6 @@ public class ProductMapper {
                 .slug(productEntity.getSlug())
                 .name(productEntity.getName())
                 .description(productEntity.getDescription())
-                .originalPrice(productEntity.getOriginalPrice())
-                .price(productEntity.getPrice())
-                .pricePerItem(productEntity.getPricePerItem())
                 .status(productEntity.getStatus())
                 .createdAt(productEntity.getCreatedAt())
                 .updatedAt(productEntity.getUpdatedAt())
@@ -40,9 +38,6 @@ public class ProductMapper {
                 .slug(product.getSlug())
                 .name(product.getName())
                 .description(product.getDescription())
-                .originalPrice(product.getOriginalPrice())
-                .price(product.getPrice())
-                .pricePerItem(product.getPricePerItem())
                 .status(product.getStatus())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
@@ -67,21 +62,19 @@ public class ProductMapper {
                 .id(productEntity.getId())
                 .slug(productEntity.getSlug())
                 .name(productEntity.getName())
-                .originalPrice(productEntity.getOriginalPrice() != null ? productEntity.getOriginalPrice().getAmount() : null)
-                .price(productEntity.getPrice() != null ? productEntity.getPrice().getAmount() : null)
                 .createdAt(productEntity.getCreatedAt().toEpochSecond())
                 .updatedAt(productEntity.getUpdatedAt() != null ? productEntity.getUpdatedAt().toEpochSecond() : null)
                 .image(productEntity.getImage() != null ? AssetMapper.toAssetResponse(productEntity.getImage()) : null)
                 .build();
     }
 
-    public static ProductFilterItemResponse toProductFilterItemResponse(ProductEntity product) {
+    public static ProductFilterItemResponse toProductFilterItemResponse(ProductEntity product, ProductPrice productPrice) {
         return ProductFilterItemResponse.Builder.builder()
                 .id(product.getId())
                 .slug(product.getSlug())
                 .name(product.getName())
-                .originalPrice(product.getOriginalPrice() != null ? product.getOriginalPrice().getAmount() : null)
-                .price(product.getPrice() != null ? product.getPrice().getAmount() : null)
+                .originalPrice(productPrice.getOriginalPrice().getAmount())
+                .price(productPrice.getPrice().getAmount())
                 .createdAt(product.getCreatedAt().toEpochSecond())
                 .updatedAt(product.getUpdatedAt() != null ? product.getUpdatedAt().toEpochSecond() : null)
                 .image(product.getImage() != null ? AssetMapper.toAssetResponse(product.getImage()) : null)
