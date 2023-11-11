@@ -14,41 +14,28 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "global_options")
+public class GlobalOption {
 
     @Id
     @EqualsAndHashCode.Include
     private String id;
 
-    private String barcode;
-
+    @Column(length = 60, nullable = false)
     private String name;
 
-    private String sku;
-
-    private String description;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "products_to_categories",
-            joinColumns =@JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private Set<Category> categories;
+    @OneToMany(mappedBy = "option", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<GlobalOptionValue> values;
 
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private ZonedDateTime updated;
+    private ZonedDateTime updatedAt;
 
-    private boolean deleted;
-
-    public Product() {
+    public GlobalOption() {
         id = UUID.randomUUID().toString().replace("-", "");
         createdAt = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
-        updated = createdAt;
+        updatedAt = createdAt;
     }
-
 }
