@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -17,8 +16,8 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "option_values")
+public class OptionValue {
 
     @Id
     @EqualsAndHashCode.Include
@@ -27,15 +26,9 @@ public class Category {
     @Column(length = 60, nullable = false)
     private String name;
 
-    @Column(columnDefinition = "text")
-    private String description;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Category parent;
-
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-    private Set<Category> children;
+    @JoinColumn(name = "option_id", nullable = false)
+    private Option option;
 
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
@@ -43,16 +36,10 @@ public class Category {
     @Column(name = "updated_at", nullable = false)
     private ZonedDateTime updatedAt;
 
-    private boolean deleted;
-
-    public Category() {
+    public OptionValue() {
         id = UUID.randomUUID().toString().replace("-", "");
         createdAt = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
         updatedAt = createdAt;
     }
 
-    @Override
-    public String toString() {
-        return "Category{}";
-    }
 }

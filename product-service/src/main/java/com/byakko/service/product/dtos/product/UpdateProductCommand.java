@@ -1,5 +1,6 @@
 package com.byakko.service.product.dtos.product;
 
+import com.byakko.service.product.dtos.global_option.CreateOptionCommand;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,9 +16,9 @@ public class UpdateProductCommand {
     private String barcode;
     private String sku;
     private String description;
+    private Set<String> assets;
     private Set<String> categories;
+    private Set<CreateOptionCommand> options;
+    private Set<CreateProductVariantCommand> variants;
 
-    public UpdateProductCommand(String id) {
-        this.id = id;
-    }
 }

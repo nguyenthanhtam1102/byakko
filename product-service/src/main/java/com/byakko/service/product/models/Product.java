@@ -31,11 +31,25 @@ public class Product {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
+            name = "products_to_assets",
+            joinColumns =@JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "asset_id")
+    )
+    private Set<Asset> assets;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
             name = "products_to_categories",
             joinColumns =@JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Option> options;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ProductVariant> variants;
 
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
@@ -51,4 +65,8 @@ public class Product {
         updated = createdAt;
     }
 
+    @Override
+    public String toString() {
+        return "Product{}";
+    }
 }

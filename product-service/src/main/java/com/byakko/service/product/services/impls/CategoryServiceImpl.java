@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ListAllCategoriesResponse getRootCategories(GetRootCategoriesCommand command) {
-        Page<Category> rootCategories = categoryRepository.findByParentIsNull(PageRequest.of(command.getPage(), command.getLimit()));
+        Page<Category> rootCategories = categoryRepository.findByParentIsNullAndDeletedIsFalse(PageRequest.of(command.getPage(), command.getLimit()));
         if (command.getDepth() > 0) {
             rootCategories.forEach(category -> loadChildren(category, command.getDepth()));
         }
