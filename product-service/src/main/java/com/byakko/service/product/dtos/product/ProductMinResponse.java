@@ -1,5 +1,6 @@
 package com.byakko.service.product.dtos.product;
 
+import com.byakko.service.product.dtos.assets.AssetMinResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +14,6 @@ public class ProductMinResponse {
     private String barcode;
     private String name;
     private String sku;
+    private AssetMinResponse image;
 
 }

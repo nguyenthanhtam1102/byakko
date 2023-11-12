@@ -20,10 +20,8 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     @Query("select c from Category c where c.id = :id and c.deleted = false ")
     Optional<Category> findById(@Param("id") String id);
 
-    @Query("select c from Category c where c.parent is null and c.deleted = false")
-    Page<Category> findByParentIsNull(Pageable pageable);
+    Page<Category> findByParentIsNullAndDeletedIsFalse(Pageable pageable);
 
     List<Category> findAllByParentAndDeletedIsFalse(Category parent);
-    List<Category> findAllByDeletedIsFalse();
 
 }

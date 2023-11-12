@@ -6,10 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -17,25 +19,26 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "assets")
+public class Asset {
 
     @Id
     @EqualsAndHashCode.Include
     private String id;
 
-    @Column(length = 60, nullable = false)
-    private String name;
+    @Column(name = "filename", length = 255, nullable = false)
+    private String filename;
 
-    @Column(columnDefinition = "text")
-    private String description;
+    @Column(length = 255, nullable = false)
+    private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Category parent;
+    private Long size;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-    private Set<Category> children;
+    @Column(name = "blob_id")
+    private String blobId;
+
+    @Column(name = "content_type")
+    private String contentType;
 
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
@@ -43,16 +46,10 @@ public class Category {
     @Column(name = "updated_at", nullable = false)
     private ZonedDateTime updatedAt;
 
-    private boolean deleted;
-
-    public Category() {
+    public Asset() {
         id = UUID.randomUUID().toString().replace("-", "");
         createdAt = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
         updatedAt = createdAt;
     }
 
-    @Override
-    public String toString() {
-        return "Category{}";
-    }
 }

@@ -17,25 +17,19 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "product_variants")
+public class ProductVariant {
 
     @Id
     @EqualsAndHashCode.Include
     private String id;
 
-    @Column(length = 60, nullable = false)
-    private String name;
-
-    @Column(columnDefinition = "text")
-    private String description;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Category parent;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.LAZY)
-    private Set<Category> children;
+    @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<VariantOption> variantOptions;
 
     @Column(name = "created_at", nullable = false)
     private ZonedDateTime createdAt;
@@ -45,14 +39,10 @@ public class Category {
 
     private boolean deleted;
 
-    public Category() {
+    public ProductVariant() {
         id = UUID.randomUUID().toString().replace("-", "");
         createdAt = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
         updatedAt = createdAt;
     }
 
-    @Override
-    public String toString() {
-        return "Category{}";
-    }
 }
