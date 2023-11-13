@@ -16,7 +16,7 @@ public interface ShopOwnerService {
     void changePassword(@Valid ShopOwnerChangePasswordCommand command);
     void sendResetPasswordMail(@Valid SendResetPasswordMailCommand command);
     void resetPassword(@Valid ShopOwnerResetPasswordCommand command);
-    void deleteCustomer(@Valid DeleteShopOwner command);
+    void deleteShopOwner(@Valid DeleteShopOwner command);
     void resendEmailAddressVerificationMail(@Valid ResendEmailAddressVerificationMailCommand command);
     void verifyEmailAddress(@Valid VerifyEmailAddressCommand command);
 }

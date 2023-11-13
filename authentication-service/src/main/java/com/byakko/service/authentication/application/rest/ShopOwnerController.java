@@ -59,8 +59,8 @@ public class ShopOwnerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable("id") String id) {
-        shopOwnerService.deleteCustomer(new DeleteShopOwner(id));
+    public ResponseEntity<?> deleteShopOwner(@PathVariable("id") String id) {
+        shopOwnerService.deleteShopOwner(new DeleteShopOwner(id));
         return ResponseEntity.ok("Delete success");
     }
 
