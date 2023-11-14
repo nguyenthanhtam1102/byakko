@@ -20,6 +20,12 @@ public class Inventory {
     @EqualsAndHashCode.Include
     private String id;
 
+    @Column(name = "start_date", nullable = false)
+    private ZonedDateTime startDate;
+
+    @Column(name = "end_date")
+    private ZonedDateTime endDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
@@ -31,16 +37,13 @@ public class Inventory {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(name = "created_at", nullable = false)
-    private ZonedDateTime createdAt;
-
     @Column(name = "updated_at", nullable = false)
     private ZonedDateTime updatedAt;
 
     public Inventory() {
         id = UUID.randomUUID().toString().replace("-", "");
-        createdAt = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
-        updatedAt = createdAt;
+        startDate = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
+        updatedAt = startDate;
     }
 
 }

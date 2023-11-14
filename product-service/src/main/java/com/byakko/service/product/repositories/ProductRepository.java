@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query("select p from Product p where (lower(p.id) like :idOrName or lower(p.name) like :idOrName) and p.deleted = false")
-    Page<Product> findAllByIdOrName(@Param("idOrName") String idOrName, Pageable pageable);
+    Page<Product> search(@Param("idOrName") String idOrName, Pageable pageable);
 
     @Query("select p from Product p where p.id = :id and p.deleted = false")
     Optional<Product> findById(@Param("id") String id);

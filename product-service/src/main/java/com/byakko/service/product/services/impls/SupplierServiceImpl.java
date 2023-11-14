@@ -60,7 +60,7 @@ public class SupplierServiceImpl implements SupplierService {
 
         Pageable pageable = PageRequest.of(command.getPage(), command.getLimit(), sort);
 
-        Page<Supplier> page = supplierRepository.findAllByIdOrName(
+        Page<Supplier> page = supplierRepository.search(
                 "%" + (command.getQuery() != null ? command.getQuery().toLowerCase() : "") + "%",
                 pageable
         );

@@ -82,11 +82,14 @@ public class AssetServiceImpl implements AssetService {
 
         if(command.getFile() != null) {
             String contentType = command.getFile().getContentType();
+            System.out.println(contentType);
+
             if(contentType != null && !contentType.isBlank()
                     && (contentType.startsWith("image/") || contentType.startsWith("video/"))) {
                 try {
                     Blob blob = firebaseStorageService.uploadFile(command.getFile());
                     asset.setBlobId(command.getFile().getOriginalFilename());
+
                     asset.setUrl(blob.getMediaLink());
                     asset.setSize(command.getFile().getSize());
                     asset.setContentType(command.getFile().getContentType());
