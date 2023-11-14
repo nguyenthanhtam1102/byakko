@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface PageRepository extends JpaRepository<PageEntity,Integer> {
     List<PageEntity> findAll();
+    PageEntity findByPath(String path);
 }
