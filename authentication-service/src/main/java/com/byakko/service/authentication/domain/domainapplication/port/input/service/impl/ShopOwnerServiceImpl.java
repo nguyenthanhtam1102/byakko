@@ -58,7 +58,7 @@ public class ShopOwnerServiceImpl implements ShopOwnerService {
     }
 
     @Override
-    public void deleteCustomer(DeleteShopOwner command) {
+    public void deleteShopOwner(DeleteShopOwner command) {
         shopOwnerDeleteCommandHandler.delete(command);
     }
 

@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 
         Pageable pageable = PageRequest.of(command.getPage(), command.getLimit(), sort);
 
-        Page<Product> page = productRepository.findAllByIdOrName(
+        Page<Product> page = productRepository.search(
                 "%" + (command.getQuery() != null ? command.getQuery().toLowerCase() : "") + "%",
                 pageable
         );
