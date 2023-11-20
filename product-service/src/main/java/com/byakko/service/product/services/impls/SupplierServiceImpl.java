@@ -34,7 +34,6 @@ public class SupplierServiceImpl implements SupplierService {
 
     private final SupplierRepository supplierRepository;
     private final AdministrativeDivisionRepository administrativeDivisionRepository;
-    private final AddressRepository addressRepository;
 
     @Override
     public ListAllSuppliersResponse listAllSuppliers(ListAllSuppliersCommand command) {
@@ -59,6 +58,8 @@ public class SupplierServiceImpl implements SupplierService {
         }
 
         Pageable pageable = PageRequest.of(command.getPage(), command.getLimit(), sort);
+
+        System.out.println("Query: " + command.getQuery());
 
         Page<Supplier> page = supplierRepository.search(
                 "%" + (command.getQuery() != null ? command.getQuery().toLowerCase() : "") + "%",
@@ -89,6 +90,8 @@ public class SupplierServiceImpl implements SupplierService {
 
         AddressDTO addressDTO = command.getAddress();
         if(addressDTO != null) {
+            System.out.println(addressDTO);
+
             AdministrativeDivision province = administrativeDivisionRepository.findById(addressDTO.getProvinceCode())
                     .orElseThrow(() -> new NotFoundException(String.format("Province with code %s not found", addressDTO.getProvinceCode())));
             AdministrativeDivision district = administrativeDivisionRepository.findById(addressDTO.getDistrictCode())

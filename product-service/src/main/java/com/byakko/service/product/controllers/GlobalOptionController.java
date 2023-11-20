@@ -7,8 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/global_options")
+@RequestMapping("/globaloptions")
 @RequiredArgsConstructor
 public class GlobalOptionController {
 

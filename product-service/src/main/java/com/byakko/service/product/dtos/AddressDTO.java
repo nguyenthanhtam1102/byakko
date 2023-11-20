@@ -19,6 +19,7 @@ public class AddressDTO {
     @JsonProperty("commune_code")
     private String communeCode;
 
+    @JsonProperty("address_detail")
     private String address;
 
 }
