@@ -2,6 +2,7 @@ package com.byakko.service.product;
 
 import com.byakko.service.product.models.AdministrativeDivision;
 import com.byakko.service.product.models.AdministrativeDivisionType;
+import com.byakko.service.product.models.Supplier;
 import com.byakko.service.product.repositories.AdministrativeDivisionRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +37,9 @@ public class ProductServiceApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        importAdministrativeDivisions();
+
+        Supplier supplier = new Supplier();
+        
     }
 
     private void importAdministrativeDivisions() throws Exception {
