@@ -17,9 +17,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,6 +35,7 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryRepository categoryRepository;
     private final OptionRepository optionRepository;
     private final ProductVariantRepository productVariantRepository;
+    private final ProductPriceRepository productPriceRepository;
 
     @Override
     public ListAllProductsResponse listAllProducts(ListAllProductsCommand command) {
@@ -288,4 +291,22 @@ public class ProductServiceImpl implements ProductService {
         productVariantRepository.saveAllAndFlush(variants);
     }
 
+    private ProductPrice getCurrentPriceForProduct(Product product) {
+        LocalDate currentDate = LocalDate.now();
+        List<ProductPrice> currentPrices = productPriceRepository.findCurrentPriceByProduct(product, currentDate);
+        
+        ProductPrice currentPrice = null;
+        
+        if(!currentPrices.isEmpty()) {
+            currentPrice = currentPrices.get(0);
+        } else {
+            List<ProductPrice> nearestPrices = productPriceRepository.findNearestPricesBeforeCurrentDate(product, currentDate);
+            if(!nearestPrices.isEmpty()) {
+                currentPrice = nearestPrices.get(0);
+            }
+        }
+        
+        return currentPrice;
+    }
+    
 }
