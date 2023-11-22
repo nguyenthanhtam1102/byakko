@@ -70,9 +70,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/roles/**").hasAnyAuthority(SystemRole.SYSTEM_ADMIN.getName(), SystemRole.SHOP_OWNER.getName())
 
                 .antMatchers("/sa/signin").permitAll()
-                .antMatchers("/shopowner/signin").permitAll()
-                .antMatchers("/shopowner").hasAuthority(SystemRole.SYSTEM_ADMIN.getName())
-
+                .antMatchers("/shopowners/signin").permitAll()
+                .antMatchers("/shopowners/signup").permitAll()
+                .antMatchers("/shopowners/sendResetPasswordMail").permitAll()
+                .antMatchers("/shopowners/resetPassword").permitAll()
+                .antMatchers("/shopowners/{id}/resendVerifyMail").permitAll()
+                .antMatchers("/shopowners/verifyemailaddress").permitAll()
+                .antMatchers("/shopowners/{id}").hasAuthority(SystemRole.SHOP_OWNER.getName())
 //                .antMatchers(HttpMethod.GET, "/users", "/users/{id}").hasRole(SystemRole.CUSTOMER.getName())
 //                .antMatchers().hasRole(SystemRole.SYSTEM_ADMIN.getName())
 //                .antMatchers().hasRole(SystemPermission.CREATE_PRODUCT.getName())

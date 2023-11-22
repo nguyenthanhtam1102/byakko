@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
         product.setBarcode(command.getBarcode());
         product.setDescription(command.getDescription());
 
-        if(command.getAssets() != null & !command.getAssets().isEmpty()) {
+        if(command.getAssets() != null && !command.getAssets().isEmpty()) {
             Set<Asset> assets = command.getAssets()
                     .stream()
                     .map(assetId -> assetRepository.findById(assetId)
@@ -133,12 +133,11 @@ public class ProductServiceImpl implements ProductService {
                         Option option = options.stream().filter(op -> op.getName().equals(optionName)).findFirst()
                                 .orElseThrow(() -> new NotFoundException(String.format("Option with name %s not found", optionName)));
 
-                        OptionValue value = option.getValues().stream().filter(val -> val.getName().equals(optionName)).findFirst()
+                        OptionValue value = option.getValues().stream().filter(val -> val.getName().equals(valueName)).findFirst()
                                 .orElseThrow(() -> new NotFoundException(String.format("Option value with name %s not found", valueName)));
 
                         variantOptions.add(new VariantOption(productVariant, option, value));
                     });
-
                     if(options.size() != variantOptions.size()) {
                         throw new ValidationException(Map.of("variant_options", "Số lượng variant_options không khớp với số lượng options"));
                     }
@@ -235,6 +234,7 @@ public class ProductServiceImpl implements ProductService {
             Set<ProductVariant> variants = command.getVariants().stream().map(v -> {
                 ProductVariant productVariant = new ProductVariant();
                 productVariant.setProduct(product);
+
 
                 Set<VariantOption> variantOptions = new HashSet<>();
                 v.getOptions().forEach((optionName, valueName) -> {
