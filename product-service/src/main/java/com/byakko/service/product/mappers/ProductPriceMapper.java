@@ -15,7 +15,9 @@ public class ProductPriceMapper {
                 .employee(productPrice.getEmployee().getId())
                 .price(MoneyResponse.toMoneyResponse(productPrice.getPrice()))
                 .startDate(productPrice.getStartDate().atStartOfDay(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())
-                .endDate(productPrice.getEndDate() != null ? productPrice.getEndDate().atStartOfDay(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond() : null)
+                .endDate(productPrice.getEndDate() != null
+                        ? productPrice.getEndDate().atStartOfDay(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond()
+                        : null)
                 .note(productPrice.getNote())
                 .active(productPrice.isActive())
                 .modifiedDate(productPrice.getStartDate().atStartOfDay(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())
