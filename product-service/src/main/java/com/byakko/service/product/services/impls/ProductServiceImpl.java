@@ -136,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
                         Option option = options.stream().filter(op -> op.getName().equals(optionName)).findFirst()
                                 .orElseThrow(() -> new NotFoundException(String.format("Option with name %s not found", optionName)));
 
-                        OptionValue value = option.getValues().stream().filter(val -> val.getName().equals(optionName)).findFirst()
+                        OptionValue value = option.getValues().stream().filter(val -> val.getName().equals(valueName)).findFirst()
                                 .orElseThrow(() -> new NotFoundException(String.format("Option value with name %s not found", valueName)));
 
                         variantOptions.add(new VariantOption(productVariant, option, value));
