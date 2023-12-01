@@ -1,14 +1,16 @@
 package com.byakko.service.product.models;
 
+import com.byakko.common.DomainConstants;
 import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -21,7 +23,7 @@ public class PurchaseOrder {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = true)
     private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,5 +63,8 @@ public class PurchaseOrder {
 
     @OneToMany(mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
     private Set<GoodsReceipt> goodsReceipt;
-
+    public PurchaseOrder() {
+        id = UUID.randomUUID().toString().replace("-", "");
+        orderDate = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
+    }
 }

@@ -76,6 +76,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProduct(GetProductCommand command) {
         Product product = productRepository.findById(command.getId())
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id %s not found", command.getId())));
+        product.getVariants().forEach(op->op.getVariantOptions().forEach(di->{System.out.println("@@@@@@@@@");}));
         return ProductMapper.toProductResponse(product);
     }
 
@@ -141,6 +142,8 @@ public class ProductServiceImpl implements ProductService {
 
                         variantOptions.add(new VariantOption(productVariant, option, value));
                     });
+
+                    productVariant.setVariantOptions(variantOptions);
 
                     if(options.size() != variantOptions.size()) {
                         throw new ValidationException(Map.of("variant_options", "Số lượng variant_options không khớp với số lượng options"));

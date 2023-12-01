@@ -16,7 +16,7 @@ public class PurchaseOrderMapper {
     public static PurchaseOrderResponse toPurchaseOrderResponse(PurchaseOrder order) {
         return PurchaseOrderResponse.builder()
                 .id(order.getId())
-                .employee(order.getEmployee().getId())
+//                .employee(order.getEmployee().getId())
                 .supplier(order.getSupplier().getId())
                 .subTotal(order.getSubTotal())
                 .surcharge(order.getSurcharge())
@@ -24,7 +24,9 @@ public class PurchaseOrderMapper {
                 .deliveryCharge(order.getDeliveryCharge())
                 .totalDue(order.getTotalDue())
                 .orderDate(order.getOrderDate().toEpochSecond())
-                .shipDate(order.getShipDate().toEpochSecond())
+                .shipDate(order.getShipDate() != null
+                        ? order.getShipDate().toEpochSecond()
+                        :null )
                 .note(order.getNote())
                 .status(order.getStatus().toString())
                 .purchaseOrderDetails(order.getPurchaseOrderDetails() != null
@@ -39,7 +41,7 @@ public class PurchaseOrderMapper {
     public static PurchaseOrderMinResponse toPurchaseOrderMinResponse(PurchaseOrder order) {
         return PurchaseOrderMinResponse.builder()
                 .id(order.getId())
-                .employee(order.getEmployee().getId())
+//                .employee(order.getEmployee().getId())
                 .supplier(order.getSupplier().getId())
                 .subTotal(order.getSubTotal())
                 .surcharge(order.getSurcharge())

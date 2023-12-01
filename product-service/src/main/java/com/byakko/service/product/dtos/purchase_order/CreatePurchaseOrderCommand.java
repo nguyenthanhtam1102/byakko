@@ -10,8 +10,8 @@ import java.util.Set;
 @Data
 public class CreatePurchaseOrderCommand {
 
-    @NotBlank(message = "employee must be not blank")
-    private String employee;
+//    @NotBlank(message = "employee must be not blank")
+//    private String employee;
 
     @NotBlank(message = "supplier must be not blank")
     private String supplier;

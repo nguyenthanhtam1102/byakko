@@ -41,6 +41,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
             throw new RuntimeException("Sort direction not correct");
         }
 
+
         Sort sort;
         if(command.getSortBy() == null || command.getSortBy().isBlank()) {
             sort = Sort.by(direction, "orderDate");
@@ -80,9 +81,9 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrder.setNote(command.getNote());
         purchaseOrder.setStatus(PurchaseOrderStatus.PENDING_APPROVAL);
 
-        Employee employee = employeeRepository.findById(command.getEmployee())
-                .orElseThrow(() -> new NotFoundException(String.format("Employee with id %s not found", command.getEmployee())));
-        purchaseOrder.setEmployee(employee);
+//        Employee employee = employeeRepository.findById(command.getEmployee())
+//                .orElseThrow(() -> new NotFoundException(String.format("Employee with id %s not found", command.getEmployee())));
+//        purchaseOrder.setEmployee(employee);
 
         Supplier supplier = supplierRepository.findById(command.getSupplier())
                 .orElseThrow(() -> new NotFoundException(String.format("Supplier with id %s not found", command.getSupplier())));
@@ -122,8 +123,8 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         BigDecimal purchaseOrderTotalDue = purchaseOrderSubTotal.subtract(command.getDiscount()).add(command.getSurcharge()).add(command.getTax()).add(command.getDeliveryCharge());
         purchaseOrder.setTotalDue(purchaseOrderTotalDue);
 
-        purchaseOrderRepository.save(purchaseOrder);
-
+        PurchaseOrder purchaseOrder1 = purchaseOrderRepository.save(purchaseOrder);
+        System.out.println(purchaseOrder1.getId());
         return PurchaseOrderMapper.toPurchaseOrderResponse(purchaseOrder);
     }
 
