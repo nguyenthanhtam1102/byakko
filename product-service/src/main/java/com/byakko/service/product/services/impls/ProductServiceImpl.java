@@ -76,7 +76,6 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProduct(GetProductCommand command) {
         Product product = productRepository.findById(command.getId())
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id %s not found", command.getId())));
-        product.getVariants().forEach(op->op.getVariantOptions().forEach(di->{System.out.println("@@@@@@@@@");}));
         return ProductMapper.toProductResponse(product);
     }
 

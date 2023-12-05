@@ -15,8 +15,8 @@ public class CreateGoodReceiptCommand {
     @JsonProperty("purchase_order")
     private String purchaseOrder;
 
-    @NotBlank(message = "employee must be not blank")
-    private String employee;
+//    @NotBlank(message = "employee must be not blank")
+//    private String employee;
 
     private Set<String> asset;
 

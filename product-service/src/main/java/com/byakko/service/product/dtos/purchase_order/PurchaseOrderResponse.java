@@ -42,6 +42,8 @@ public class PurchaseOrderResponse {
 
     private String status;
 
+    private BigDecimal discount;
+
     @JsonProperty("purchase_order_details")
     private List<PurchaseOrderDetailResponse> purchaseOrderDetails;
 

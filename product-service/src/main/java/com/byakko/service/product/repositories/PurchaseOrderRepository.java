@@ -18,10 +18,10 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, St
             "lower(po.id) like :query " +
             "or lower(po.supplier.id) like :query " +
             "or lower(po.supplier.name) like :query " +
-            "or lower(po.employee.id) like :query " +
-            "or lower(po.employee.firstName) like :query " +
-            "or lower(po.employee.lastName) like :query) " +
-            "and po.deleted = false")
+//            "or lower(po.employee.id) like :query " +
+//            "or lower(po.employee.firstName) like :query " +
+//            "or lower(po.employee.lastName) like :query " +
+            ")and po.deleted = false")
     Page<PurchaseOrder> findAllByIdOrSupplierOrEmployee(@Param("query") String query, Pageable pageable);
 
     @Query("select po from PurchaseOrder po where po.id = :id and po.deleted = false")

@@ -24,7 +24,7 @@ public class PurchaseOrderMinResponse {
     private BigDecimal surcharge;
 
     private BigDecimal tax;
-
+    private BigDecimal discount;
     @JsonProperty("delivery_charge")
     private BigDecimal deliveryCharge;
 

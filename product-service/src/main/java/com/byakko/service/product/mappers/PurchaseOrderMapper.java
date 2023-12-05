@@ -22,6 +22,7 @@ public class PurchaseOrderMapper {
                 .surcharge(order.getSurcharge())
                 .tax(order.getTax())
                 .deliveryCharge(order.getDeliveryCharge())
+                .discount(order.getDiscount())
                 .totalDue(order.getTotalDue())
                 .orderDate(order.getOrderDate().toEpochSecond())
                 .shipDate(order.getShipDate() != null
@@ -45,11 +46,12 @@ public class PurchaseOrderMapper {
                 .supplier(order.getSupplier().getId())
                 .subTotal(order.getSubTotal())
                 .surcharge(order.getSurcharge())
+                .discount(order.getDiscount())
                 .tax(order.getTax())
                 .deliveryCharge(order.getDeliveryCharge())
                 .totalDue(order.getTotalDue())
                 .orderDate(order.getOrderDate().toEpochSecond())
-                .shipDate(order.getShipDate().toEpochSecond())
+                .shipDate(order.getShipDate()==null?null:order.getShipDate().toEpochSecond())
                 .note(order.getNote())
                 .status(order.getStatus().toString())
                 .build();

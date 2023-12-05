@@ -26,7 +26,7 @@ public class GoodsReceipt {
     private PurchaseOrder purchaseOrder;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id", nullable = true)
     private Employee employee;
 
     @ManyToMany(fetch = FetchType.LAZY)

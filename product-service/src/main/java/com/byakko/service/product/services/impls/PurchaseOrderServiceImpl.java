@@ -76,6 +76,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
     public PurchaseOrderResponse createPurchaseOrder(CreatePurchaseOrderCommand command) {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         purchaseOrder.setSurcharge(command.getSurcharge());
+        purchaseOrder.setDiscount(command.getDiscount());
         purchaseOrder.setTax(command.getTax());
         purchaseOrder.setDeliveryCharge(command.getDeliveryCharge());
         purchaseOrder.setNote(command.getNote());
@@ -124,7 +125,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         purchaseOrder.setTotalDue(purchaseOrderTotalDue);
 
         PurchaseOrder purchaseOrder1 = purchaseOrderRepository.save(purchaseOrder);
-        System.out.println(purchaseOrder1.getId());
         return PurchaseOrderMapper.toPurchaseOrderResponse(purchaseOrder);
     }
 

@@ -77,9 +77,9 @@ public class GoodsReceiptServiceImpl implements GoodsReceiptService {
                 .orElseThrow(() -> new NotFoundException(String.format("Purchase order with id %s not found", command.getPurchaseOrder())));
         goodsReceipt.setPurchaseOrder(purchaseOrder);
 
-        Employee employee = employeeRepository.findById(command.getEmployee())
-                .orElseThrow(() -> new NotFoundException(String.format("Employee with id %s not found", command.getEmployee())));
-        goodsReceipt.setEmployee(employee);
+//        Employee employee = employeeRepository.findById(command.getEmployee())
+//                .orElseThrow(() -> new NotFoundException(String.format("Employee with id %s not found", command.getEmployee())));
+//        goodsReceipt.setEmployee(employee);
 
         if(command.getAsset() != null && !command.getAsset().isEmpty()) {
             Set<Asset> assets = command.getAsset()

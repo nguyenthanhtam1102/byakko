@@ -60,12 +60,12 @@ public class ProductPriceServiceImpl implements ProductPriceService {
         Product product = productRepository.findById(command.getProduct())
                 .orElseThrow(() -> new NotFoundException(String.format("product with id %s not found", command.getProduct())));
 
-        Employee employee = employeeRepository.findById(command.getEmployee())
-                .orElseThrow(() -> new NotFoundException(String.format("employee with id %s not found", command.getEmployee())));
+//        Employee employee = employeeRepository.findById(command.getEmployee())
+//                .orElseThrow(() -> new NotFoundException(String.format("employee with id %s not found", command.getEmployee())));
 
         ProductPrice productPrice = new ProductPrice();
         productPrice.setProduct(product);
-        productPrice.setEmployee(employee);
+//        productPrice.setEmployee(employee);
         productPrice.setPrice(command.getPrice());
         productPrice.setNote(command.getNote());
         productPrice.setStartDate(Instant.ofEpochSecond(command.getStartDate()).atZone(ZoneId.of(DomainConstants.ZONE_ID)).toLocalDate());

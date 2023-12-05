@@ -11,7 +11,6 @@ public class UpdateProductCommand {
 
     @NotBlank(message = "id must be not blank")
     private String id;
-
     private String name;
     private String barcode;
     private String sku;
