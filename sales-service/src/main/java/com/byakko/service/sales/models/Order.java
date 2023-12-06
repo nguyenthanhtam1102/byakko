@@ -29,7 +29,7 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private ZonedDateTime orderDate;
 
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer", nullable = false)
     private String customer;
 
     @Column(name = "shipping_address", nullable = false)

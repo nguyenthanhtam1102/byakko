@@ -88,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
         product.setBarcode(command.getBarcode());
         product.setDescription(command.getDescription());
 
-        if(command.getAssets() != null & !command.getAssets().isEmpty()) {
+        if(command.getAssets() != null && !command.getAssets().isEmpty()) {
             Set<Asset> assets = command.getAssets()
                     .stream()
                     .map(assetId -> assetRepository.findById(assetId)
@@ -141,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
 
                         variantOptions.add(new VariantOption(productVariant, option, value));
                     });
+                    productVariant.setVariantOptions(variantOptions);
 
                     productVariant.setVariantOptions(variantOptions);
 

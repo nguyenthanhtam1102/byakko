@@ -9,9 +9,11 @@ import com.byakko.service.product.mappers.ProductPriceMapper;
 import com.byakko.service.product.models.Employee;
 import com.byakko.service.product.models.Product;
 import com.byakko.service.product.models.ProductPrice;
+import com.byakko.service.product.models.ProductVariant;
 import com.byakko.service.product.repositories.EmployeeRepository;
 import com.byakko.service.product.repositories.ProductPriceRepository;
 import com.byakko.service.product.repositories.ProductRepository;
+import com.byakko.service.product.repositories.ProductVariantRepository;
 import com.byakko.service.product.services.ProductPriceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,7 @@ import java.util.Map;
 public class ProductPriceServiceImpl implements ProductPriceService {
 
     private final ProductRepository productRepository;
+    private final ProductVariantRepository productVariantRepository;
     private final EmployeeRepository employeeRepository;
     private final ProductPriceRepository productPriceRepository;
 
@@ -60,12 +63,28 @@ public class ProductPriceServiceImpl implements ProductPriceService {
         Product product = productRepository.findById(command.getProduct())
                 .orElseThrow(() -> new NotFoundException(String.format("product with id %s not found", command.getProduct())));
 
+<<<<<<< Updated upstream
 //        Employee employee = employeeRepository.findById(command.getEmployee())
 //                .orElseThrow(() -> new NotFoundException(String.format("employee with id %s not found", command.getEmployee())));
 
         ProductPrice productPrice = new ProductPrice();
         productPrice.setProduct(product);
 //        productPrice.setEmployee(employee);
+=======
+        ProductVariant variant = null;
+        if(command.getVariant() != null) {
+            variant = productVariantRepository.findByIdAndProductId(product.getId(), command.getVariant())
+                    .orElseThrow(() -> new NotFoundException(String.format("Variant with id %s not found", command.getVariant())));
+        }
+        
+        Employee employee = employeeRepository.findById(command.getEmployee())
+                .orElseThrow(() -> new NotFoundException(String.format("employee with id %s not found", command.getEmployee())));
+
+        ProductPrice productPrice = new ProductPrice();
+        productPrice.setProduct(product);
+        productPrice.setVariant(variant);
+        productPrice.setEmployee(employee);
+>>>>>>> Stashed changes
         productPrice.setPrice(command.getPrice());
         productPrice.setNote(command.getNote());
         productPrice.setStartDate(Instant.ofEpochSecond(command.getStartDate()).atZone(ZoneId.of(DomainConstants.ZONE_ID)).toLocalDate());

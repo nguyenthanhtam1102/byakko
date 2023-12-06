@@ -36,6 +36,10 @@ public class ProductPrice {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "variant_id", unique = true)
+    private ProductVariant variant;
+
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
