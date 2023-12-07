@@ -13,7 +13,6 @@ public class CreateProductPriceCommand {
 
     @NotBlank(message = "product must be not blank")
     private String product;
-
 //    @NotBlank(message = "employee must be not blank")
 //    private String employee;
 
