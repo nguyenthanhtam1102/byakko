@@ -14,15 +14,10 @@ public class CreateProductPriceCommand {
     @NotBlank(message = "product must be not blank")
     private String product;
 
-<<<<<<< Updated upstream
-//    @NotBlank(message = "employee must be not blank")
-//    private String employee;
-=======
     private String variant;
 
     @NotBlank(message = "employee must be not blank")
     private String employee;
->>>>>>> Stashed changes
 
     @NotNull(message = "start_date must be not null")
     @JsonProperty("start_date")

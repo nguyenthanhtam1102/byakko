@@ -63,14 +63,13 @@ public class ProductPriceServiceImpl implements ProductPriceService {
         Product product = productRepository.findById(command.getProduct())
                 .orElseThrow(() -> new NotFoundException(String.format("product with id %s not found", command.getProduct())));
 
-<<<<<<< Updated upstream
 //        Employee employee = employeeRepository.findById(command.getEmployee())
 //                .orElseThrow(() -> new NotFoundException(String.format("employee with id %s not found", command.getEmployee())));
 
         ProductPrice productPrice = new ProductPrice();
         productPrice.setProduct(product);
 //        productPrice.setEmployee(employee);
-=======
+
         ProductVariant variant = null;
         if(command.getVariant() != null) {
             variant = productVariantRepository.findByIdAndProductId(product.getId(), command.getVariant())
@@ -80,11 +79,10 @@ public class ProductPriceServiceImpl implements ProductPriceService {
         Employee employee = employeeRepository.findById(command.getEmployee())
                 .orElseThrow(() -> new NotFoundException(String.format("employee with id %s not found", command.getEmployee())));
 
-        ProductPrice productPrice = new ProductPrice();
         productPrice.setProduct(product);
         productPrice.setVariant(variant);
         productPrice.setEmployee(employee);
->>>>>>> Stashed changes
+
         productPrice.setPrice(command.getPrice());
         productPrice.setNote(command.getNote());
         productPrice.setStartDate(Instant.ofEpochSecond(command.getStartDate()).atZone(ZoneId.of(DomainConstants.ZONE_ID)).toLocalDate());

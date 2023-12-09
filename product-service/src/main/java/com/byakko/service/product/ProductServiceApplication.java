@@ -37,7 +37,7 @@ public class ProductServiceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        importAdministrativeDivisions();
+        importAdministrativeDivisions();
     }
 
     private void importAdministrativeDivisions() throws Exception {
@@ -48,22 +48,31 @@ public class ProductServiceApplication implements CommandLineRunner {
         Map<String, AdministrativeDivision> provinces = objectMapper.readValue(provincesJson, new TypeReference<>() {});
         provinces.values().forEach(province -> {
             province.setEtype(AdministrativeDivisionType.PROVINCE);
-            administrativeDivisionRepository.saveAndFlush(province);
         });
+//
+//        administrativeDivisionRepository.saveAll(provinces.values());
+//
+//        System.out.println("Save complete");
 
         Map<String, AdministrativeDivision> districts = objectMapper.readValue(districtsJson, new TypeReference<>() {});
         districts.values().forEach(district -> {
             district.setParent(provinces.get(district.getParentCode()));
             district.setEtype(AdministrativeDivisionType.DISTRICT);
-            administrativeDivisionRepository.saveAndFlush(district);
         });
+
+//        administrativeDivisionRepository.saveAll(districts.values());
+
+//        System.out.println("Save complete");
 
         Map<String, AdministrativeDivision> communes = objectMapper.readValue(communesJson, new TypeReference<>() {});
         communes.values().forEach(commune -> {
             commune.setParent(districts.get(commune.getParentCode()));
             commune.setEtype(AdministrativeDivisionType.COMMUNE);
-            administrativeDivisionRepository.saveAndFlush(commune);
         });
+
+        administrativeDivisionRepository.saveAll(communes.values());
+
+        System.out.println("Save complete");
     }
 
     public String readJsonFile(String fileName) throws Exception {
