@@ -37,7 +37,7 @@ public class ProductServiceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        importAdministrativeDivisions();
+//        importAdministrativeDivisions();
     }
 
     private void importAdministrativeDivisions() throws Exception {
