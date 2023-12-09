@@ -1,0 +1,13 @@
+package com.byakko.service.sales.service.authentication.domain.domainapplication.dto.role;
+
+import lombok.Getter;
+
+import javax.validation.constraints.NotNull;
+
+@Getter
+public class GetRoleCommand {
+
+    @NotNull(message = "id must be not null")
+    private String id;
+
+}

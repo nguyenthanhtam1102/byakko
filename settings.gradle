@@ -6,4 +6,5 @@ include 'human-resources-service'
 include 'production-service'
 include 'api-gateway'
 include 'product-service'
+include 'sales-service'
 
