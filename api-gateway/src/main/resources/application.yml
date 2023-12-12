@@ -1,7 +1,5 @@
-server:
-  port: 8080
-
 spring:
+#<<<<<<< HEAD
   cloud:
     gateway:
       routes:
@@ -28,3 +26,7 @@ spring:
             allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
+#=======
+#  profiles:
+#    active: prod
+#>>>>>>> 114b1adb5e8904e96b017cd8f74060bc73269f70
