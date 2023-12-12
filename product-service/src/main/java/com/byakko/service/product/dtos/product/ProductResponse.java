@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -19,6 +20,7 @@ public class ProductResponse {
     private String name;
     private String sku;
     private String description;
+    private BigDecimal price;
     private List<AssetMinResponse> assets;
     private List<CategoryMinResponse> categories;
     private List<OptionResponse> options;

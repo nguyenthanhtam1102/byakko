@@ -12,7 +12,7 @@ public class ProductPriceMapper {
     public static ProductPriceResponse toProductPriceResponse(ProductPrice productPrice) {
         return ProductPriceResponse.builder()
                 .id(productPrice.getId())
-                .employee(productPrice.getEmployee().getId())
+//                .employee(productPrice.getEmployee().getId())
                 .price(MoneyResponse.toMoneyResponse(productPrice.getPrice()))
                 .startDate(productPrice.getStartDate().atStartOfDay(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond())
                 .endDate(productPrice.getEndDate() != null

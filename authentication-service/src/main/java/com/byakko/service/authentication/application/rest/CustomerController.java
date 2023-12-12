@@ -36,7 +36,6 @@ public class CustomerController {
         customerService.sendResetPasswordMail(command);
         return ResponseEntity.ok("Email send success");
     }
-
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody CustomerResetPasswordCommand command) {
         System.out.println(token);

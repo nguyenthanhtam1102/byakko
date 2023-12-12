@@ -39,6 +39,8 @@ public class CreateShippingAddressCommand {
 
     @NotBlank(message = "phone must be not blank")
     private String phone;
+    @NotBlank(message = "name must be not blank")
+    private String name;
 
     private String note;
 

@@ -44,6 +44,8 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> categories;
+    @OneToMany(mappedBy = "product", fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ProductPrice> productPrices;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Option> options;

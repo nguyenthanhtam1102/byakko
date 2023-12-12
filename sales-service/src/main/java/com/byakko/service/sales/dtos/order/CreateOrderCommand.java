@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -19,7 +20,14 @@ public class CreateOrderCommand {
     @JsonProperty("shipping_address")
     private String shippingAddress;
 
+    @JsonProperty("delivery_charge")
+    private BigDecimal deliveryCharge;
+
     private String note;
+
+    @NotBlank(message = "phone must be not bank")
+    @JsonProperty("phone")
+    private String phone;
 
     @NotBlank(message = "payment_method must be not blank")
     @JsonProperty("payment_method")

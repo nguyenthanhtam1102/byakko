@@ -17,6 +17,7 @@ public class ShippingAddressMapper {
                 .commune(shippingAddress.getCommune())
                 .address(shippingAddress.getAddress())
                 .phone(shippingAddress.getPhone())
+                .name(shippingAddress.getName())
                 .note(shippingAddress.getNote())
                 .isDefault(shippingAddress.isDefault())
                 .build();

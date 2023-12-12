@@ -14,7 +14,7 @@ public interface OrderService {
     OrderResponse getOrder(@Valid GetOrderCommand command);
     OrderResponse createOrder(@Valid CreateOrderCommand command);
     String paymentOrder(@Valid PaymentOrderCommand command);
-    void orderPaymentSuccess(@Valid OrderPaymentSuccessDTO dto);
+    void orderPaymentSuccess(@Valid String TxnRef);
     void cancelOrder(@Valid CancelOrderCommand command);
 
 }

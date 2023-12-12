@@ -13,6 +13,7 @@ public class OrderMapper {
         return OrderResponse.builder()
                 .id(order.getId())
                 .customer(order.getCustomer())
+                .phone(order.getPhone())
                 .orderDate(order.getOrderDate().toEpochSecond())
                 .shippingAddress(order.getShippingAddress())
                 .note(order.getNote())

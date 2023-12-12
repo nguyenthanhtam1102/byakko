@@ -29,13 +29,16 @@ public class Order {
     @Column(name = "order_date", nullable = false)
     private ZonedDateTime orderDate;
 
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer", nullable = false)
     private String customer;
 
     @Column(name = "shipping_address", nullable = false)
     private String shippingAddress;
 
     private String note;
+
+    @Column(length = 255,nullable = false)
+    private String phone;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<OrderDetail> orderDetails;
@@ -57,7 +60,7 @@ public class Order {
     @Column(nullable = false)
     private PaymentMethod paymentMethod;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderStatusHistory> statusHistories;
 
     public Order() {

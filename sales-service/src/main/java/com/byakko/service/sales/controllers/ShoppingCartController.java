@@ -39,7 +39,6 @@ public class ShoppingCartController {
         command.setItemId(itemId);
         return ResponseEntity.ok(shoppingCartService.updateItemFromCart(command));
     }
-
     @DeleteMapping("/{customer_id}/items/{item_id}")
     public ResponseEntity<?> deleteItemFromCart(@PathVariable("customer_id") String customerId, @PathVariable("item_id") String itemId) {
         shoppingCartService.deleteItemFromCart(new DeleteItemFromCartCommand(customerId, itemId));

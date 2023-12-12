@@ -24,7 +24,7 @@ public class OrderResponse {
     private String shippingAddress;
 
     private String note;
-
+    private String phone;
     @JsonProperty("order_status")
     private String orderStatus;
 

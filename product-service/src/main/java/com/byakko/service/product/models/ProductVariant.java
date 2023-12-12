@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Set;
@@ -36,6 +37,9 @@ public class ProductVariant {
 
     @Column(name = "updated_at", nullable = false)
     private ZonedDateTime updatedAt;
+
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
 
     private boolean deleted;
 

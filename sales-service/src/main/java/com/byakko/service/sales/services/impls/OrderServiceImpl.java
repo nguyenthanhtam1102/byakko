@@ -73,7 +73,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponse createOrder(CreateOrderCommand command) {
         Order order = new Order();
-
+        order.setPhone(command.getPhone());
+        order.setDeliveryCharge(command.getDeliveryCharge());
         order.setCustomer(command.getCustomerId());
         order.setShippingAddress(command.getShippingAddress());
         order.setNote(command.getNote());
@@ -94,11 +95,11 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal subTotal = orderDetails.stream()
                 .map(od -> od.getUnitPrice().multiply(BigDecimal.valueOf(od.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        BigDecimal totalDue = subTotal.subtract(order.getDeliveryCharge());
+        order.setSubTotal(subTotal);
+        BigDecimal totalDue = subTotal.add(order.getDeliveryCharge());
 
         order.setTotalDue(totalDue);
-
+        orderRepository.save(order);
         OrderStatusHistory statusHistory = new OrderStatusHistory();
         statusHistory.setOrder(order);
         statusHistory.setStatus(order.getStatus());
@@ -106,14 +107,14 @@ public class OrderServiceImpl implements OrderService {
 
         if(order.getPaymentMethod().equals(PaymentMethod.ONLINE)) {
             order.setStatus(OrderStatus.PENDING_PAYMENT);
-
+            orderRepository.save(order);
             OrderStatusHistory sth = new OrderStatusHistory();
             sth.setOrder(order);
             sth.setStatus(order.getStatus());
             orderStatusHistoryRepository.save(statusHistory);
         }
 
-        orderRepository.save(order);
+
 
         return OrderMapper.toOrderResponse(order);
     }
@@ -127,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("Đơn hàng không thuộc trạng thái đang chờ thanh toán");
 
         Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Amount", String.valueOf(order.getTotalDue().multiply(BigDecimal.valueOf(100))));
+        vnp_Params.put("vnp_Amount", String.valueOf(order.getTotalDue().multiply(BigDecimal.valueOf(100)).intValue()));
         vnp_Params.put("vnp_Command", VNPayConfigs.vnp_Command);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -188,9 +189,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void orderPaymentSuccess(OrderPaymentSuccessDTO dto) {
-        Order order = orderRepository.findById(dto.getTxnRef())
-                .orElseThrow(() -> new NotFoundException(String.format("Order with id %s not found", dto.getTxnRef())));
+    public void orderPaymentSuccess(String TxnRef) {
+        Order order = orderRepository.findById(TxnRef)
+                .orElseThrow(() -> new NotFoundException(String.format("Order with id %s not found", TxnRef)));
 
         order.setStatus(OrderStatus.PAYMENT_SUCCESS);
 

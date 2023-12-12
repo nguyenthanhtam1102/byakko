@@ -34,6 +34,8 @@ public class ShippingAddressResponse {
     @JsonProperty("address_detail")
     private String address;
 
+    private String name;
+
     private String phone;
 
     private String note;

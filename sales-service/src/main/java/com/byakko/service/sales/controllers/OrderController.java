@@ -46,8 +46,8 @@ public class OrderController {
     }
 
     @GetMapping("/payment-success")
-    public ResponseEntity<?> paymentSuccess(@ModelAttribute OrderPaymentSuccessDTO dto) {
-        orderService.orderPaymentSuccess(dto);
+    public ResponseEntity<?> paymentSuccess(@RequestParam("vnp_TxnRef") String vnpTxnRef) {
+        orderService.orderPaymentSuccess(vnpTxnRef);
         return ResponseEntity.ok("Payment success");
     }
 

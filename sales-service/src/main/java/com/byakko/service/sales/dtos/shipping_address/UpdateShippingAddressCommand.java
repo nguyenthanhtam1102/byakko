@@ -35,7 +35,7 @@ public class UpdateShippingAddressCommand {
     private String address;
 
     private String phone;
-
+    private String name;
     private String note;
 
     @JsonProperty("is_default")

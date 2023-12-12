@@ -44,6 +44,9 @@ public class ShippingAddress {
     @Column(length = 255)
     private String address;
 
+    @Column(length = 255)
+    private String name;
+
     @Column(length = 15, nullable = false)
     private String phone;
 

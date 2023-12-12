@@ -4,9 +4,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -34,4 +34,7 @@ public class OrderDetail {
     @Column(nullable = false)
     private Integer quantity;
 
+    public OrderDetail() {
+        this.id = UUID.randomUUID().toString();
+    }
 }

@@ -46,6 +46,7 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
         shippingAddress.setAddress(command.getAddress());
         shippingAddress.setPhone(command.getPhone());
         shippingAddress.setNote(command.getNote());
+        shippingAddress.setName((command.getName()));
         shippingAddress.setDefault(command.isDefault());
 
         if(command.isDefault()) {
@@ -88,7 +89,9 @@ public class ShippingAddressServiceImpl implements ShippingAddressService {
         if(command.getPhone() != null) {
             shippingAddress.setPhone(command.getPhone());
         }
-
+        if(command.getName() != null){
+            shippingAddress.setName(command.getName());
+        }
         if(command.getNote() != null) {
             shippingAddress.setNote(command.getNote());
         }

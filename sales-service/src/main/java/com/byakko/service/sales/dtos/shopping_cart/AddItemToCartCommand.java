@@ -21,6 +21,6 @@ public class AddItemToCartCommand {
     private String variantId;
 
     @Min(value = 1, message = "quantity must be greater than 0")
-    private int quantity = 1;
+    private int quantity ;
 
 }
