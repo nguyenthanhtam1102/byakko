@@ -1,5 +1,6 @@
 package com.byakko.service.sales.controllers;
 
+import com.byakko.common.application.dto.ListAllCommand;
 import com.byakko.service.sales.dtos.order.*;
 import com.byakko.service.sales.services.OrderService;
 import com.byakko.service.sales.vnpay.VNPayConfigs;
@@ -18,9 +19,16 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @GetMapping
-    public ResponseEntity<?> listAllOrders(@ModelAttribute ListAllOrderCommand command) {
-        return ResponseEntity.ok(orderService.listAllOrders(command));
+    @GetMapping("/list/{id}")
+    public ResponseEntity<?> listAllOrders(@PathVariable("id") String id,@ModelAttribute ListAllCommand command) {
+        ListAllOrderCommand list = new ListAllOrderCommand();
+        list.setCustomerId(id);
+        list.setPage(command.getPage());
+        list.setLimit(command.getLimit());
+        list.setQuery(command.getQuery());
+        list.setSortBy(command.getSortBy());
+        list.setSortDirection(command.getSortDirection());
+        return ResponseEntity.ok(orderService.listAllOrders(list));
     }
 
     @GetMapping("/{id}")

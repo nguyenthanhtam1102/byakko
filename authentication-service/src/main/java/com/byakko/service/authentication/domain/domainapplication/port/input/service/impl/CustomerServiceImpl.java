@@ -18,6 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
     private final DeleteCustomerCommandHandler deleteCustomerCommandHandler;
     private final ResendEmailAddressVerificationMailCommandHandler resendEmailAddressVerificationMailCommandHandler;
     private final VerifyEmailAddressCommandHandler verifyEmailAddressCommandHandler;
+    private final CustomerGetDetailsHandler customerGetDetailsHandler;
 
     public CustomerServiceImpl(CustomerSignUpCommandHandler customerSignUpCommandHandler,
                                CustomerSignInCommandHandler customerSignInCommandHandler,
@@ -25,7 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
                                SendResetPasswordMailCommandHandler sendResetPasswordMailCommandHandler,
                                CustomerResetPasswordCommandHandler customerResetPasswordCommandHandler,
                                DeleteCustomerCommandHandler deleteCustomerCommandHandler,
-                               ResendEmailAddressVerificationMailCommandHandler resendEmailAddressVerificationMailCommandHandler, VerifyEmailAddressCommandHandler verifyEmailAddressCommandHandler) {
+                               ResendEmailAddressVerificationMailCommandHandler resendEmailAddressVerificationMailCommandHandler,
+                               VerifyEmailAddressCommandHandler verifyEmailAddressCommandHandler,
+                               CustomerGetDetailsHandler customerGetDetailsHandler) {
         this.customerSignUpCommandHandler = customerSignUpCommandHandler;
         this.customerSignInCommandHandler = customerSignInCommandHandler;
         this.customerSignOutCommandHandler = customerSignOutCommandHandler;
@@ -34,6 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerResetPasswordCommandHandler = customerResetPasswordCommandHandler;
         this.deleteCustomerCommandHandler = deleteCustomerCommandHandler;
         this.resendEmailAddressVerificationMailCommandHandler = resendEmailAddressVerificationMailCommandHandler;
+        this.customerGetDetailsHandler = customerGetDetailsHandler;
         this.verifyEmailAddressCommandHandler = verifyEmailAddressCommandHandler;
     }
 
@@ -45,6 +49,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerSignInResponse signIn(CustomerSignInCommand command) {
         return customerSignInCommandHandler.signIn(command);
+    }
+
+    @Override
+    public CustomerDetailsResponse getCustomer(String id) {
+        return customerGetDetailsHandler.getCustomer(id);
     }
 
     @Override

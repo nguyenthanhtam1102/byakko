@@ -27,20 +27,13 @@ public class ShopOwnerResetPasswordCommandHandler {
     public void handler(ShopOwnerResetPasswordCommand command) {
         Token token = tokenRepository.findByHashedData(command.getToken())
                 .orElseThrow(() -> new RuntimeException("OTP not found"));
-        System.out.println("@@@@@@@@@@@@@@@@@");
         token.validate();
-        System.out.println("@@@@@@@@@@@@@@@@@");
         ShopOwner shopOwner = shopOwnerRepository.findById(token.getUserId())
                 .orElseThrow(()->new RuntimeException("Shop Owner Not Found"));
-        System.out.println("@@@@@@@@@@@@@@@@@"+shopOwner.getMenuId().getId());
         token.setUsed(Boolean.TRUE);
-        System.out.println("@@@@@@@@@@@@@@@@@");
         tokenRepository.save(token);
-        System.out.println("@@@@@@@@@@@@@@@@@");
         shopOwner.setPassword(passwordUtils.encode(command.getNewPassword()));
-        System.out.println("@@@@@@@@@@@@@@@@@");
         shopOwner.validate();
-        System.out.println("@@@@@@@@@@@@@@@@@");
         shopOwnerRepository.save(shopOwner);
     }
 }

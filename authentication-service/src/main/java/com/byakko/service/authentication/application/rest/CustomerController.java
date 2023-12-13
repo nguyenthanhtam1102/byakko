@@ -30,7 +30,10 @@ public class CustomerController {
         customerService.signOut(new CustomerSignOutCommand(userId));
         return ResponseEntity.ok("singout success");
     }
-
+    @GetMapping("/{id}/getDetails")
+    public ResponseEntity<?> getCustomer(@PathVariable("id")String id){
+        return ResponseEntity.ok(customerService.getCustomer(id));
+    }
     @GetMapping("/sendResetPasswordMail")
     public ResponseEntity<?> sendResetPasswordMail(@ModelAttribute SendResetPasswordMailCommand command) {
         customerService.sendResetPasswordMail(command);

@@ -58,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/customers/signup").permitAll()
                 .antMatchers("/customers/signin").permitAll()
+                .antMatchers("/customers/{id}/getDetails").hasAuthority(SystemRole.CUSTOMER.getName())
                 .antMatchers("/customers/signout").hasAuthority(SystemRole.CUSTOMER.getName())
                 .antMatchers("/customers/{id}/resendVerifyMail").hasAuthority(SystemRole.CUSTOMER.getName())
                 .antMatchers("/customers/verifyemailaddress").permitAll()
