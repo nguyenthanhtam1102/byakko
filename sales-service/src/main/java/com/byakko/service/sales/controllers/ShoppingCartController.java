@@ -15,6 +15,7 @@ public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
 
+
     @GetMapping("/{customer_id}/quantity")
     public ResponseEntity<?> getTotalOfQuantity(@PathVariable("customer_id") String customerId) {
         return ResponseEntity.ok(shoppingCartService.getTotalOfQuantity(new GetTotalOfQuantityCommand(customerId)));
