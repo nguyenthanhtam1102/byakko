@@ -5,6 +5,8 @@ import com.byakko.common.domain.exception.NotFoundException;
 import com.byakko.service.sales.dtos.order.*;
 import com.byakko.service.sales.mappers.OrderMapper;
 import com.byakko.service.sales.models.*;
+import com.byakko.service.sales.models.ghn.GHNCreateOrderResponse;
+import com.byakko.service.sales.models.ghn.GHNOrder;
 import com.byakko.service.sales.repositories.OrderRepository;
 import com.byakko.service.sales.repositories.OrderStatusHistoryRepository;
 import com.byakko.service.sales.services.OrderService;
@@ -15,11 +17,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
+    private final WebClient webClient;
 
     @Override
     public ListAllOrderResponse listAllOrders(ListAllOrderCommand command) {
@@ -227,4 +236,45 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
     }
+
+    @Override
+    public void approvalOrder(ApprovelOrderCommand command) {
+        Order order = orderRepository.findById(command.getOrderId())
+                .orElseThrow(() -> new NotFoundException(String.format("Order with id %s not found", command.getOrderId())));
+
+        order.setStatus(OrderStatus.APPROVAL);
+
+        OrderStatusHistory statusHistory = new OrderStatusHistory();
+        statusHistory.setOrder(order);
+        statusHistory.setStatus(order.getStatus());
+        orderStatusHistoryRepository.save(statusHistory);
+
+        order.setStatus(OrderStatus.PROCESSING);
+
+        statusHistory = new OrderStatusHistory();
+        statusHistory.setOrder(order);
+        statusHistory.setStatus(order.getStatus());
+        orderStatusHistoryRepository.save(statusHistory);
+
+        orderRepository.save(order);
+    }
+
+    private void createGhnOrder(Order order) {
+        GHNOrder ghnOrder = new GHNOrder();
+
+        webClient.post()
+                .uri("https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create")
+                .header("Token", "4e38d1bb-98a6-11ee-8bfa-8a2dda8ec551")
+                .header("ShopId", "190530")
+                .body(Mono.just(ghnOrder), GHNOrder.class)
+                .retrieve()
+                .bodyToMono(GHNCreateOrderResponse.class)
+                .retry(3)
+                .subscribe(res -> {
+
+                }, error -> {
+
+                });
+    }
+
 }

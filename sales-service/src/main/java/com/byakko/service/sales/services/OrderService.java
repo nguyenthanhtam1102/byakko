@@ -16,5 +16,6 @@ public interface OrderService {
     String paymentOrder(@Valid PaymentOrderCommand command);
     void orderPaymentSuccess(@Valid String TxnRef);
     void cancelOrder(@Valid CancelOrderCommand command);
+    void approvalOrder(@Valid ApprovelOrderCommand command);
 
 }
