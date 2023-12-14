@@ -72,12 +72,12 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
             pageOptions.setDescription("product options");
             pageRepository.save(pageOptions);
         }
-        if(pageRepository.findByPath("/admin/roles")==null) {
-            PageEntity pageRole = new PageEntity();
-            pageRole.setName("Role");
-            pageRole.setPath("/admin/roles");
-            pageRole.setDescription("role");
-            pageRepository.save(pageRole);
-        }
+//        if(pageRepository.findByPath("/admin/roles")==null) {
+//            PageEntity pageRole = new PageEntity();
+//            pageRole.setName("Role");
+//            pageRole.setPath("/admin/roles");
+//            pageRole.setDescription("role");
+//            pageRepository.save(pageRole);
+//        }
     }
 }
