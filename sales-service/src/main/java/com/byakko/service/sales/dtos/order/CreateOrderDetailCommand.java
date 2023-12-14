@@ -1,5 +1,6 @@
 package com.byakko.service.sales.dtos.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.validation.constraints.DecimalMin;
@@ -18,6 +19,7 @@ public class CreateOrderDetailCommand {
 
     @NotNull(message = "unit_price must be not null")
     @DecimalMin(value = "0", inclusive = true, message = "unit_price must be greater than or equal 0")
+    @JsonProperty("unit_price")
     private BigDecimal unitPrice;
 
     @NotNull(message = "quantity must be not null")

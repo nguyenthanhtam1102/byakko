@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class CreateOrderCommand {
@@ -38,4 +39,16 @@ public class CreateOrderCommand {
     @JsonProperty("order_details")
     private List<CreateOrderDetailCommand> orderDetails;
 
+    @Override
+    public String toString() {
+        return "CreateOrderCommand{" +
+                "customerId='" + customerId + '\'' +
+                ", shippingAddress='" + shippingAddress + '\'' +
+                ", deliveryCharge=" + deliveryCharge +
+                ", note='" + note + '\'' +
+                ", phone='" + phone + '\'' +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", orderDetails=" + orderDetails +
+                '}';
+    }
 }

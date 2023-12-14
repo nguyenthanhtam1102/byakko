@@ -1,6 +1,7 @@
 package com.byakko.service.sales.models;
 
 import com.byakko.common.DomainConstants;
+import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class Order {
     private String id;
 
     @Column(name = "order_date", nullable = false)
-    private ZonedDateTime orderDate;
+    private Long orderDate;
 
     @Column(name = "customer", nullable = false)
     private String customer;
@@ -44,29 +45,35 @@ public class Order {
     private Set<OrderDetail> orderDetails;
 
     @Column(name = "sub_total", nullable = false)
-    private BigDecimal subTotal;
+    private BigDecimal subTotal = BigDecimal.ZERO;
 
     @Column(name = "delivery_charge", nullable = false)
-    private BigDecimal deliveryCharge;
+    private BigDecimal deliveryCharge = BigDecimal.ZERO;
 
     @Column(name = "total_due", nullable = false)
-    private BigDecimal totalDue;
+    private BigDecimal totalDue = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Expose
     private OrderStatus status;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Expose
     private PaymentMethod paymentMethod;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @Expose
     private List<OrderStatusHistory> statusHistories;
 
     public Order() {
         id = UUID.randomUUID().toString().replace("-", "");
-        orderDate = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
+        orderDate = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond();
         status = OrderStatus.CREATED;
     }
 
+    public Order(String id) {
+        this.id = id;
+    }
 }

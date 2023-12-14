@@ -12,13 +12,13 @@ import javax.validation.constraints.Min;
 public class ListAllCommand {
 
     @Min(value = 0, message = "page must be greater than or equal zero")
-    private Integer page;
+    private Integer page = 0;
 
     @Min(value = 1, message = "limit must be greater than 0")
     @Max(value = 100, message = "limit must be less than 100")
-    private Integer limit;
+    private Integer limit = 15;
 
-    private String query;
+    private String query = "";
 
     @JsonProperty("sort_by")
     private String sortBy;

@@ -1,5 +1,6 @@
 package com.byakko.service.product.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class VariantOption {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "variant_id")
     @EqualsAndHashCode.Include
+    @JsonIgnore
     private ProductVariant variant;
 
     @Id

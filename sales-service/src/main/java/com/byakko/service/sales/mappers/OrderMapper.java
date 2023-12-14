@@ -14,7 +14,7 @@ public class OrderMapper {
                 .id(order.getId())
                 .customer(order.getCustomer())
                 .phone(order.getPhone())
-                .orderDate(order.getOrderDate().toEpochSecond())
+                .orderDate(order.getOrderDate())
                 .shippingAddress(order.getShippingAddress())
                 .note(order.getNote())
                 .orderStatus(order.getStatus().name())
@@ -44,7 +44,7 @@ public class OrderMapper {
     public static OrderStatusHistoryResponse toOrderStatusHistoryResponse(OrderStatusHistory statusHistory) {
         return OrderStatusHistoryResponse.builder()
                 .status(statusHistory.getStatus().name())
-                .timestamp(statusHistory.getTimestamp().toEpochSecond())
+                .timestamp(statusHistory.getTimestamp())
                 .note(statusHistory.getNote())
                 .build();
     }

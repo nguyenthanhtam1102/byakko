@@ -1,6 +1,7 @@
 package com.byakko.service.product.models;
 
 import com.byakko.common.DomainConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Product {
             joinColumns =@JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "asset_id")
     )
+    @JsonIgnore
     private Set<Asset> assets;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -43,22 +45,30 @@ public class Product {
             joinColumns =@JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @JsonIgnore
     private Set<Category> categories;
+
     @OneToMany(mappedBy = "product", fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<ProductPrice> productPrices;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Option> options;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<ProductVariant> variants;
 
     @Column(name = "created_at", nullable = false)
+    @JsonIgnore
     private ZonedDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @JsonIgnore
     private ZonedDateTime updated;
 
+    @JsonIgnore
     private boolean deleted;
 
     public Product() {

@@ -54,7 +54,7 @@ public class ProductPrice {
 
     private String note;
 
-    private boolean active;
+    private boolean active = true;
 
     @Column(name = "modified_date", nullable = false)
     private ZonedDateTime modifiedDate;

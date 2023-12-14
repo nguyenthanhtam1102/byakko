@@ -32,13 +32,13 @@ public class OrderStatusHistory {
     private OrderStatus status;
 
     @Column(nullable = false)
-    private ZonedDateTime timestamp;
+    private Long timestamp;
 
     private String note;
 
     public OrderStatusHistory() {
         id = UUID.randomUUID().toString().replace("-", "");
-        timestamp = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
+        timestamp = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond();
     }
 
 }

@@ -7,8 +7,10 @@ import com.byakko.service.sales.mappers.OrderMapper;
 import com.byakko.service.sales.models.*;
 import com.byakko.service.sales.models.ghn.GHNCreateOrderResponse;
 import com.byakko.service.sales.models.ghn.GHNOrder;
+import com.byakko.service.sales.models.ghn.GHNOrderItem;
 import com.byakko.service.sales.repositories.OrderRepository;
 import com.byakko.service.sales.repositories.OrderStatusHistoryRepository;
+import com.byakko.service.sales.saga.CreateOrderSaga;
 import com.byakko.service.sales.services.OrderService;
 import com.byakko.service.sales.vnpay.VNPayConfigs;
 import lombok.RequiredArgsConstructor;
@@ -16,18 +18,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import reactor.util.retry.Retry;
 
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
+    private final CreateOrderSaga createOrderSaga;
     private final WebClient webClient;
 
     @Override
@@ -80,10 +80,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse createOrder(CreateOrderCommand command) {
+    public Mono<OrderResponse> createOrder(CreateOrderCommand command) {
         Order order = new Order();
         order.setPhone(command.getPhone());
         order.setDeliveryCharge(command.getDeliveryCharge());
+
         order.setCustomer(command.getCustomerId());
         order.setShippingAddress(command.getShippingAddress());
         order.setNote(command.getNote());
@@ -95,37 +96,12 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setProduct(od.getProduct());
             orderDetail.setVariant(od.getVariant());
             orderDetail.setQuantity(od.getQuantity());
-            orderDetail.setUnitPrice(od.getUnitPrice());
             return orderDetail;
         }).collect(Collectors.toSet());
 
         order.setOrderDetails(orderDetails);
 
-        BigDecimal subTotal = orderDetails.stream()
-                .map(od -> od.getUnitPrice().multiply(BigDecimal.valueOf(od.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        order.setSubTotal(subTotal);
-        BigDecimal totalDue = subTotal.add(order.getDeliveryCharge());
-
-        order.setTotalDue(totalDue);
-        orderRepository.save(order);
-        OrderStatusHistory statusHistory = new OrderStatusHistory();
-        statusHistory.setOrder(order);
-        statusHistory.setStatus(order.getStatus());
-        orderStatusHistoryRepository.save(statusHistory);
-
-        if(order.getPaymentMethod().equals(PaymentMethod.ONLINE)) {
-            order.setStatus(OrderStatus.PENDING_PAYMENT);
-            orderRepository.save(order);
-            OrderStatusHistory sth = new OrderStatusHistory();
-            sth.setOrder(order);
-            sth.setStatus(order.getStatus());
-            orderStatusHistoryRepository.save(statusHistory);
-        }
-
-
-
-        return OrderMapper.toOrderResponse(order);
+        return createOrderSaga.createOrder(order);
     }
 
     @Override
@@ -238,7 +214,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void approvalOrder(ApprovelOrderCommand command) {
+    public Mono<String> approvalOrder(ApprovelOrderCommand command) {
         Order order = orderRepository.findById(command.getOrderId())
                 .orElseThrow(() -> new NotFoundException(String.format("Order with id %s not found", command.getOrderId())));
 
@@ -257,24 +233,65 @@ public class OrderServiceImpl implements OrderService {
         orderStatusHistoryRepository.save(statusHistory);
 
         orderRepository.save(order);
+
+        return createGhnOrder(order);
     }
 
-    private void createGhnOrder(Order order) {
-        GHNOrder ghnOrder = new GHNOrder();
+    private Mono<String> createGhnOrder(Order order) {
+        GHNOrder ghnOrder = GHNOrder.builder()
+                .required_note("KHONGCHOXEMHANG")
+                .payment_type_id(1)
+                .from_name("Byakko")
+                .from_phone("0987654321")
+                .from_address("72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam")
+                .from_ward_name("Phường 14")
+                .from_district_name("Quận 10")
+                .from_province_name("HCM")
+                .to_name(order.getCustomer())
+                .to_phone(order.getPhone())
+                .to_address("72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam")
+                .to_ward_code("20308")
+                .to_district_id(1444)
+                .cod_amount(order.getTotalDue().intValue())
+                .weight(200)
+                .service_type_id(5)
+                .insurance_value(order.getSubTotal().intValue())
+                .items(order.getOrderDetails().stream().map(orderDetail -> GHNOrderItem.builder()
+                        .name(orderDetail.getProduct())
+                        .code(orderDetail.getProduct())
+                        .price(orderDetail.getUnitPrice().intValue())
+                        .quantity(orderDetail.getQuantity())
+                        .weight(100)
+                        .build()).toList())
+                .build();
 
-        webClient.post()
+        if(order.getPaymentMethod() == PaymentMethod.ONLINE) {
+            ghnOrder.setCod_amount(0);
+        }
+
+        return webClient.post()
                 .uri("https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create")
                 .header("Token", "4e38d1bb-98a6-11ee-8bfa-8a2dda8ec551")
                 .header("ShopId", "190530")
                 .body(Mono.just(ghnOrder), GHNOrder.class)
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError, clientResponse ->
+                        clientResponse.bodyToMono(String.class).flatMap(errorBody ->
+                                Mono.error(new RuntimeException("Lỗi 400 BadRequest: " + errorBody))
+                        )
+                )
                 .bodyToMono(GHNCreateOrderResponse.class)
                 .retry(3)
-                .subscribe(res -> {
-
-                }, error -> {
-
-                });
+                .map(response -> {
+                    if ("200".equals(response.getCode())) {
+                        return "OK";
+                    } else {
+                        throw new RuntimeException("Lỗi: Mã phản hồi không phải là 200");
+                    }
+                })
+                .onErrorResume(throwable ->
+                        Mono.just("Xử lý lỗi: " + throwable.getMessage())
+                );
     }
 
 }

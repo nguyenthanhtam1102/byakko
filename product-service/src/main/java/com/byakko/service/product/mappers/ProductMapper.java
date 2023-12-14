@@ -19,21 +19,21 @@ import java.util.stream.Collectors;
 public class ProductMapper {
 
     public static ProductResponse toProductResponse(Product product) {
-        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
-        Map<String, BigDecimal> variantPriceMap = product.getProductPrices().stream()
-                .filter(price -> {
-                    LocalDate startDate = price.getStartDate();
-                    LocalDate endDate = price.getEndDate();
-
-                    // Kiểm tra xem currentTime có nằm trong khoảng startDate và endDate không
-                    return currentTime.toLocalDate().compareTo(startDate) >= 0 &&
-                            (endDate == null || currentTime.toLocalDate().compareTo(endDate) <= 0);
-                })
-                .collect(Collectors.toMap(
-                        price -> price.getVariant().getId(),
-                        ProductPrice::getPrice,
-                        (existing, replacement) -> existing // Nếu có trùng lặp, giữ giá trị hiện tại
-                ));
+//        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID));
+//        Map<String, BigDecimal> variantPriceMap = product.getProductPrices().stream()
+//                .filter(price -> {
+//                    LocalDate startDate = price.getStartDate();
+//                    LocalDate endDate = price.getEndDate();
+//
+//                    // Kiểm tra xem currentTime có nằm trong khoảng startDate và endDate không
+//                    return currentTime.toLocalDate().compareTo(startDate) >= 0 &&
+//                            (endDate == null || currentTime.toLocalDate().compareTo(endDate) <= 0);
+//                })
+//                .collect(Collectors.toMap(
+//                        price -> price.getVariant().getId(),
+//                        ProductPrice::getPrice,
+//                        (existing, replacement) -> existing // Nếu có trùng lặp, giữ giá trị hiện tại
+//                ));
 
         return ProductResponse.builder()
                 .id(product.getId())
@@ -66,10 +66,10 @@ public class ProductMapper {
                         ? product.getVariants()
                                 .stream()
                                 .filter(variant -> !variant.isDeleted())
-                                .peek(variant -> {
-                                    BigDecimal price = variantPriceMap.get(variant.getId());
-                                    variant.setPrice(price != null ? price : null);
-                                })
+//                                .peek(variant -> {
+//                                    BigDecimal price = variantPriceMap.get(variant.getId());
+//                                    variant.setPrice(price != null ? price : null);
+//                                })
                                 .map(ProductMapper::toProductVariantMinResponse)
                                 .toList()
                         : null)

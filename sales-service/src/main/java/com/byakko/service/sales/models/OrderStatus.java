@@ -2,6 +2,7 @@ package com.byakko.service.sales.models;
 
 public enum OrderStatus {
 
+    PENDING,
     CREATED,
     PENDING_PAYMENT,
     PAYMENT_SUCCESS,
@@ -12,5 +13,6 @@ public enum OrderStatus {
     DELIVERED,
     COMPLETED,
     CANCELED,
+    FAILED,
 
 }

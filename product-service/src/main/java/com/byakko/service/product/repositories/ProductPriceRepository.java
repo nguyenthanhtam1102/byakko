@@ -29,7 +29,6 @@ public interface ProductPriceRepository extends JpaRepository<ProductPrice, Stri
             "where pp.product = :product " +
             "and pp.startDate <= :currentDate " +
             "and (pp.endDate is null or pp.endDate >= :currentDate)" +
-            "and pp.active = true " +
             "and pp.deleted = false " +
             "order by pp.startDate desc ")
     List<ProductPrice> findCurrentPriceByProduct(@Param("product") Product product, @Param("currentDate") LocalDate currentDate);

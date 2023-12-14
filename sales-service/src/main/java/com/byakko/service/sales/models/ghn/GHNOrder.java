@@ -1,11 +1,20 @@
 package com.byakko.service.sales.models.ghn;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class GHNOrder {
 
     private int payment_type_id = 2;
-    private String required_note = RequiredNote.KHONGCHOXEMHANG.name();
+    private String required_note = "KHONGCHOXEMHANG";
     private String from_name = "Byakko";
     private String from_phone = "0987654321";
     private String from_address = "72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam";
@@ -17,7 +26,7 @@ public class GHNOrder {
     private String to_phone;
     private String to_address;
     private String to_ward_code;
-    private String to_district_id;
+    private int to_district_id;
     private int cod_amount;
     private int weight = 200;
     private int insurance_value = 10000000;

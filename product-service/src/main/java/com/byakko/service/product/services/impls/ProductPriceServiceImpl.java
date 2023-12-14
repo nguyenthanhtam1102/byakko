@@ -84,12 +84,12 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 //        productPrice.setEmployee(employee);
         productPrice.setPrice(command.getPrice());
         productPrice.setNote(command.getNote());
-        productPrice.setStartDate(Instant.ofEpochMilli(command.getStartDate())
+        productPrice.setStartDate(Instant.ofEpochSecond(command.getStartDate())
                 .atZone(ZoneId.of(DomainConstants.ZONE_ID))
                 .toLocalDateTime()
                 .toLocalDate());
         productPrice.setEndDate(command.getEndDate() != null ?
-                Instant.ofEpochMilli(command.getEndDate())
+                Instant.ofEpochSecond(command.getEndDate())
                         .atZone(ZoneId.of(DomainConstants.ZONE_ID))
                         .toLocalDateTime()
                         .toLocalDate(): null);

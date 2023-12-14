@@ -14,16 +14,12 @@ public class CreateProductPriceCommand {
     @NotBlank(message = "product must be not blank")
     private String product;
 
-//<<<<<<< HEAD
-//    @NotBlank(message = "employee must be not blank")
-//    private String employee;
     private String variant;
 
     @NotNull(message = "start_date must be not null")
     @JsonProperty("start_date")
     private Long startDate;
 
-    @NotNull(message = "end_date must be not null")
     @JsonProperty("end_date")
     private Long endDate;
 

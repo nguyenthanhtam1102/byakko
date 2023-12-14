@@ -1,5 +1,7 @@
 package com.byakko.service.sales.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +22,8 @@ public class OrderDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnore
+    @Expose
     private Order order;
 
     @Column(name = "product_id", nullable = false)
@@ -29,7 +33,7 @@ public class OrderDetail {
     private String variant;
 
     @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    private BigDecimal unitPrice = BigDecimal.ZERO;
 
     @Column(nullable = false)
     private Integer quantity;

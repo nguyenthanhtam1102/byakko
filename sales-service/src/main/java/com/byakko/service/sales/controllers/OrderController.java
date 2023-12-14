@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,8 +38,13 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createOrder(@RequestBody CreateOrderCommand command) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(command));
+    public Mono<ResponseEntity<OrderResponse>> createOrder(@RequestBody CreateOrderCommand command) {
+        return orderService.createOrder(command).map(ResponseEntity::ok);
+    }
+
+    @PutMapping("/{id}/approval")
+    public Mono<ResponseEntity<String>> approvalOrder(@PathVariable("id") String id) {
+        return orderService.approvalOrder(new ApprovelOrderCommand(id)).map(ResponseEntity::ok);
     }
 
     @PutMapping("/{id}/cancel")
