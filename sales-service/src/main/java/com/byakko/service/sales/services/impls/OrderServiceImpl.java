@@ -116,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
             orderPaymentStatusHistoryRepository.save(orderPaymentStatusHistory);
         }
 
-        return createOrderSaga.createOrder(order);     
+        return createOrderSaga.createOrder(order);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(command.getOrderId())
                 .orElseThrow(() -> new NotFoundException(String.format("Order with id %s not found", command.getOrderId())));
 
-        if(!order.getStatus().equals(OrderStatus.PENDING_PAYMENT))
+        if(!order.getPaymentStatus().equals(OrderPaymentStatus.PENDING_PAYMENT))
             throw new RuntimeException("Đơn hàng không thuộc trạng thái đang chờ thanh toán");
 
         Map<String, String> vnp_Params = new HashMap<>();

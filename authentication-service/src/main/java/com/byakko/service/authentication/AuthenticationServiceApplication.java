@@ -23,6 +23,14 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
     private PageRepository pageRepository;
     @Override
     public void run(String... args) throws Exception {
+        if(pageRepository.findByPath("/admin/roles")==null) {
+            PageEntity pageRole = new PageEntity();
+            pageRole.setName("Role");
+            pageRole.setPath("/admin/roles");
+            pageRole.setDescription("role");
+            pageRepository.save(pageRole);
+        }
+
         if(pageRepository.findByPath("/admin/product")==null) {
             PageEntity pageProduct = new PageEntity();
             pageProduct.setName("Product");
@@ -44,12 +52,6 @@ public class AuthenticationServiceApplication implements CommandLineRunner {
             pageOptions.setDescription("product options");
             pageRepository.save(pageOptions);
         }
-        if(pageRepository.findByPath("/admin/role")==null) {
-            PageEntity pageRole = new PageEntity();
-            pageRole.setName("Role");
-            pageRole.setPath("/admin/roles");
-            pageRole.setDescription("role");
-            pageRepository.save(pageRole);
-        }
+
     }
 }

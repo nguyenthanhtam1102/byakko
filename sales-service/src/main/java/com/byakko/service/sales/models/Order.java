@@ -74,6 +74,9 @@ public class Order {
     @JsonIgnore
     private List<OrderStatusHistory> statusHistories;
 
+    @Column(name = "error_message")
+    private String errorMessage;
+
     public Order() {
         id = UUID.randomUUID().toString().replace("-", "");
         orderDate = ZonedDateTime.now(ZoneId.of(DomainConstants.ZONE_ID)).toEpochSecond();
