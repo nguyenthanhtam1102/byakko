@@ -30,7 +30,10 @@ public class ShopOwnerController {
         shopOwnerService.sendResetPasswordMail(command);
         return ResponseEntity.ok("Email send success");
     }
-
+//    @GetMapping("/{id}/getDetails")
+//    public ResponseEntity<?> getShopOwnerDetails(@PathVariable("id") String id){
+//        return ResponseEntity.ok();
+//    }
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestBody ShopOwnerResetPasswordCommand command) {
         System.out.println(token);
