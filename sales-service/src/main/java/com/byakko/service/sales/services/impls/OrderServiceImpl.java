@@ -8,6 +8,7 @@ import com.byakko.service.sales.models.*;
 import com.byakko.service.sales.models.ghn.GHNCreateOrderResponse;
 import com.byakko.service.sales.models.ghn.GHNOrder;
 import com.byakko.service.sales.models.ghn.GHNOrderItem;
+import com.byakko.service.sales.repositories.OrderPaymentStatusHistoryRepository;
 import com.byakko.service.sales.repositories.OrderRepository;
 import com.byakko.service.sales.repositories.OrderStatusHistoryRepository;
 import com.byakko.service.sales.saga.CreateOrderSaga;
@@ -27,6 +28,7 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderStatusHistoryRepository orderStatusHistoryRepository;
+    private final OrderPaymentStatusHistoryRepository orderPaymentStatusHistoryRepository;
     private final CreateOrderSaga createOrderSaga;
     private final WebClient webClient;
 
@@ -100,6 +103,18 @@ public class OrderServiceImpl implements OrderService {
         }).collect(Collectors.toSet());
 
         order.setOrderDetails(orderDetails);
+
+        if(order.getPaymentMethod().equals(PaymentMethod.ONLINE)) {
+            order.setPaymentStatus(OrderPaymentStatus.PENDING_PAYMENT);
+            System.out.println("Payment status: " + order.getPaymentStatus());
+            orderRepository.save(order);
+
+            OrderPaymentStatusHistory orderPaymentStatusHistory = new OrderPaymentStatusHistory();
+            orderPaymentStatusHistory.setStatus(order.getPaymentStatus());
+            orderPaymentStatusHistory.setOrder(order);
+            orderPaymentStatusHistory.setTimestamp(ZonedDateTime.now().toEpochSecond());
+            orderPaymentStatusHistoryRepository.save(orderPaymentStatusHistory);
+        }
 
         return createOrderSaga.createOrder(order);
     }
@@ -178,21 +193,13 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(TxnRef)
                 .orElseThrow(() -> new NotFoundException(String.format("Order with id %s not found", TxnRef)));
 
-        order.setStatus(OrderStatus.PAYMENT_SUCCESS);
+        order.setPaymentStatus(OrderPaymentStatus.PAID);
 
-        OrderStatusHistory statusHistory = new OrderStatusHistory();
+        OrderPaymentStatusHistory statusHistory = new OrderPaymentStatusHistory();
         statusHistory.setOrder(order);
-        statusHistory.setStatus(order.getStatus());
+        statusHistory.setStatus(order.getPaymentStatus());
 
-        orderStatusHistoryRepository.save(statusHistory);
-
-        order.setStatus(OrderStatus.PROCESSING);
-
-        OrderStatusHistory statusHistory2 = new OrderStatusHistory();
-        statusHistory2.setOrder(order);
-        statusHistory2.setStatus(order.getStatus());
-
-        orderStatusHistoryRepository.save(statusHistory2);
+        orderPaymentStatusHistoryRepository.save(statusHistory);
 
         orderRepository.save(order);
     }
@@ -249,7 +256,7 @@ public class OrderServiceImpl implements OrderService {
                 .from_province_name("HCM")
                 .to_name(order.getCustomer())
                 .to_phone(order.getPhone())
-                .to_address("72 Thành Thái, Phường 14, Quận 10, Hồ Chí Minh, Vietnam")
+                .to_address("152/10 Lương Ngọc Quyến, Phường 5, Quận Gò Vấp, TP.HCM")
                 .to_ward_code("20308")
                 .to_district_id(1444)
                 .cod_amount(order.getTotalDue().intValue())

@@ -55,7 +55,7 @@ public class CheckOrderSaga {
             }
 
             if(orderDetail.getVariant() != null) {
-                ProductVariant productVariant = productVariantRepository.findByIdAndProductId(orderDetail.getVariant(), product.getId())
+                ProductVariant productVariant = productVariantRepository.findByIdAndProductId(product.getId(), orderDetail.getVariant())
                         .orElseThrow(() -> new NotFoundException(String.format("Product variant with id %s not found", orderDetail.getVariant())));
                 try {
                     orderDetail.setVariant(objectMapper.writeValueAsString(productVariant));

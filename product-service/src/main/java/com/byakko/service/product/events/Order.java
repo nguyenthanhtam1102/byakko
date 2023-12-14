@@ -40,6 +40,8 @@ public class Order {
 
     private PaymentMethod paymentMethod;
 
+    private OrderPaymentStatus paymentStatus;
+
     @Override
     public String toString() {
         return "Order{" +

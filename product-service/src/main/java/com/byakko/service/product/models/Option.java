@@ -1,6 +1,7 @@
 package com.byakko.service.product.models;
 
 import com.byakko.common.DomainConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,20 +27,25 @@ public class Option {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
 
     @Column(length = 60, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "option", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<OptionValue> values;
 
     @Column(name = "created_at", nullable = false)
+    @JsonIgnore
     private ZonedDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @JsonIgnore
     private ZonedDateTime updatedAt;
 
+    @JsonIgnore
     private boolean deleted;
 
     public Option() {

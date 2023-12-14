@@ -1,6 +1,7 @@
 package com.byakko.service.sales.models;
 
 import com.byakko.common.DomainConstants;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,16 +56,22 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Expose
     private OrderStatus status;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @Expose
     private PaymentMethod paymentMethod;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
+    private OrderPaymentStatus paymentStatus;
+
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-    @Expose
+    @JsonIgnore
+    private List<OrderPaymentStatusHistory> paymentStatusHistories;
+
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<OrderStatusHistory> statusHistories;
 
     public Order() {

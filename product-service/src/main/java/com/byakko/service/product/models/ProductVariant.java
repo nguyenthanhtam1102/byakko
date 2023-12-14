@@ -32,17 +32,22 @@ public class ProductVariant {
     private Product product;
 
     @OneToMany(mappedBy = "variant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<VariantOption> variantOptions;
 
     @Column(name = "created_at", nullable = false)
+    @JsonIgnore
     private ZonedDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @JsonIgnore
     private ZonedDateTime updatedAt;
 
     @Column(name = "price")
+    @JsonIgnore
     private BigDecimal price;
 
+    @JsonIgnore
     private boolean deleted;
 
     public ProductVariant() {
