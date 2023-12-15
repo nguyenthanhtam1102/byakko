@@ -9,6 +9,9 @@ public class MailTemplate {
     @Value("${application.name}")
     private String APP_NAME;
 
+    @Value("${frontend.host}")
+    private String FRONTEND_HOST;
+
     public Mail getEmailAddressVerificationMailTemplate(String mailTo, String displayName, String token) {
         return Mail.Builder.builder()
                 .to(mailTo)
@@ -25,7 +28,7 @@ public class MailTemplate {
                         "\n" +
                         "Your %s team",
                         displayName,
-                        String.format("http://localhost:3000/verifyemailaddress?token=%s", token),
+                        String.format(FRONTEND_HOST + "/verifyemailaddress?token=%s", token),
                         APP_NAME))
                 .build();
 
@@ -46,7 +49,7 @@ public class MailTemplate {
                                 "\n" +
                                 "Your %s team",
                         displayName,
-                        String.format("http://localhost:3000/ad/verifyemailaddress?token=%s", token),
+                        String.format(FRONTEND_HOST + "/ad/verifyemailaddress?token=%s", token),
                         APP_NAME))
                 .build();
 
@@ -68,7 +71,7 @@ public class MailTemplate {
                         "Your %s team",
                         APP_NAME,
                         mailTo,
-                        String.format("http://localhost:3000/resetpassword?token=%s", token),
+                        String.format(FRONTEND_HOST + "/resetpassword?token=%s", token),
                         APP_NAME))
                 .build();
     }
@@ -89,7 +92,7 @@ public class MailTemplate {
                                 "Your %s team",
                         APP_NAME,
                         mailTo,
-                        String.format("http://localhost:3000/ad/resetpassword?token=%s", token),
+                        String.format(FRONTEND_HOST + "/ad/resetpassword?token=%s", token),
                         APP_NAME))
                 .build();
     }
